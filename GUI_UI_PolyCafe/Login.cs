@@ -28,6 +28,7 @@ namespace GUI_UI_PolyCafe
         private void SetUpComponents()
         {
             txtPassWord.UseSystemPasswordChar = true;
+            StartPosition = FormStartPosition.CenterScreen;
         }
 
         private void btnLogin_Click(object sender, EventArgs e)

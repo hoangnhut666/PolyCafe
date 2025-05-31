@@ -28,8 +28,6 @@ namespace GUI_UI_PolyCafe
 
         private void InitializeUI()
         {
-            //this.Text = "PolyCafe - Main Menu";
-            //this.WindowState = FormWindowState.Maximized;
             timerClock.Start();
             timerClock.Tick += TimerClock_Tick;
 
@@ -96,21 +94,18 @@ namespace GUI_UI_PolyCafe
 
         private void btnStaffManagement_Click(object sender, EventArgs e)
         {
-            // Check if the user is authorized to access this feature
             if (!AuthUtil.IsManager())
             {
                 MessageBox.Show("You do not have permission to access this feature.", "Access Denied", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Create and show the staff management form
             var staffManagementForm = new frmStaff();
             EmbedFormIntoPanel(staffManagementForm);
         }
 
         private void btnExit_Click(object sender, EventArgs e)
         {
-            //Ask for confirmation before exiting the application
             var result = MessageBox.Show("Are you sure you want to exit the application?", "Exit Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
@@ -121,42 +116,36 @@ namespace GUI_UI_PolyCafe
 
         private void itmStaffManagement_Click(object sender, EventArgs e)
         {
-            // Check if the user is authorized to access this feature
             if (!AuthUtil.IsManager())
             {
                 MessageBox.Show("You do not have permission to access this feature.", "Access Denied", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Create and show the staff management form
             var staffManagementForm = new frmStaff();
             EmbedFormIntoPanel(staffManagementForm);
         }
 
         private void itmProductCategoriesManagement_Click(object sender, EventArgs e)
         {
-            // Check if the user is authorized to access this feature
             if (!AuthUtil.IsManager())
             {
                 MessageBox.Show("You do not have permission to access this feature.", "Access Denied", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Create and show the product categories management form
             var productCategoriesForm = new frmProductCategories();
             EmbedFormIntoPanel(productCategoriesForm);
         }
 
         private void itmProductManagement_Click(object sender, EventArgs e)
         {
-            // Check if the user is authorized to access this feature
             if (!AuthUtil.IsManager())
             {
                 MessageBox.Show("You do not have permission to access this feature.", "Access Denied", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Create and show the product management form
             var productManagementForm = new frmProduct();
             EmbedFormIntoPanel(productManagementForm);
         }
@@ -173,28 +162,24 @@ namespace GUI_UI_PolyCafe
 
         private void itmChangePassword_Click(object sender, EventArgs e)
         {
-            // Check if the user is authorized to access this feature
             if (!AuthUtil.IsLoggedIn())
             {
                 MessageBox.Show("You must be logged in to change your password.", "Access Denied", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Create and show the change password form
             var changePasswordForm = new frmChangePassword();
             changePasswordForm.ShowDialog();
         }
 
         private void itmMembershipCardManagement_Click(object sender, EventArgs e)
         {
-            // Check if the user is authorized to access this feature
             if (!AuthUtil.IsManager())
             {
                 MessageBox.Show("You do not have permission to access this feature.", "Access Denied", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Create and show the membership card management form
             var membershipCardManagementForm = new frmMembershipCard();
             EmbedFormIntoPanel(membershipCardManagementForm);
         }
@@ -213,7 +198,6 @@ namespace GUI_UI_PolyCafe
 
         private void itmExit_Click(object sender, EventArgs e)
         {
-            // Ask for confirmation before exiting the application
             var result = MessageBox.Show("Are you sure you want to exit the application?", "Exit Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
