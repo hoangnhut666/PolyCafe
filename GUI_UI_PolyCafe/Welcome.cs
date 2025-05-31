@@ -35,7 +35,6 @@ namespace GUI_UI_PolyCafe
         }
 
 
-
         private void Welcome_FormClosing(object sender, FormClosingEventArgs e)
         {
             //Prevent the form from closing by user clicking the close button

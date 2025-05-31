@@ -55,9 +55,7 @@ namespace GUI_UI_PolyCafe
 
             AuthUtil.Login(staff);
             this.DialogResult = DialogResult.OK;
-            this.Dispose();
-
-            //MessageBox.Show("Login successfully!", "Greetings", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            this.Close();
         }
 
         private void btnExitLoginPage_Click(object sender, EventArgs e)
