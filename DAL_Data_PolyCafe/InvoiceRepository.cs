@@ -18,7 +18,7 @@ namespace DAL_Data_PolyCafe
             string prefix = "INV";
             string query = $"SELECT COUNT(*) FROM {DbTables.Invoice}";
             int count = Convert.ToInt32(Utilities.ExecuteScalar(query));
-            return prefix + (count + 1).ToString("D4");
+            return prefix + (count + 1).ToString("D3");
         }
 
 
@@ -83,6 +83,7 @@ namespace DAL_Data_PolyCafe
                          $"{InvoiceColumns.Date} = @Date, " +
                          $"{InvoiceColumns.Status} = @Status " +
                          $"WHERE {InvoiceColumns.Id} = @Id";
+
             SqlParameter[] parameters = new SqlParameter[]
             {
                 new SqlParameter("@Id", invoice.Id ?? (object)DBNull.Value),

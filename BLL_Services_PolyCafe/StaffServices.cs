@@ -27,5 +27,35 @@ namespace BLL_Services_PolyCafe
             var staffList = staffRepository.GetStaffListByCriteria(columnName, value);
             return staffList.FirstOrDefault();
         }
+
+        // Add a new staff member
+        public int AddStaff(Staff staff)
+        {
+            if (staff == null)
+            {
+                throw new ArgumentNullException(nameof(staff), "Staff cannot be null.");
+            }
+            return staffRepository.Insert(staff);
+        }
+
+        // Update an existing staff member
+        public int UpdateStaff(Staff staff)
+        {
+            if (staff == null)
+            {
+                throw new ArgumentNullException(nameof(staff), "Staff cannot be null.");
+            }
+            return staffRepository.Update(staff);
+        }
+
+        // Delete a staff member by ID
+        public int DeleteStaff(string staffId)
+        {
+            if (string.IsNullOrEmpty(staffId))
+            {
+                throw new ArgumentException("Staff ID cannot be null or empty.", nameof(staffId));
+            }
+            return staffRepository.Delete(staffId);
+        }
     }
 }

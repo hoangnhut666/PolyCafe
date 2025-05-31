@@ -11,7 +11,6 @@ using DAL_Data_PolyCafe;
 using DTO_Models_PolyCafe;
 using DBUTIL_Utilities_PolyCafe;
 using BLL_Services_PolyCafe;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using DAL_Data_PolyCafe.Constants;
 
 namespace GUI_UI_PolyCafe
@@ -43,6 +42,8 @@ namespace GUI_UI_PolyCafe
                 return;
             }
 
+
+
             Staff? staff = staffServices.GetStaffByCriteria(StaffColumns.Id, staffUsernameWithID);
 
             if (staff == null || staff.Password != password)
@@ -54,7 +55,7 @@ namespace GUI_UI_PolyCafe
 
             AuthUtil.Login(staff);
             this.DialogResult = DialogResult.OK;
-            this.Close();
+            this.Dispose();
 
             //MessageBox.Show("Login successfully!", "Greetings", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
@@ -72,7 +73,7 @@ namespace GUI_UI_PolyCafe
 
         private void chkShowPassword_CheckedChanged(object sender, EventArgs e)
         {
-           txtPassWord.UseSystemPasswordChar = !chkShowPassword.Checked;
+            txtPassWord.UseSystemPasswordChar = !chkShowPassword.Checked;
         }
 
         private void Login_FormClosing(object sender, FormClosingEventArgs e)

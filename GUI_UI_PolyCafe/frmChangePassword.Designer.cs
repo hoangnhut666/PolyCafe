@@ -1,6 +1,6 @@
 ﻿namespace GUI_UI_PolyCafe
 {
-    partial class ChangePassword
+    partial class frmChangePassword
     {
         /// <summary>
         /// Required designer variable.

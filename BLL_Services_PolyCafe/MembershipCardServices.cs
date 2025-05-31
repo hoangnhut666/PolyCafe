@@ -15,17 +15,49 @@ namespace BLL_Services_PolyCafe
         {
             membershipCardRepository = new MembershipCardRepository();
         }
+
+        //Get all membership cards
         public List<MembershipCard> GetAllMembershipCards()
         {
             return membershipCardRepository.GetAll();
         }
-        //public MembershipCard? GetMembershipCardById(string cardId)
-        //{
-        //    return membershipCardRepository.GetById(cardId);
-        //}
-        //public List<MembershipCard> GetActiveMembershipCards()
-        //{
-        //    return membershipCardRepository.GetActiveCards();
-        //}
+
+        //Generate a new membership card ID
+        public string GenerateCardId()
+        {
+            return membershipCardRepository.GenerateCardId();
+        }
+
+        //Add a new membership card
+        public int AddMembershipCard(MembershipCard card)
+        {
+            if (card == null)
+            {
+                throw new ArgumentNullException(nameof(card), "Membership card cannot be null.");
+            }
+                
+            return membershipCardRepository.Insert(card);
+        }
+
+        //Update an existing membership card
+        public int UpdateMembershipCard(MembershipCard card)
+        {
+            if (card == null)
+            {
+                throw new ArgumentNullException(nameof(card), "Membership card cannot be null.");
+            }
+
+            return membershipCardRepository.Update(card);
+        }
+
+        //Delete a membership card
+        public int DeleteMembershipCard(string cardId)
+        {
+            if (string.IsNullOrEmpty(cardId))
+            {
+                throw new ArgumentException("Card ID cannot be null or empty.", nameof(cardId));
+            }
+            return membershipCardRepository.Delete(cardId);
+        }
     }
 }

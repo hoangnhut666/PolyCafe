@@ -1,6 +1,6 @@
 ﻿namespace GUI_UI_PolyCafe
 {
-    partial class MembershipCard
+    partial class frmMembershipCard
     {
         /// <summary>
         /// Required designer variable.
@@ -34,8 +34,8 @@
             btnDelete = new Button();
             btnUpdate = new Button();
             btnAdd = new Button();
-            checkBox1 = new CheckBox();
-            textBox1 = new TextBox();
+            chkStatus = new CheckBox();
+            txtCardHolder = new TextBox();
             txtCardId = new TextBox();
             label4 = new Label();
             label3 = new Label();
@@ -65,8 +65,8 @@
             tabPageUpdate.Controls.Add(btnDelete);
             tabPageUpdate.Controls.Add(btnUpdate);
             tabPageUpdate.Controls.Add(btnAdd);
-            tabPageUpdate.Controls.Add(checkBox1);
-            tabPageUpdate.Controls.Add(textBox1);
+            tabPageUpdate.Controls.Add(chkStatus);
+            tabPageUpdate.Controls.Add(txtCardHolder);
             tabPageUpdate.Controls.Add(txtCardId);
             tabPageUpdate.Controls.Add(label4);
             tabPageUpdate.Controls.Add(label3);
@@ -79,7 +79,6 @@
             tabPageUpdate.TabIndex = 0;
             tabPageUpdate.Text = "CẬP NHẬT ";
             tabPageUpdate.UseVisualStyleBackColor = true;
-     
             // 
             // btnRefresh
             // 
@@ -91,6 +90,7 @@
             btnRefresh.TabIndex = 4;
             btnRefresh.Text = "Làm mới";
             btnRefresh.UseVisualStyleBackColor = true;
+            btnRefresh.Click += btnRefresh_Click;
             // 
             // btnDelete
             // 
@@ -102,6 +102,7 @@
             btnDelete.TabIndex = 4;
             btnDelete.Text = "Xóa";
             btnDelete.UseVisualStyleBackColor = true;
+            btnDelete.Click += btnDelete_Click;
             // 
             // btnUpdate
             // 
@@ -113,6 +114,7 @@
             btnUpdate.TabIndex = 4;
             btnUpdate.Text = "Sửa";
             btnUpdate.UseVisualStyleBackColor = true;
+            btnUpdate.Click += btnUpdate_Click;
             // 
             // btnAdd
             // 
@@ -124,26 +126,27 @@
             btnAdd.TabIndex = 4;
             btnAdd.Text = "Thêm";
             btnAdd.UseVisualStyleBackColor = true;
+            btnAdd.Click += btnAdd_Click;
             // 
-            // checkBox1
+            // chkStatus
             // 
-            checkBox1.AutoSize = true;
-            checkBox1.Font = new Font("Segoe UI", 11F);
-            checkBox1.Location = new Point(953, 528);
-            checkBox1.Name = "checkBox1";
-            checkBox1.Size = new Size(207, 49);
-            checkBox1.TabIndex = 3;
-            checkBox1.Text = "Hoạt động";
-            checkBox1.UseVisualStyleBackColor = true;
+            chkStatus.AutoSize = true;
+            chkStatus.Font = new Font("Segoe UI", 11F);
+            chkStatus.Location = new Point(953, 528);
+            chkStatus.Name = "chkStatus";
+            chkStatus.Size = new Size(207, 49);
+            chkStatus.TabIndex = 3;
+            chkStatus.Text = "Hoạt động";
+            chkStatus.UseVisualStyleBackColor = true;
             // 
-            // textBox1
+            // txtCardHolder
             // 
-            textBox1.Font = new Font("Segoe UI", 11F);
-            textBox1.Location = new Point(953, 384);
-            textBox1.Multiline = true;
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(652, 74);
-            textBox1.TabIndex = 2;
+            txtCardHolder.Font = new Font("Segoe UI", 11F);
+            txtCardHolder.Location = new Point(953, 384);
+            txtCardHolder.Multiline = true;
+            txtCardHolder.Name = "txtCardHolder";
+            txtCardHolder.Size = new Size(652, 74);
+            txtCardHolder.TabIndex = 2;
             // 
             // txtCardId
             // 
@@ -151,6 +154,7 @@
             txtCardId.Location = new Point(953, 260);
             txtCardId.Multiline = true;
             txtCardId.Name = "txtCardId";
+            txtCardId.ReadOnly = true;
             txtCardId.Size = new Size(652, 69);
             txtCardId.TabIndex = 2;
             // 
@@ -194,7 +198,6 @@
             label1.Size = new Size(433, 72);
             label1.TabIndex = 0;
             label1.Text = "THẺ LƯU ĐỘNG";
-     
             // 
             // tabPageListMembershipCards
             // 
@@ -217,14 +220,14 @@
             dgvMembershipCards.TabIndex = 0;
             dgvMembershipCards.CellClick += dgvMembershipCards_CellClick;
             // 
-            // MembershipCard
+            // frmMembershipCard
             // 
             AutoScaleDimensions = new SizeF(15F, 37F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(2272, 1421);
             Controls.Add(tabControl1);
-            Name = "MembershipCard";
-            Text = "MembershipCard";
+            Name = "frmMembershipCard";
+            Text = "Quản Lý Thẻ Lưu Động";
             tabControl1.ResumeLayout(false);
             tabPageUpdate.ResumeLayout(false);
             tabPageUpdate.PerformLayout();
@@ -238,8 +241,8 @@
         private TabControl tabControl1;
         private TabPage tabPageUpdate;
         private TabPage tabPageListMembershipCards;
-        private CheckBox checkBox1;
-        private TextBox textBox1;
+        private CheckBox chkStatus;
+        private TextBox txtCardHolder;
         private TextBox txtCardId;
         private Label label4;
         private Label label3;

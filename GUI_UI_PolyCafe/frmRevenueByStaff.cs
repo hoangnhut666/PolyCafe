@@ -10,23 +10,11 @@ using System.Windows.Forms;
 
 namespace GUI_UI_PolyCafe
 {
-    public partial class Home : Form
+    public partial class frmRevenueByStaff: Form
     {
-        public Home()
+        public frmRevenueByStaff()
         {
             InitializeComponent();
-            this.StartPosition = FormStartPosition.CenterScreen;
-        }
-
-
-        private void SetupComponent(DataGridView dataGridView)
-        {
-
-        }
-
-        private void toolStripStatusLabel3_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

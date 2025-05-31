@@ -10,11 +10,16 @@ using System.Windows.Forms;
 
 namespace GUI_UI_PolyCafe
 {
-    public partial class OrderDetail: Form
+    public partial class frmProductCategory : Form
     {
-        public OrderDetail()
+        public frmProductCategory()
         {
             InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

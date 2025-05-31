@@ -12,11 +12,11 @@ using DBUTIL_Utilities_PolyCafe;
 
 namespace GUI_UI_PolyCafe
 {
-    public partial class ChangePassword : Form
+    public partial class frmChangePassword : Form
     {
 
         private readonly StaffRepository _staffRepo = new StaffRepository();
-        public ChangePassword()
+        public frmChangePassword()
         {
             InitializeComponent();
             SetupComponent();

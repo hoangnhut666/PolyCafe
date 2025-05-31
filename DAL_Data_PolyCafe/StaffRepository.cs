@@ -74,18 +74,59 @@ namespace DAL_Data_PolyCafe
             return Utilities.ExecuteNonQuery(sql, parameters) > 0;
         }
 
+
+        public int Insert(Staff staff)
+        {
+            string sql = $"INSERT INTO {DbTables.Staff} " +
+                         $"({StaffColumns.Id}, {StaffColumns.FullName}, {StaffColumns.Email}, " +
+                         $"{StaffColumns.Password}, {StaffColumns.Role}, {StaffColumns.Status}) " +
+                         $"VALUES (@Id, @FullName, @Email, @Password, @Role, @Status)";
+            var parameters = new SqlParameter[]
+            {
+                new SqlParameter("@Id", staff.Id),
+                new SqlParameter("@FullName", staff.FullName),
+                new SqlParameter("@Email", staff.Email),
+                new SqlParameter("@Password", staff.Password),
+                new SqlParameter("@Role", staff.Role),
+                new SqlParameter("@Status", staff.Status)
+            };
+            return Utilities.ExecuteNonQuery(sql, parameters);
+        }
+
+
+        public int Update(Staff staff)
+        {
+            string sql = $"UPDATE {DbTables.Staff} SET " +
+                         $"{StaffColumns.FullName} = @FullName, " +
+                         $"{StaffColumns.Email} = @Email, " +
+                         $"{StaffColumns.Password} = @Password, " +
+                         $"{StaffColumns.Role} = @Role, " +
+                         $"{StaffColumns.Status} = @Status " +
+                         $"WHERE {StaffColumns.Id} = @Id";
+            var parameters = new SqlParameter[]
+            {
+                new SqlParameter("@Id", staff.Id),
+                new SqlParameter("@FullName", staff.FullName),
+                new SqlParameter("@Email", staff.Email),
+                new SqlParameter("@Password", staff.Password),
+                new SqlParameter("@Role", staff.Role),
+                new SqlParameter("@Status", staff.Status)
+            };
+            return Utilities.ExecuteNonQuery(sql, parameters);
+        }
+
+
+        public int Delete(string staffId)
+        {
+            string sql = $"DELETE FROM {DbTables.Staff} WHERE {StaffColumns.Id} = @Id";
+            var parameters = new SqlParameter[]
+            {
+                new SqlParameter("@Id", staffId)
+            };
+            return Utilities.ExecuteNonQuery(sql, parameters);
+        }
     }
 }
-
-
-
-
-
-
-
-
-
-
 
 
 
