@@ -53,7 +53,7 @@ namespace DAL_Data_PolyCafe
                     Role = Convert.ToInt32(reader[StaffColumns.Role]),
                     Status = Convert.ToInt32(reader[StaffColumns.Status])
                 };
-            });
+            }, parameters);
 
             return staff;
         }

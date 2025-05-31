@@ -23,6 +23,13 @@ namespace BLL_Services_PolyCafe
             return invoiceRepository.GenerateInvoiceId();
         }
 
+        // Get list of invoice by criteria such as StaffId, CardId, etc.
+        public List<Invoice> GetInvoicesByCriteria(string columnName, string value)
+        {
+            return invoiceRepository.GetInvoicesByCriteria(columnName, value);
+        }
+
+
         // Insert a new invoice into the database
         public int AddInvoice(Invoice invoice)
         {

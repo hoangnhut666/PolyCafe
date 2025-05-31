@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace GUI_UI_PolyCafe
 {
-    public partial class frmProductCategory : Form
+    public partial class frmProductCategories : Form
     {
-        public frmProductCategory()
+        public frmProductCategories()
         {
             InitializeComponent();
         }

@@ -1,6 +1,6 @@
 ﻿namespace GUI_UI_PolyCafe
 {
-    partial class frmManageInvoices
+    partial class frmInvoiceManagement : Form
     {
         /// <summary>
         /// Required designer variable.

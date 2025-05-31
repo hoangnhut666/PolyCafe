@@ -9,24 +9,28 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DTO_Models_PolyCafe;
 using BLL_Services_PolyCafe;
+using DAL_Data_PolyCafe;
+using DAL_Data_PolyCafe.Constants;
 
 namespace GUI_UI_PolyCafe
 {
-    public partial class frmManageInvoices : Form
+    public partial class frmInvoiceManagement : Form
     {
         private readonly InvoiceServices invoiceServices;
         private readonly InvoiceDetailsServices invoiceDetailsServices;
         private readonly MembershipCardServices membershipCardServices;
         private readonly StaffServices staffServices;
         private readonly ProductServices productServices;
+        private readonly string? _userId;
 
-        public frmManageInvoices()
+        public frmInvoiceManagement(string? userId = null)
         {
             invoiceServices = new InvoiceServices();
             invoiceDetailsServices = new InvoiceDetailsServices();
             membershipCardServices = new MembershipCardServices();
             staffServices = new StaffServices();
             productServices = new ProductServices();
+            _userId = userId;
             InitializeComponent();
             SetupComponent();
             LoadAllInvoices();
@@ -70,23 +74,50 @@ namespace GUI_UI_PolyCafe
             cboStaff.SelectedIndex = -1; // No selection by default
         }
 
-        //Load all invoices
+
+        //Load all invoices with criteria based on user ID
         private void LoadAllInvoices()
         {
             try
             {
-                var invoices = invoiceServices.GetAllInvoices();
+                List<Invoice> invoices;
+                if (_userId != null)
+                {
+                    // Load invoices by staff ID if user ID is provided
+                    invoices = invoiceServices.GetInvoicesByCriteria(InvoiceColumns.Id, _userId);
+                    dgvInvoices.DataSource = invoices;
+                }
+                else
+                {
+                    // Load all invoices if no user ID is provided
+                    invoices = invoiceServices.GetAllInvoices();
+                    dgvInvoices.DataSource = invoices;
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                dgvInvoices.DataSource = null;
+            }
+        }
+
+        //Load invoice by staff ID criteria
+        private void LoadInvoicesByStaffId(string staffId)
+        {
+            try
+            {
+                var invoices = invoiceServices.GetInvoicesByCriteria("StaffId", staffId);
                 if (invoices != null && invoices.Count > 0)
                 {
                     dgvInvoices.DataSource = invoices;
                 }
                 else
                 {
-                    MessageBox.Show("No invoices found.");
+                    MessageBox.Show("No invoices found for the selected staff.");
                     dgvInvoices.DataSource = null;
                 }
             }
-            catch (Exception e )
+            catch (Exception e)
             {
                 MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 dgvInvoices.DataSource = null;
@@ -508,4 +539,29 @@ namespace GUI_UI_PolyCafe
 //        UnitPrice = decimal.TryParse(txtUnitPrice.Text, out decimal unitPrice) ? unitPrice : 0,
 //        Quantity = int.TryParse(txtQuantity.Text, out int quantity) ? quantity : 0,
 //    };
+//}
+
+
+
+//Load all invoices
+//private void LoadAllInvoices()
+//{
+//    try
+//    {
+//        var invoices = invoiceServices.GetAllInvoices();
+//        if (invoices != null && invoices.Count > 0)
+//        {
+//            dgvInvoices.DataSource = invoices;
+//        }
+//        else
+//        {
+//            MessageBox.Show("No invoices found.");
+//            dgvInvoices.DataSource = null;
+//        }
+//    }
+//    catch (Exception e )
+//    {
+//        MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+//        dgvInvoices.DataSource = null;
+//    }
 //}

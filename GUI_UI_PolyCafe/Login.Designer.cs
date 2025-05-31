@@ -155,7 +155,6 @@
             Controls.Add(groupBox1);
             Name = "Login";
             Text = "Login";
-            FormClosing += Login_FormClosing;
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             ResumeLayout(false);

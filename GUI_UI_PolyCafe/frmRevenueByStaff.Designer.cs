@@ -103,27 +103,30 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(1343, 57);
+            label3.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label3.Location = new Point(1328, 55);
             label3.Name = "label3";
-            label3.Size = new Size(130, 37);
+            label3.Size = new Size(159, 45);
             label3.TabIndex = 0;
             label3.Text = "Đến ngày";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(700, 57);
+            label2.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label2.Location = new Point(697, 55);
             label2.Name = "label2";
-            label2.Size = new Size(112, 37);
+            label2.Size = new Size(136, 45);
             label2.TabIndex = 0;
             label2.Text = "Từ ngày";
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(76, 59);
+            label1.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label1.Location = new Point(66, 51);
             label1.Name = "label1";
-            label1.Size = new Size(137, 37);
+            label1.Size = new Size(169, 45);
             label1.TabIndex = 0;
             label1.Text = "Nhân viên";
             // 

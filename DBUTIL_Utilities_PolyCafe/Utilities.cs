@@ -125,7 +125,8 @@ namespace DBUTIL_Utilities_PolyCafe
         }
 
 
-        public static List<T> ExecuteQuery<T>(string query, Func<IDataReader, T> mapFunction)
+
+        public static List<T> ExecuteQuery<T>(string query, Func<IDataReader, T> mapFunction, params SqlParameter[] parameters)
         {
             List<T> result = new List<T>();
 
@@ -133,6 +134,11 @@ namespace DBUTIL_Utilities_PolyCafe
             {
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
+                    if (parameters != null && parameters.Length > 0)
+                    {
+                        command.Parameters.AddRange(parameters);
+                    }
+
                     connection.Open();
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
@@ -146,6 +152,7 @@ namespace DBUTIL_Utilities_PolyCafe
 
             return result;
         }
+
 
 
         public static int ExecuteNonQuery(string commandText, params SqlParameter[] parameters)

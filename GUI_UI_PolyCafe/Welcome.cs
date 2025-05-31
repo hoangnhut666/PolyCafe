@@ -18,8 +18,8 @@ namespace GUI_UI_PolyCafe
             SetupComponent();
 
             progressBar.Style = ProgressBarStyle.Marquee;
-            progressBar.MarqueeAnimationSpeed = 30;
-            Task.Delay(3000).ContinueWith(t =>
+            progressBar.MarqueeAnimationSpeed = 10;
+            Task.Delay(2000).ContinueWith(t =>
             {
                 Invoke(new Action(() =>
                 {

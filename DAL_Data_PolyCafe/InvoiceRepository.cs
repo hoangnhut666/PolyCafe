@@ -40,6 +40,29 @@ namespace DAL_Data_PolyCafe
         }
 
 
+        // Get invoices by specific criteria (e.g., StaffId, CardId, etc.)
+        public List<Invoice> GetInvoicesByCriteria(string columnName, string value)
+        {
+            string sql = $"SELECT * FROM {DbTables.Invoice} WHERE {columnName} = @Value";
+            var parameters = new SqlParameter[]
+            {
+                new SqlParameter("@Value", value)
+            };
+            List<Invoice> invoices = Utilities.ExecuteQuery(sql, reader =>
+            {
+                return new Invoice
+                {
+                    Id = reader[InvoiceColumns.Id].ToString(),
+                    StaffId = reader[InvoiceColumns.StaffId].ToString(),
+                    CardId = reader[InvoiceColumns.CardId] as string,
+                    Date = Convert.ToDateTime(reader[InvoiceColumns.Date]),
+                    Status = Convert.ToBoolean(reader[InvoiceColumns.Status])
+                };
+            }, parameters);
+            return invoices;
+        }
+
+
         public DataTable GetDetailsByInvoiceId(string invoiceId)
         {
             string sql = $"SELECT c.*, p.{ProductColumns.ProductName} " +

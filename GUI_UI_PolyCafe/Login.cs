@@ -32,30 +32,36 @@ namespace GUI_UI_PolyCafe
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            string staffUsernameWithID = txtUserName.Text.Trim();
+            string staffId = txtUserName.Text.Trim();
             string password = txtPassWord.Text;
 
-            if (string.IsNullOrEmpty(staffUsernameWithID) || string.IsNullOrEmpty(password))
+            if (string.IsNullOrEmpty(staffId) || string.IsNullOrEmpty(password))
             {
                 MessageBox.Show("Please enter both staff ID and password", "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-
-
-            Staff? staff = staffServices.GetStaffByCriteria(StaffColumns.Id, staffUsernameWithID);
-
-            if (staff == null || staff.Password != password)
+            try
             {
-                MessageBox.Show("Invalid staff ID or password", "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
+                Staff? staff = staffServices.GetStaffByCriteria(StaffColumns.Id, staffId);
 
-            AuthUtil.Login(staff);
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+                if (staff == null || staff.Password != password)
+                {
+                    MessageBox.Show("Invalid staff ID or password", "Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                AuthUtil.Login(staff);
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Login failed: {ex.Message}", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnExitLoginPage_Click(object sender, EventArgs e)
@@ -72,15 +78,6 @@ namespace GUI_UI_PolyCafe
         private void chkShowPassword_CheckedChanged(object sender, EventArgs e)
         {
             txtPassWord.UseSystemPasswordChar = !chkShowPassword.Checked;
-        }
-
-        private void Login_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (e.CloseReason == CloseReason.UserClosing)
-            {
-                e.Cancel = true;
-                MessageBox.Show("Please use the exit button to exit the app", "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
         }
     }
 }

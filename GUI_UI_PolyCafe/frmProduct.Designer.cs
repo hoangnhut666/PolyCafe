@@ -87,6 +87,7 @@
             tabPageUpdate.Controls.Add(label3);
             tabPageUpdate.Controls.Add(label2);
             tabPageUpdate.Controls.Add(label1);
+            tabPageUpdate.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold, GraphicsUnit.Point, 0);
             tabPageUpdate.Location = new Point(10, 63);
             tabPageUpdate.Name = "tabPageUpdate";
             tabPageUpdate.Padding = new Padding(3);
@@ -97,58 +98,63 @@
             // 
             // button5
             // 
-            button5.Font = new Font("Segoe UI", 11F);
+            button5.BackColor = Color.FromArgb(162, 192, 248);
+            button5.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button5.Location = new Point(1713, 819);
             button5.Margin = new Padding(4);
             button5.Name = "button5";
-            button5.Size = new Size(249, 101);
+            button5.Size = new Size(249, 84);
             button5.TabIndex = 21;
             button5.Text = "Chọn hình";
-            button5.UseVisualStyleBackColor = true;
+            button5.UseVisualStyleBackColor = false;
             // 
             // button4
             // 
-            button4.Font = new Font("Segoe UI", 11F);
+            button4.BackColor = Color.FromArgb(162, 192, 248);
+            button4.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold);
             button4.Location = new Point(1278, 1080);
             button4.Margin = new Padding(4);
             button4.Name = "button4";
-            button4.Size = new Size(249, 101);
+            button4.Size = new Size(249, 82);
             button4.TabIndex = 21;
             button4.Text = "Làm mới";
-            button4.UseVisualStyleBackColor = true;
+            button4.UseVisualStyleBackColor = false;
             // 
             // button3
             // 
-            button3.Font = new Font("Segoe UI", 11F);
+            button3.BackColor = Color.FromArgb(162, 192, 248);
+            button3.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold);
             button3.Location = new Point(910, 1080);
             button3.Margin = new Padding(4);
             button3.Name = "button3";
-            button3.Size = new Size(249, 101);
+            button3.Size = new Size(249, 82);
             button3.TabIndex = 21;
             button3.Text = "Xóa";
-            button3.UseVisualStyleBackColor = true;
+            button3.UseVisualStyleBackColor = false;
             // 
             // button1
             // 
-            button1.Font = new Font("Segoe UI", 11F);
+            button1.BackColor = Color.FromArgb(162, 192, 248);
+            button1.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold);
             button1.Location = new Point(540, 1080);
             button1.Margin = new Padding(4);
             button1.Name = "button1";
-            button1.Size = new Size(249, 101);
+            button1.Size = new Size(249, 82);
             button1.TabIndex = 21;
             button1.Text = "Sửa";
-            button1.UseVisualStyleBackColor = true;
+            button1.UseVisualStyleBackColor = false;
             // 
             // button2
             // 
-            button2.Font = new Font("Segoe UI", 11F);
+            button2.BackColor = Color.FromArgb(162, 192, 248);
+            button2.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold);
             button2.Location = new Point(169, 1080);
             button2.Margin = new Padding(4);
             button2.Name = "button2";
-            button2.Size = new Size(249, 101);
+            button2.Size = new Size(249, 82);
             button2.TabIndex = 21;
             button2.Text = "Thêm";
-            button2.UseVisualStyleBackColor = true;
+            button2.UseVisualStyleBackColor = false;
             // 
             // radioButton2
             // 
@@ -197,29 +203,29 @@
             // 
             // textBox3
             // 
-            textBox3.Location = new Point(592, 540);
+            textBox3.Location = new Point(592, 546);
             textBox3.Margin = new Padding(4);
             textBox3.Multiline = true;
             textBox3.Name = "textBox3";
-            textBox3.Size = new Size(842, 76);
+            textBox3.Size = new Size(842, 70);
             textBox3.TabIndex = 15;
             // 
             // textBox2
             // 
-            textBox2.Location = new Point(592, 378);
+            textBox2.Location = new Point(592, 383);
             textBox2.Margin = new Padding(4);
             textBox2.Multiline = true;
             textBox2.Name = "textBox2";
-            textBox2.Size = new Size(842, 76);
+            textBox2.Size = new Size(842, 71);
             textBox2.TabIndex = 14;
             // 
             // textBox1
             // 
-            textBox1.Location = new Point(592, 223);
+            textBox1.Location = new Point(592, 229);
             textBox1.Margin = new Padding(4);
             textBox1.Multiline = true;
             textBox1.Name = "textBox1";
-            textBox1.Size = new Size(842, 76);
+            textBox1.Size = new Size(842, 70);
             textBox1.TabIndex = 13;
             // 
             // label6
@@ -292,10 +298,10 @@
             // tabPageList
             // 
             tabPageList.Controls.Add(dataGridView1);
-            tabPageList.Location = new Point(10, 63);
+            tabPageList.Location = new Point(10, 55);
             tabPageList.Name = "tabPageList";
             tabPageList.Padding = new Padding(3);
-            tabPageList.Size = new Size(2237, 1337);
+            tabPageList.Size = new Size(2237, 1345);
             tabPageList.TabIndex = 1;
             tabPageList.Text = "DANH SÁCH";
             tabPageList.UseVisualStyleBackColor = true;
