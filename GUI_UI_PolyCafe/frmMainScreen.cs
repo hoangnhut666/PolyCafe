@@ -17,9 +17,10 @@ namespace GUI_UI_PolyCafe
         {
             InitializeComponent();
             SetupComponent(dataGridView: null);
-            CheckAuthorization();
+            UpdateUserInfo(); // Only update user info, do not show login
             InitializeUI();
         }
+
 
         private void SetupComponent(DataGridView? dataGridView)
         {
@@ -38,34 +39,6 @@ namespace GUI_UI_PolyCafe
             EmbedFormIntoPanel(new frmAbout());
         }
 
-        private void CheckAuthorization()
-        {
-            if (!AuthUtil.IsLoggedIn())
-            {
-                ShowLogin();
-            }
-            else
-            {
-                UpdateUserInfo();
-            }
-        }
-
-        private void ShowLogin()
-        {
-            this.Hide();
-
-            using (var frmLogin = new Login())
-            {
-                if (frmLogin.ShowDialog() != DialogResult.OK)
-                {
-                    Application.Exit();
-                    return;
-                }
-            }
-
-            this.Show();
-            UpdateUserInfo();
-        }
 
         private void UpdateUserInfo()
         {
@@ -203,6 +176,62 @@ namespace GUI_UI_PolyCafe
             {
                 Application.Exit();
             }
+        }
+
+        private void itmRevenueByCategory_Click(object sender, EventArgs e)
+        {
+            //Check if the user is a manager
+            if (!AuthUtil.IsManager())
+            {
+                MessageBox.Show("You do not have permission to access this feature.", "Access Denied", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Create and show the revenue by category form
+            var revenueByCategoryForm = new frmRevenueByCategory();
+            EmbedFormIntoPanel(revenueByCategoryForm);
+        }
+
+        private void itmRevenueByStaff_Click(object sender, EventArgs e)
+        {
+            if (!AuthUtil.IsManager())
+            {
+                MessageBox.Show("You do not have permission to access this feature.", "Access Denied", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var revenueByStaffForm = new frmRevenueByStaff();
+            EmbedFormIntoPanel(revenueByStaffForm);
+        }
+
+        private void btnProductCategoriesManagemet_Click(object sender, EventArgs e)
+        {
+            if (!AuthUtil.IsManager())
+            {
+                MessageBox.Show("You do not have permission to access this feature.", "Access Denied", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var productCategoriesForm = new frmProductCategories();
+            EmbedFormIntoPanel(productCategoriesForm);
+        }
+
+        private void btnProductManagement_Click(object sender, EventArgs e)
+        {
+            if (!AuthUtil.IsManager())
+            {
+                MessageBox.Show("You do not have permission to access this feature.", "Access Denied", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var productManagementForm = new frmProduct();
+            EmbedFormIntoPanel(productManagementForm);
+        }
+
+        private void btnAbout_Click(object sender, EventArgs e)
+        {
+            var aboutForm = new frmAbout();
+            EmbedFormIntoPanel(aboutForm);
         }
     }
 }

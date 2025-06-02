@@ -48,9 +48,9 @@
             toolStrip1 = new ToolStrip();
             btnExit = new ToolStripButton();
             btnStaffManagement = new ToolStripButton();
-            toolStripButton3 = new ToolStripButton();
-            toolStripButton4 = new ToolStripButton();
-            toolStripButton5 = new ToolStripButton();
+            btnProductCategoriesManagemet = new ToolStripButton();
+            btnProductManagement = new ToolStripButton();
+            btnAbout = new ToolStripButton();
             lblRole = new ToolStripLabel();
             lblAccount = new ToolStripLabel();
             statusStrip1 = new StatusStrip();
@@ -70,7 +70,7 @@
             menuStrip1.Items.AddRange(new ToolStripItem[] { tàiKhoảnToolStripMenuItem, quảnLýToolStripMenuItem, thốngKêToolStripMenuItem, hỗTrợToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(2272, 47);
+            menuStrip1.Size = new Size(2272, 45);
             menuStrip1.TabIndex = 0;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -78,14 +78,14 @@
             // 
             tàiKhoảnToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { itmChangePassword, itmExit });
             tàiKhoảnToolStripMenuItem.Name = "tàiKhoảnToolStripMenuItem";
-            tàiKhoảnToolStripMenuItem.Size = new Size(151, 43);
+            tàiKhoảnToolStripMenuItem.Size = new Size(151, 41);
             tàiKhoảnToolStripMenuItem.Text = "Tài khoản";
             // 
             // itmChangePassword
             // 
             itmChangePassword.Image = Properties.Resources.arrows11;
             itmChangePassword.Name = "itmChangePassword";
-            itmChangePassword.Size = new Size(403, 48);
+            itmChangePassword.Size = new Size(326, 48);
             itmChangePassword.Text = "Đổi mật khẩu";
             itmChangePassword.Click += itmChangePassword_Click;
             // 
@@ -93,7 +93,7 @@
             // 
             itmExit.Image = Properties.Resources.entry1;
             itmExit.Name = "itmExit";
-            itmExit.Size = new Size(403, 48);
+            itmExit.Size = new Size(326, 48);
             itmExit.Text = "Đăng xuất";
             itmExit.Click += itmExit_Click;
             // 
@@ -101,7 +101,7 @@
             // 
             quảnLýToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { itmStaffManagement, itmMembershipCardManagement, itmProductCategoriesManagement, itmProductManagement, itmInvoiceManagement });
             quảnLýToolStripMenuItem.Name = "quảnLýToolStripMenuItem";
-            quảnLýToolStripMenuItem.Size = new Size(130, 43);
+            quảnLýToolStripMenuItem.Size = new Size(130, 41);
             quảnLýToolStripMenuItem.Text = "Quản lý";
             // 
             // itmStaffManagement
@@ -148,7 +148,7 @@
             // 
             thốngKêToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { itmRevenueByCategory, itmRevenueByStaff });
             thốngKêToolStripMenuItem.Name = "thốngKêToolStripMenuItem";
-            thốngKêToolStripMenuItem.Size = new Size(149, 43);
+            thốngKêToolStripMenuItem.Size = new Size(149, 41);
             thốngKêToolStripMenuItem.Text = "Thống kê";
             // 
             // itmRevenueByCategory
@@ -157,6 +157,7 @@
             itmRevenueByCategory.Name = "itmRevenueByCategory";
             itmRevenueByCategory.Size = new Size(526, 48);
             itmRevenueByCategory.Text = "Doanh thu theo loại sản phẩm";
+            itmRevenueByCategory.Click += itmRevenueByCategory_Click;
             // 
             // itmRevenueByStaff
             // 
@@ -164,12 +165,13 @@
             itmRevenueByStaff.Name = "itmRevenueByStaff";
             itmRevenueByStaff.Size = new Size(526, 48);
             itmRevenueByStaff.Text = "Danh thu theo nhân viên";
+            itmRevenueByStaff.Click += itmRevenueByStaff_Click;
             // 
             // hỗTrợToolStripMenuItem
             // 
             hỗTrợToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { itmHelp, itmAbout });
             hỗTrợToolStripMenuItem.Name = "hỗTrợToolStripMenuItem";
-            hỗTrợToolStripMenuItem.Size = new Size(115, 43);
+            hỗTrợToolStripMenuItem.Size = new Size(115, 41);
             hỗTrợToolStripMenuItem.Text = "Hỗ trợ";
             // 
             // itmHelp
@@ -191,8 +193,8 @@
             // toolStrip1
             // 
             toolStrip1.ImageScalingSize = new Size(36, 36);
-            toolStrip1.Items.AddRange(new ToolStripItem[] { btnExit, btnStaffManagement, toolStripButton3, toolStripButton4, toolStripButton5, lblRole, lblAccount });
-            toolStrip1.Location = new Point(0, 47);
+            toolStrip1.Items.AddRange(new ToolStripItem[] { btnExit, btnStaffManagement, btnProductCategoriesManagemet, btnProductManagement, btnAbout, lblRole, lblAccount });
+            toolStrip1.Location = new Point(0, 45);
             toolStrip1.Name = "toolStrip1";
             toolStrip1.Size = new Size(2272, 46);
             toolStrip1.TabIndex = 1;
@@ -218,32 +220,35 @@
             btnStaffManagement.Text = "toolStripButton2";
             btnStaffManagement.Click += btnStaffManagement_Click;
             // 
-            // toolStripButton3
+            // btnProductCategoriesManagemet
             // 
-            toolStripButton3.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButton3.Image = Properties.Resources.Order_history;
-            toolStripButton3.ImageTransparentColor = Color.Magenta;
-            toolStripButton3.Name = "toolStripButton3";
-            toolStripButton3.Size = new Size(52, 40);
-            toolStripButton3.Text = "toolStripButton3";
+            btnProductCategoriesManagemet.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            btnProductCategoriesManagemet.Image = Properties.Resources.Order_history;
+            btnProductCategoriesManagemet.ImageTransparentColor = Color.Magenta;
+            btnProductCategoriesManagemet.Name = "btnProductCategoriesManagemet";
+            btnProductCategoriesManagemet.Size = new Size(52, 40);
+            btnProductCategoriesManagemet.Text = "toolStripButton3";
+            btnProductCategoriesManagemet.Click += btnProductCategoriesManagemet_Click;
             // 
-            // toolStripButton4
+            // btnProductManagement
             // 
-            toolStripButton4.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButton4.Image = Properties.Resources.coffee;
-            toolStripButton4.ImageTransparentColor = Color.Magenta;
-            toolStripButton4.Name = "toolStripButton4";
-            toolStripButton4.Size = new Size(52, 40);
-            toolStripButton4.Text = "toolStripButton4";
+            btnProductManagement.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            btnProductManagement.Image = Properties.Resources.coffee;
+            btnProductManagement.ImageTransparentColor = Color.Magenta;
+            btnProductManagement.Name = "btnProductManagement";
+            btnProductManagement.Size = new Size(52, 40);
+            btnProductManagement.Text = "toolStripButton4";
+            btnProductManagement.Click += btnProductManagement_Click;
             // 
-            // toolStripButton5
+            // btnAbout
             // 
-            toolStripButton5.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButton5.Image = Properties.Resources.information;
-            toolStripButton5.ImageTransparentColor = Color.Magenta;
-            toolStripButton5.Name = "toolStripButton5";
-            toolStripButton5.Size = new Size(52, 40);
-            toolStripButton5.Text = "toolStripButton5";
+            btnAbout.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            btnAbout.Image = Properties.Resources.information;
+            btnAbout.ImageTransparentColor = Color.Magenta;
+            btnAbout.Name = "btnAbout";
+            btnAbout.Size = new Size(52, 40);
+            btnAbout.Text = "toolStripButton5";
+            btnAbout.Click += btnAbout_Click;
             // 
             // lblRole
             // 
@@ -314,7 +319,7 @@
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
             Name = "frmMainScreen";
-            Text = "frmMainScreeen";
+            Text = "Trang chủ";
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             toolStrip1.ResumeLayout(false);
@@ -335,9 +340,9 @@
         private ToolStrip toolStrip1;
         private ToolStripButton btnExit;
         private ToolStripButton btnStaffManagement;
-        private ToolStripButton toolStripButton3;
-        private ToolStripButton toolStripButton4;
-        private ToolStripButton toolStripButton5;
+        private ToolStripButton btnProductCategoriesManagemet;
+        private ToolStripButton btnProductManagement;
+        private ToolStripButton btnAbout;
         private ToolStripLabel lblRole;
         private StatusStrip statusStrip1;
         private ToolStripStatusLabel lblSystemInfo;

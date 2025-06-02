@@ -48,7 +48,7 @@
             label1.Location = new Point(676, 287);
             label1.Name = "label1";
             label1.Size = new Size(253, 48);
-            label1.TabIndex = 0;
+            label1.TabIndex = 8;
             label1.Text = "Tên đăng nhập";
             // 
             // txtUserName
@@ -68,7 +68,7 @@
             label2.Location = new Point(840, 137);
             label2.Name = "label2";
             label2.Size = new Size(379, 81);
-            label2.TabIndex = 0;
+            label2.TabIndex = 7;
             label2.Text = "ĐĂNG NHẬP";
             // 
             // label3
@@ -79,7 +79,7 @@
             label3.Location = new Point(676, 469);
             label3.Name = "label3";
             label3.Size = new Size(168, 48);
-            label3.TabIndex = 0;
+            label3.TabIndex = 9;
             label3.Text = "Mật khẩu";
             // 
             // chkShowPassword
@@ -116,7 +116,7 @@
             btnExitLoginPage.Location = new Point(676, 909);
             btnExitLoginPage.Name = "btnExitLoginPage";
             btnExitLoginPage.Size = new Size(729, 102);
-            btnExitLoginPage.TabIndex = 3;
+            btnExitLoginPage.TabIndex = 4;
             btnExitLoginPage.Text = "Thoát";
             btnExitLoginPage.UseVisualStyleBackColor = false;
             btnExitLoginPage.Click += btnExitLoginPage_Click;
@@ -128,15 +128,15 @@
             groupBox1.Location = new Point(504, 90);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new Size(1068, 1134);
-            groupBox1.TabIndex = 4;
+            groupBox1.TabIndex = 5;
             groupBox1.TabStop = false;
             // 
             // txtPassWord
             // 
-            txtPassWord.Location = new Point(172, 459);
+            txtPassWord.Location = new Point(172, 470);
             txtPassWord.Name = "txtPassWord";
             txtPassWord.Size = new Size(729, 43);
-            txtPassWord.TabIndex = 0;
+            txtPassWord.TabIndex = 1;
             txtPassWord.UseSystemPasswordChar = true;
             // 
             // Login
@@ -154,7 +154,7 @@
             Controls.Add(label1);
             Controls.Add(groupBox1);
             Name = "Login";
-            Text = "Login";
+            Text = "Đăng nhập";
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             ResumeLayout(false);

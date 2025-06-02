@@ -138,7 +138,7 @@
             Controls.Add(dataGridView1);
             Controls.Add(panel1);
             Name = "frmRevenueByStaff";
-            Text = "frmRevenueByStaff";
+            Text = "Thống kê doanh thu theo nhân viên";
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();

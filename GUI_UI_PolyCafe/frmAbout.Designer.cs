@@ -83,14 +83,14 @@
             // 
             AutoScaleDimensions = new SizeF(15F, 37F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(255, 192, 128);
+            BackColor = Color.SandyBrown;
             ClientSize = new Size(2272, 1421);
             Controls.Add(lblContent2);
             Controls.Add(lblContent1);
             Controls.Add(label1);
             Controls.Add(pictureBox1);
             Name = "frmAbout";
-            Text = "frmAbout";
+            Text = "Giới thiệu";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();

@@ -324,7 +324,7 @@
             Font = new Font("Segoe UI", 11F);
             Margin = new Padding(4);
             Name = "frmProduct";
-            Text = "frmProduct";
+            Text = "Quản lý sản phẩm";
             tabControl1.ResumeLayout(false);
             tabPageUpdate.ResumeLayout(false);
             tabPageUpdate.PerformLayout();

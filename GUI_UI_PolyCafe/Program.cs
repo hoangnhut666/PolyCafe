@@ -8,31 +8,24 @@ namespace GUI_UI_PolyCafe
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
 
-            // Show splash screen first
             using (var frmWelcome = new Welcome())
             {
                 frmWelcome.ShowDialog();
             }
 
-            // Then show login form
             using (var frmLogin = new Login())
             {
                 if (frmLogin.ShowDialog() == DialogResult.OK)
                 {
-                    // If login successful, run main application
                     Application.Run(new frmMainScreen());
                 }
                 else
                 {
-                    // If login cancelled, exit application
                     Application.Exit();
                 }
             }
-
         }
     }
 }
@@ -72,4 +65,34 @@ namespace GUI_UI_PolyCafe
 //        // If login cancelled, exit application
 //        Application.Exit();
 //    }
+//}
+
+
+//static void Main()
+//{
+//    // To customize application configuration such as set high DPI settings or default font,
+//    // see https://aka.ms/applicationconfiguration.
+//    ApplicationConfiguration.Initialize();
+
+//    // Show splash screen first
+//    using (var frmWelcome = new Welcome())
+//    {
+//        frmWelcome.ShowDialog();
+//    }
+
+//    // Then show login form
+//    using (var frmLogin = new Login())
+//    {
+//        if (frmLogin.ShowDialog() == DialogResult.OK)
+//        {
+//            // If login successful, run main application
+//            Application.Run(new frmMainScreen());
+//        }
+//        else
+//        {
+//            // If login cancelled, exit application
+//            Application.Exit();
+//        }
+//    }
+
 //}

@@ -196,7 +196,7 @@
             btnSaveChanges.UseVisualStyleBackColor = true;
             btnSaveChanges.Click += btnSaveChanges_Click;
             // 
-            // ChangePassword
+            // frmChangePassword
             // 
             AutoScaleDimensions = new SizeF(15F, 37F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -216,8 +216,8 @@
             Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(label1);
-            Name = "ChangePassword";
-            Text = "ChangePassword";
+            Name = "frmChangePassword";
+            Text = "Đổi mật khẩu";
             Load += ChangePassword_Load;
             ResumeLayout(false);
             PerformLayout();

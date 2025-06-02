@@ -158,9 +158,9 @@
             label4.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label4.Location = new Point(573, 544);
             label4.Name = "label4";
-            label4.Size = new Size(135, 45);
+            label4.Size = new Size(139, 45);
             label4.TabIndex = 1;
-            label4.Text = "Mã loại:";
+            label4.Text = "Ghi chú:";
             // 
             // label3
             // 
@@ -168,9 +168,9 @@
             label3.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label3.Location = new Point(573, 386);
             label3.Name = "label3";
-            label3.Size = new Size(135, 45);
+            label3.Size = new Size(138, 45);
             label3.TabIndex = 1;
-            label3.Text = "Mã loại:";
+            label3.Text = "Tên loại:";
             // 
             // label2
             // 
