@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DAL_Data_PolyCafe;
+using DAL_Data_PolyCafe.Constants;
 using DTO_Models_PolyCafe;
 
 namespace BLL_Services_PolyCafe
@@ -20,6 +21,11 @@ namespace BLL_Services_PolyCafe
         public List<Staff> GetAllStaff()
         {
             return staffRepository.GetAll();
+        }
+
+        public string GenerateStaffId()
+        {
+            return EntityRepository.GenerateId(DbTables.Staff, StaffColumns.Id, "NV");
         }
 
         public Staff? GetStaffByCriteria(string columnName, string value)

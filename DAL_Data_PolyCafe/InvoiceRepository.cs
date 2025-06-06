@@ -13,12 +13,28 @@ namespace DAL_Data_PolyCafe
 {
     public class InvoiceRepository
     {
+
         public string GenerateInvoiceId()
         {
-            string prefix = "INV";
-            string query = $"SELECT COUNT(*) FROM {DbTables.Invoice}";
-            int count = Convert.ToInt32(Utilities.ExecuteScalar(query));
-            return prefix + (count + 1).ToString("D3");
+            string prefix = "PBH";
+            string query = $"SELECT {InvoiceColumns.Id} FROM {DbTables.Invoice} ORDER BY {InvoiceColumns.Id} DESC";
+            try
+            {
+                // Get the maximum InvoiceId from the database
+                string lastInvoiceId = Utilities.ExecuteScalar(query)?.ToString() ?? string.Empty;
+                if (string.IsNullOrEmpty(lastInvoiceId))
+                {
+                    return prefix + "001";
+                }
+                // Extract the numeric part and increment it
+                string numericPart = lastInvoiceId.Substring(prefix.Length);
+                int nextNumber = int.Parse(numericPart) + 1;
+                return prefix + nextNumber.ToString("D3");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error generating new InvoiceId: " + ex.Message);
+            }
         }
 
 

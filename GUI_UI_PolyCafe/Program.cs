@@ -9,23 +9,24 @@ namespace GUI_UI_PolyCafe
         static void Main()
         {
             ApplicationConfiguration.Initialize();
+            Application.Run(new frmStaff());
 
-            using (var frmWelcome = new Welcome())
-            {
-                frmWelcome.ShowDialog();
-            }
+            //using (var frmWelcome = new Welcome())
+            //{
+            //    frmWelcome.ShowDialog();
+            //}
 
-            using (var frmLogin = new Login())
-            {
-                if (frmLogin.ShowDialog() == DialogResult.OK)
-                {
-                    Application.Run(new frmMainScreen());
-                }
-                else
-                {
-                    Application.Exit();
-                }
-            }
+            //using (var frmLogin = new Login())
+            //{
+            //    if (frmLogin.ShowDialog() == DialogResult.OK)
+            //    {
+            //        Application.Run(new frmMainScreen());
+            //    }
+            //    else
+            //    {
+            //        Application.Exit();
+            //    }
+            //}
         }
     }
 }

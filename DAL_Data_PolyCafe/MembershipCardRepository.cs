@@ -13,16 +13,7 @@ namespace DAL_Data_PolyCafe
 {
     public class MembershipCardRepository
     {
-        public string GenerateCardId()
-        {
-            string prefix = "THE";
-            string query = $"SELECT COUNT(*) FROM {DbTables.MembershipCard}";
-            int count = Convert.ToInt32(Utilities.ExecuteScalar(query));
-            return prefix + (count + 1).ToString("D3");
-        }
-
-
-        public List<MembershipCard> GetAll()
+        public List<MembershipCard> SelectAll()
         {
             string sql = $"SELECT * FROM {DbTables.MembershipCard}";
 
@@ -38,7 +29,6 @@ namespace DAL_Data_PolyCafe
 
             return cards;
         }
-
 
 
         public int Insert(MembershipCard card)
@@ -84,5 +74,95 @@ namespace DAL_Data_PolyCafe
 
             return Utilities.ExecuteNonQuery(sql, parameters);
         }
+
+
+        //Get list of MembershipCard by Criteria
+        public List<MembershipCard> GetMembershipCardsByCriteria(string columnName, string value)
+        {
+            string sql = $"SELECT * FROM {DbTables.MembershipCard} WHERE {columnName} = @Value";
+            var parameters = new SqlParameter[]
+            {
+                new SqlParameter("@Value", value)
+            };
+            List<MembershipCard> cards = Utilities.ExecuteQuery(sql, reader =>
+            {
+                return new MembershipCard
+                {
+                    CardId = reader[MembershipCardColumns.CardId].ToString(),
+                    CardHolder = reader[MembershipCardColumns.CardHolder].ToString(),
+                    Status = Convert.ToBoolean(reader[MembershipCardColumns.Status])
+                };
+            }, parameters);
+            return cards;
+        }  
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//// Get MembershipCard by CardId --
+//public MembershipCard? SelectById(string cardId)
+//{
+//    return GetMembershipCardsByCriteria(MembershipCardColumns.CardId, cardId).FirstOrDefault() ?? null;
+//}
+
+
+//// Get MembershipCard by Sql --
+//public List<MembershipCard> SelectBySql(string sql)
+//{
+//    return Utilities.ExecuteQuery(sql, reader =>
+//    {
+//        return new MembershipCard
+//        {
+//            CardId = reader[MembershipCardColumns.CardId].ToString(),
+//            CardHolder = reader[MembershipCardColumns.CardHolder].ToString(),
+//            Status = Convert.ToBoolean(reader[MembershipCardColumns.Status])
+//        };
+//    });
+//}
+
+
+
+//public string GenerateCardId()
+//{
+//    string prefix = "THE";
+//    string query = $"SELECT {MembershipCardColumns.CardId} FROM {DbTables.MembershipCard} ORDER BY {MembershipCardColumns.CardId} DESC";
+
+//    try
+//    {
+//        //Get the maximum CardId from the database
+//        string lastCardId = Utilities.ExecuteScalar(query)?.ToString() ?? string.Empty;
+//        if (string.IsNullOrEmpty(lastCardId))
+//        {
+//            return prefix + "001";
+//        }
+
+//        // Extract the numeric part and increment it
+//        string numericPart = lastCardId.Substring(prefix.Length);
+//        int nextNumber = int.Parse(numericPart) + 1;
+//        return prefix + nextNumber.ToString("D3");
+//    }
+//    catch (Exception ex)
+//    {
+//        throw new Exception("Error generating new CardId: " + ex.Message);
+//    }
+//}

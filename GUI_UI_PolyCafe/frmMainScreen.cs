@@ -17,7 +17,7 @@ namespace GUI_UI_PolyCafe
         {
             InitializeComponent();
             SetupComponent(dataGridView: null);
-            UpdateUserInfo(); // Only update user info, do not show login
+            UpdateUserInfo();
             InitializeUI();
         }
 

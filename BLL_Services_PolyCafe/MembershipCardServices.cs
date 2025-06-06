@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DAL_Data_PolyCafe;
 using DTO_Models_PolyCafe;
+using DAL_Data_PolyCafe.Constants;
 
 namespace BLL_Services_PolyCafe
 {
@@ -19,13 +20,13 @@ namespace BLL_Services_PolyCafe
         //Get all membership cards
         public List<MembershipCard> GetAllMembershipCards()
         {
-            return membershipCardRepository.GetAll();
+            return membershipCardRepository.SelectAll();
         }
 
         //Generate a new membership card ID
         public string GenerateCardId()
         {
-            return membershipCardRepository.GenerateCardId();
+            return EntityRepository.GenerateId(DbTables.MembershipCard, MembershipCardColumns.CardId, "THE");
         }
 
         //Add a new membership card

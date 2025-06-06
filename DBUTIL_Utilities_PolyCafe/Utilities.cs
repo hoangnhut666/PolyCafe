@@ -76,7 +76,7 @@ namespace DBUTIL_Utilities_PolyCafe
                     {
                         Object result = new object();
 
-                        if (reader.Read()) 
+                        if (reader.Read())
                         {
                             for (int i = 0; i < reader.FieldCount; i++)
                             {
@@ -102,12 +102,12 @@ namespace DBUTIL_Utilities_PolyCafe
         }
 
 
-
         public static DataTable ExecuteDataTable(string commandText, params SqlParameter[] parameters)
         {
             using (SqlConnection connection = new SqlConnection(connString))
+            using (SqlCommand command = new SqlCommand(commandText, connection))
             {
-                using (SqlCommand command = new SqlCommand(commandText, connection))
+                try
                 {
                     if (parameters != null)
                     {
@@ -121,18 +121,21 @@ namespace DBUTIL_Utilities_PolyCafe
                         return dt;
                     }
                 }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Error executing DataTable query: {commandText}", ex);
+                }
             }
         }
-
-
 
         public static List<T> ExecuteQuery<T>(string query, Func<IDataReader, T> mapFunction, params SqlParameter[] parameters)
         {
             List<T> result = new List<T>();
 
             using (SqlConnection connection = new SqlConnection(connString))
+            using (SqlCommand command = new SqlCommand(query, connection))
             {
-                using (SqlCommand command = new SqlCommand(query, connection))
+                try
                 {
                     if (parameters != null && parameters.Length > 0)
                     {
@@ -148,25 +151,35 @@ namespace DBUTIL_Utilities_PolyCafe
                         }
                     }
                 }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Error executing query and mapping results: {query}", ex);
+                }
             }
 
             return result;
         }
 
 
-
         public static int ExecuteNonQuery(string commandText, params SqlParameter[] parameters)
         {
             using (SqlConnection connection = new SqlConnection(connString))
             using (SqlCommand command = new SqlCommand(commandText, connection))
             {
-                if (parameters != null)
+                try
                 {
-                    command.Parameters.AddRange(parameters);
-                }
+                    if (parameters != null)
+                    {
+                        command.Parameters.AddRange(parameters);
+                    }
 
-                connection.Open();
-                return command.ExecuteNonQuery();
+                    connection.Open();
+                    return command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Error executing non-query command: {commandText}", ex);
+                }
             }
         }
 
@@ -176,184 +189,190 @@ namespace DBUTIL_Utilities_PolyCafe
             using (SqlConnection connection = new SqlConnection(connString))
             using (SqlCommand command = new SqlCommand(commandText, connection))
             {
-                if (parameters != null)
+                try
                 {
-                    command.Parameters.AddRange(parameters);
+                    if (parameters != null)
+                    {
+                        command.Parameters.AddRange(parameters);
+                    }
+
+                    connection.Open();
+                    return command.ExecuteScalar();
                 }
-
-                connection.Open();
-                return command.ExecuteScalar();
-            }
-        }
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /// <summary>
-    /// A static class to simplify interaction with SQL Server using ADO.NET.
-    /// </summary>
-    public static class SqlUtilities
-    {
-        // Replace these values with your actual SQL Server connection details.
-        private static readonly string ConnectionString =
-            @"Server=.\;Database=PolyCafe;Integrated Security=True;TrustServerCertificate=True;";
-
-        /// <summary>
-        /// Executes a non-query T-SQL command (such as INSERT, UPDATE or DELETE).
-        /// </summary>
-        /// <param name="commandText">The T-SQL command or stored procedure to execute.</param>
-        /// <param name="parameters">Optional SQL parameters for the command.</param>
-        /// <returns>The number of rows affected.</returns>
-        public static int ExecuteNonQuery(string commandText, params SqlParameter[] parameters)
-        {
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
-            using (SqlCommand command = new SqlCommand(commandText, connection))
-            {
-                if (parameters != null)
+                catch (Exception ex)
                 {
-                    command.Parameters.AddRange(parameters);
-                }
-
-                connection.Open();
-                return command.ExecuteNonQuery();
-            }
-        }
-
-        /// <summary>
-        /// Executes a T-SQL command that returns a single scalar value.
-        /// </summary>
-        /// <param name="commandText">The T-SQL command or stored procedure to execute.</param>
-        /// <param name="parameters">Optional SQL parameters for the command.</param>
-        /// <returns>The first column of the first row in the result set.</returns>
-        public static object ExecuteScalar(string commandText, params SqlParameter[] parameters)
-        {
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
-            using (SqlCommand command = new SqlCommand(commandText, connection))
-            {
-                if (parameters != null)
-                {
-                    command.Parameters.AddRange(parameters);
-                }
-
-                connection.Open();
-                return command.ExecuteScalar();
-            }
-        }
-
-        /// <summary>
-        /// Executes a T-SQL query and returns the result in a DataTable.
-        /// </summary>
-        /// <param name="commandText">The T-SQL query to execute.</param>
-        /// <param name="parameters">Optional SQL parameters for the query.</param>
-        /// <returns>A DataTable containing the results of the query.</returns>
-        public static DataTable ExecuteDataTable(string commandText, params SqlParameter[] parameters)
-        {
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
-            using (SqlCommand command = new SqlCommand(commandText, connection))
-            {
-                if (parameters != null)
-                {
-                    command.Parameters.AddRange(parameters);
-                }
-
-                using (SqlDataAdapter adapter = new SqlDataAdapter(command))
-                {
-                    DataTable dt = new DataTable();
-                    adapter.Fill(dt);
-                    return dt;
+                    throw new Exception($"Error executing scalar command: {commandText}", ex);
                 }
             }
-        }
-
-        /// <summary>
-        /// Executes a T-SQL query and returns a SqlDataReader.
-        /// </summary>
-        /// <param name="commandText">The T-SQL query to execute.</param>
-        /// <param name="parameters">Optional SQL parameters for the query.</param>
-        /// <returns>A SqlDataReader object for reading the results. Note that the caller is responsible for closing it.</returns>
-        public static SqlDataReader ExecuteReader(string commandText, params SqlParameter[] parameters)
-        {
-            SqlConnection connection = new SqlConnection(ConnectionString);
-            SqlCommand command = new SqlCommand(commandText, connection);
-
-            if (parameters != null)
-            {
-                command.Parameters.AddRange(parameters);
-            }
-
-            connection.Open();
-            // Use the CloseConnection behavior so that when the reader is closed, the connection is also closed.
-            return command.ExecuteReader(CommandBehavior.CloseConnection);
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//    /// <summary>
+//    /// A static class to simplify interaction with SQL Server using ADO.NET.
+//    /// </summary>
+//    public static class SqlUtilities
+//    {
+//        // Replace these values with your actual SQL Server connection details.
+//        private static readonly string ConnectionString =
+//            @"Server=.\;Database=PolyCafe;Integrated Security=True;TrustServerCertificate=True;";
+
+//        /// <summary>
+//        /// Executes a non-query T-SQL command (such as INSERT, UPDATE or DELETE).
+//        /// </summary>
+//        /// <param name="commandText">The T-SQL command or stored procedure to execute.</param>
+//        /// <param name="parameters">Optional SQL parameters for the command.</param>
+//        /// <returns>The number of rows affected.</returns>
+//        public static int ExecuteNonQuery(string commandText, params SqlParameter[] parameters)
+//        {
+//            using (SqlConnection connection = new SqlConnection(ConnectionString))
+//            using (SqlCommand command = new SqlCommand(commandText, connection))
+//            {
+//                if (parameters != null)
+//                {
+//                    command.Parameters.AddRange(parameters);
+//                }
+
+//                connection.Open();
+//                return command.ExecuteNonQuery();
+//            }
+//        }
+
+//        /// <summary>
+//        /// Executes a T-SQL command that returns a single scalar value.
+//        /// </summary>
+//        /// <param name="commandText">The T-SQL command or stored procedure to execute.</param>
+//        /// <param name="parameters">Optional SQL parameters for the command.</param>
+//        /// <returns>The first column of the first row in the result set.</returns>
+//        public static object ExecuteScalar(string commandText, params SqlParameter[] parameters)
+//        {
+//            using (SqlConnection connection = new SqlConnection(ConnectionString))
+//            using (SqlCommand command = new SqlCommand(commandText, connection))
+//            {
+//                if (parameters != null)
+//                {
+//                    command.Parameters.AddRange(parameters);
+//                }
+
+//                connection.Open();
+//                return command.ExecuteScalar();
+//            }
+//        }
+
+//        /// <summary>
+//        /// Executes a T-SQL query and returns the result in a DataTable.
+//        /// </summary>
+//        /// <param name="commandText">The T-SQL query to execute.</param>
+//        /// <param name="parameters">Optional SQL parameters for the query.</param>
+//        /// <returns>A DataTable containing the results of the query.</returns>
+//        public static DataTable ExecuteDataTable(string commandText, params SqlParameter[] parameters)
+//        {
+//            using (SqlConnection connection = new SqlConnection(ConnectionString))
+//            using (SqlCommand command = new SqlCommand(commandText, connection))
+//            {
+//                if (parameters != null)
+//                {
+//                    command.Parameters.AddRange(parameters);
+//                }
+
+//                using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+//                {
+//                    DataTable dt = new DataTable();
+//                    adapter.Fill(dt);
+//                    return dt;
+//                }
+//            }
+//        }
+
+//        /// <summary>
+//        /// Executes a T-SQL query and returns a SqlDataReader.
+//        /// </summary>
+//        /// <param name="commandText">The T-SQL query to execute.</param>
+//        /// <param name="parameters">Optional SQL parameters for the query.</param>
+//        /// <returns>A SqlDataReader object for reading the results. Note that the caller is responsible for closing it.</returns>
+//        public static SqlDataReader ExecuteReader(string commandText, params SqlParameter[] parameters)
+//        {
+//            SqlConnection connection = new SqlConnection(ConnectionString);
+//            SqlCommand command = new SqlCommand(commandText, connection);
+
+//            if (parameters != null)
+//            {
+//                command.Parameters.AddRange(parameters);
+//            }
+
+//            connection.Open();
+//            // Use the CloseConnection behavior so that when the reader is closed, the connection is also closed.
+//            return command.ExecuteReader(CommandBehavior.CloseConnection);
+//        }
+//    }
+//}
 
 
 

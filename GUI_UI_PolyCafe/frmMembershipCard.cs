@@ -19,9 +19,9 @@ namespace GUI_UI_PolyCafe
         public MembershipCardServices MembershipCardServices { get; set; }
         public frmMembershipCard()
         {
+            MembershipCardServices = new MembershipCardServices();
             InitializeComponent();
             SetupComponent(dgvMembershipCards);
-            MembershipCardServices = new MembershipCardServices();
             LoadAllMembershipCards();
         }
 
@@ -40,14 +40,22 @@ namespace GUI_UI_PolyCafe
         // Load all membership cards from the database and bind them to the DataGridView
         private void LoadAllMembershipCards()
         {
-            var membershipCards = MembershipCardServices.GetAllMembershipCards();
-            if (membershipCards != null && membershipCards.Count > 0)
+            try
             {
-                dgvMembershipCards.DataSource = membershipCards;
+                var membershipCards = MembershipCardServices.GetAllMembershipCards();
+                if (membershipCards != null && membershipCards.Count > 0)
+                {
+                    dgvMembershipCards.DataSource = membershipCards;
+                }
+                else
+                {
+                    MessageBox.Show("No membership cards found.");
+                    dgvMembershipCards.DataSource = null;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("No membership cards found.");
+                MessageBox.Show($"An error occurred while loading membership cards: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 dgvMembershipCards.DataSource = null;
             }
         }
@@ -56,25 +64,32 @@ namespace GUI_UI_PolyCafe
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            // Get a new membership card object with the data from the form fields 
-            MembershipCard membershipCard = new MembershipCard
+            try
             {
-                CardId = MembershipCardServices.GenerateCardId(), 
-                CardHolder = txtCardHolder.Text,
-                Status = chkStatus.Checked
-            };
+                // Get a new membership card object with the data from the form fields 
+                MembershipCard membershipCard = new MembershipCard
+                {
+                    CardId = MembershipCardServices.GenerateCardId(),
+                    CardHolder = txtCardHolder.Text,
+                    Status = chkStatus.Checked
+                };
 
-            // Add the membership card to the database  
-            int result = MembershipCardServices.AddMembershipCard(membershipCard);
-            if (result > 0)
-            {
-                LoadAllMembershipCards();
-                tabControl1.SelectedTab = tabPageListMembershipCards;
-                MessageBox.Show("Membership card added successfully.", "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                // Add the membership card to the database  
+                int result = MembershipCardServices.AddMembershipCard(membershipCard);
+                if (result > 0)
+                {
+                    LoadAllMembershipCards();
+                    tabControl1.SelectedTab = tabPageListMembershipCards;
+                    MessageBox.Show("Membership card added successfully.", "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Failed to add membership card.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
-            else
+            catch (Exception)
             {
-                MessageBox.Show("Failed to add membership card.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("An error occurred while adding the membership card. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -168,8 +183,24 @@ namespace GUI_UI_PolyCafe
                 chkStatus.Checked = false;
             }
         }
+
+
+
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -250,4 +281,16 @@ namespace GUI_UI_PolyCafe
 //else
 //{
 //    MessageBox.Show("Please select a membership card to update.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+//}
+
+
+//Check if the staff information is valid before adding or updating
+//private bool IsValidMembershipCard()
+//{
+//    if (string.IsNullOrWhiteSpace(txtCardHolder.Text))
+//    {
+//        MessageBox.Show("Please enter the card holder's name.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+//        return false;
+//    }
+//    return true;
 //}
