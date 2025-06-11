@@ -52,7 +52,7 @@ namespace BLL_Services_PolyCafe
         }
 
         //Delete a membership card
-        public int DeleteMembershipCard(string cardId)
+        public int DeleteMembershipCard(string? cardId)
         {
             if (string.IsNullOrEmpty(cardId))
             {

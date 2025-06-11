@@ -39,5 +39,17 @@ namespace DBUTIL_Utilities_PolyCafe
                 CurrentUser.Password = newPassword;
             }
         }
+
+        public static void UpdateCurrentUser(Staff staff)
+        {
+            if (IsLoggedIn())
+            {
+                CurrentUser = staff;
+            }
+            else
+            {
+                throw new InvalidOperationException("No user is currently logged in.");
+            }
+        }
     }
 }

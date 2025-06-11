@@ -28,46 +28,46 @@
         /// </summary>
         private void InitializeComponent()
         {
-            tabControl1 = new TabControl();
+            tabControl = new TabControl();
             tabPageUpdate = new TabPage();
-            button4 = new Button();
-            button3 = new Button();
-            button2 = new Button();
-            button1 = new Button();
-            textBox3 = new TextBox();
-            textBox2 = new TextBox();
-            textBox1 = new TextBox();
+            btnRefresh = new Button();
+            btnDelete = new Button();
+            btnUpdate = new Button();
+            btnAdd = new Button();
+            txtNotes = new TextBox();
+            txtCategoryName = new TextBox();
+            txtCategoryId = new TextBox();
             label4 = new Label();
             label3 = new Label();
             label2 = new Label();
             label1 = new Label();
             tabPageList = new TabPage();
-            dataGridView1 = new DataGridView();
-            tabControl1.SuspendLayout();
+            dgvProductCategories = new DataGridView();
+            tabControl.SuspendLayout();
             tabPageUpdate.SuspendLayout();
             tabPageList.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvProductCategories).BeginInit();
             SuspendLayout();
             // 
-            // tabControl1
+            // tabControl
             // 
-            tabControl1.Controls.Add(tabPageUpdate);
-            tabControl1.Controls.Add(tabPageList);
-            tabControl1.Location = new Point(1, 4);
-            tabControl1.Name = "tabControl1";
-            tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(2259, 1409);
-            tabControl1.TabIndex = 0;
+            tabControl.Controls.Add(tabPageUpdate);
+            tabControl.Controls.Add(tabPageList);
+            tabControl.Location = new Point(1, 4);
+            tabControl.Name = "tabControl";
+            tabControl.SelectedIndex = 0;
+            tabControl.Size = new Size(2259, 1409);
+            tabControl.TabIndex = 0;
             // 
             // tabPageUpdate
             // 
-            tabPageUpdate.Controls.Add(button4);
-            tabPageUpdate.Controls.Add(button3);
-            tabPageUpdate.Controls.Add(button2);
-            tabPageUpdate.Controls.Add(button1);
-            tabPageUpdate.Controls.Add(textBox3);
-            tabPageUpdate.Controls.Add(textBox2);
-            tabPageUpdate.Controls.Add(textBox1);
+            tabPageUpdate.Controls.Add(btnRefresh);
+            tabPageUpdate.Controls.Add(btnDelete);
+            tabPageUpdate.Controls.Add(btnUpdate);
+            tabPageUpdate.Controls.Add(btnAdd);
+            tabPageUpdate.Controls.Add(txtNotes);
+            tabPageUpdate.Controls.Add(txtCategoryName);
+            tabPageUpdate.Controls.Add(txtCategoryId);
             tabPageUpdate.Controls.Add(label4);
             tabPageUpdate.Controls.Add(label3);
             tabPageUpdate.Controls.Add(label2);
@@ -80,77 +80,78 @@
             tabPageUpdate.Text = "CẬP NHẬT  ";
             tabPageUpdate.UseVisualStyleBackColor = true;
             // 
-            // button4
+            // btnRefresh
             // 
-            button4.BackColor = Color.FromArgb(162, 192, 248);
-            button4.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold);
-            button4.Location = new Point(1526, 895);
-            button4.Name = "button4";
-            button4.Size = new Size(226, 72);
-            button4.TabIndex = 3;
-            button4.Text = "Làm mới";
-            button4.UseVisualStyleBackColor = false;
-            button4.Click += button1_Click;
+            btnRefresh.BackColor = Color.FromArgb(162, 192, 248);
+            btnRefresh.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold);
+            btnRefresh.Location = new Point(1526, 895);
+            btnRefresh.Name = "btnRefresh";
+            btnRefresh.Size = new Size(226, 72);
+            btnRefresh.TabIndex = 3;
+            btnRefresh.Text = "Làm mới";
+            btnRefresh.UseVisualStyleBackColor = false;
+            btnRefresh.Click += btnRefresh_Click;
             // 
-            // button3
+            // btnDelete
             // 
-            button3.BackColor = Color.FromArgb(162, 192, 248);
-            button3.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold);
-            button3.Location = new Point(1180, 895);
-            button3.Name = "button3";
-            button3.Size = new Size(226, 72);
-            button3.TabIndex = 3;
-            button3.Text = "Xóa";
-            button3.UseVisualStyleBackColor = false;
-            button3.Click += button1_Click;
+            btnDelete.BackColor = Color.FromArgb(162, 192, 248);
+            btnDelete.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold);
+            btnDelete.Location = new Point(1180, 895);
+            btnDelete.Name = "btnDelete";
+            btnDelete.Size = new Size(226, 72);
+            btnDelete.TabIndex = 3;
+            btnDelete.Text = "Xóa";
+            btnDelete.UseVisualStyleBackColor = false;
+            btnDelete.Click += btnDelete_Click;
             // 
-            // button2
+            // btnUpdate
             // 
-            button2.BackColor = Color.FromArgb(162, 192, 248);
-            button2.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold);
-            button2.Location = new Point(821, 895);
-            button2.Name = "button2";
-            button2.Size = new Size(226, 72);
-            button2.TabIndex = 3;
-            button2.Text = "Sửa";
-            button2.UseVisualStyleBackColor = false;
-            button2.Click += button1_Click;
+            btnUpdate.BackColor = Color.FromArgb(162, 192, 248);
+            btnUpdate.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold);
+            btnUpdate.Location = new Point(821, 895);
+            btnUpdate.Name = "btnUpdate";
+            btnUpdate.Size = new Size(226, 72);
+            btnUpdate.TabIndex = 3;
+            btnUpdate.Text = "Sửa";
+            btnUpdate.UseVisualStyleBackColor = false;
+            btnUpdate.Click += btnUpdate_Click;
             // 
-            // button1
+            // btnAdd
             // 
-            button1.BackColor = Color.FromArgb(162, 192, 248);
-            button1.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold);
-            button1.Location = new Point(462, 895);
-            button1.Name = "button1";
-            button1.Size = new Size(226, 72);
-            button1.TabIndex = 3;
-            button1.Text = "Thêm";
-            button1.UseVisualStyleBackColor = false;
-            button1.Click += button1_Click;
+            btnAdd.BackColor = Color.FromArgb(162, 192, 248);
+            btnAdd.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold);
+            btnAdd.Location = new Point(462, 895);
+            btnAdd.Name = "btnAdd";
+            btnAdd.Size = new Size(226, 72);
+            btnAdd.TabIndex = 3;
+            btnAdd.Text = "Thêm";
+            btnAdd.UseVisualStyleBackColor = false;
+            btnAdd.Click += btnAdd_Click;
             // 
-            // textBox3
+            // txtNotes
             // 
-            textBox3.Location = new Point(821, 529);
-            textBox3.Multiline = true;
-            textBox3.Name = "textBox3";
-            textBox3.Size = new Size(797, 226);
-            textBox3.TabIndex = 2;
+            txtNotes.Location = new Point(821, 529);
+            txtNotes.Multiline = true;
+            txtNotes.Name = "txtNotes";
+            txtNotes.Size = new Size(797, 226);
+            txtNotes.TabIndex = 2;
             // 
-            // textBox2
+            // txtCategoryName
             // 
-            textBox2.Location = new Point(821, 371);
-            textBox2.Multiline = true;
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(797, 69);
-            textBox2.TabIndex = 2;
+            txtCategoryName.Location = new Point(821, 371);
+            txtCategoryName.Multiline = true;
+            txtCategoryName.Name = "txtCategoryName";
+            txtCategoryName.Size = new Size(797, 69);
+            txtCategoryName.TabIndex = 2;
             // 
-            // textBox1
+            // txtCategoryId
             // 
-            textBox1.Location = new Point(821, 223);
-            textBox1.Multiline = true;
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(797, 69);
-            textBox1.TabIndex = 2;
+            txtCategoryId.Location = new Point(821, 223);
+            txtCategoryId.Multiline = true;
+            txtCategoryId.Name = "txtCategoryId";
+            txtCategoryId.ReadOnly = true;
+            txtCategoryId.Size = new Size(797, 69);
+            txtCategoryId.TabIndex = 2;
             // 
             // label4
             // 
@@ -195,7 +196,7 @@
             // 
             // tabPageList
             // 
-            tabPageList.Controls.Add(dataGridView1);
+            tabPageList.Controls.Add(dgvProductCategories);
             tabPageList.Location = new Point(10, 55);
             tabPageList.Name = "tabPageList";
             tabPageList.Padding = new Padding(3);
@@ -204,47 +205,48 @@
             tabPageList.Text = "DANH SÁCH  ";
             tabPageList.UseVisualStyleBackColor = true;
             // 
-            // dataGridView1
+            // dgvProductCategories
             // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(6, 6);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.RowHeadersWidth = 92;
-            dataGridView1.Size = new Size(2227, 1332);
-            dataGridView1.TabIndex = 0;
+            dgvProductCategories.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvProductCategories.Location = new Point(6, 6);
+            dgvProductCategories.Name = "dgvProductCategories";
+            dgvProductCategories.RowHeadersWidth = 92;
+            dgvProductCategories.Size = new Size(2227, 1332);
+            dgvProductCategories.TabIndex = 0;
+            dgvProductCategories.CellClick += dgvProductCategories_CellClick;
             // 
             // frmProductCategories
             // 
             AutoScaleDimensions = new SizeF(15F, 37F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(2272, 1421);
-            Controls.Add(tabControl1);
+            Controls.Add(tabControl);
             Name = "frmProductCategories";
             Text = "Quản lý loại sản phẩm";
-            tabControl1.ResumeLayout(false);
+            tabControl.ResumeLayout(false);
             tabPageUpdate.ResumeLayout(false);
             tabPageUpdate.PerformLayout();
             tabPageList.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvProductCategories).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private TabControl tabControl1;
+        private TabControl tabControl;
         private TabPage tabPageUpdate;
         private TabPage tabPageList;
-        private TextBox textBox1;
+        private TextBox txtCategoryId;
         private Label label2;
         private Label label1;
-        private Button button1;
-        private TextBox textBox3;
-        private TextBox textBox2;
+        private Button btnAdd;
+        private TextBox txtNotes;
+        private TextBox txtCategoryName;
         private Label label4;
         private Label label3;
-        private Button button4;
-        private Button button3;
-        private Button button2;
-        private DataGridView dataGridView1;
+        private Button btnRefresh;
+        private Button btnDelete;
+        private Button btnUpdate;
+        private DataGridView dgvProductCategories;
     }
 }

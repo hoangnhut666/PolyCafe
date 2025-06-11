@@ -30,18 +30,18 @@
         {
             tabControl1 = new TabControl();
             tabPageUpdate = new TabPage();
-            button5 = new Button();
-            button4 = new Button();
-            button3 = new Button();
-            button1 = new Button();
-            button2 = new Button();
-            radioButton2 = new RadioButton();
-            radioButton1 = new RadioButton();
-            comboBox1 = new ComboBox();
-            pictureBox1 = new PictureBox();
-            textBox3 = new TextBox();
-            textBox2 = new TextBox();
-            textBox1 = new TextBox();
+            btnUploadImage = new Button();
+            bthRefresh = new Button();
+            bthDelete = new Button();
+            btnUpdate = new Button();
+            btnAdd = new Button();
+            rdoInactive = new RadioButton();
+            rdoActive = new RadioButton();
+            cboProductCategories = new ComboBox();
+            pictureBoxProduct = new PictureBox();
+            txtUnitPrice = new TextBox();
+            txtProductName = new TextBox();
+            txtProductId = new TextBox();
             label6 = new Label();
             label5 = new Label();
             label4 = new Label();
@@ -49,12 +49,12 @@
             label2 = new Label();
             label1 = new Label();
             tabPageList = new TabPage();
-            dataGridView1 = new DataGridView();
+            dgvProdusts = new DataGridView();
             tabControl1.SuspendLayout();
             tabPageUpdate.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxProduct).BeginInit();
             tabPageList.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvProdusts).BeginInit();
             SuspendLayout();
             // 
             // tabControl1
@@ -69,18 +69,18 @@
             // 
             // tabPageUpdate
             // 
-            tabPageUpdate.Controls.Add(button5);
-            tabPageUpdate.Controls.Add(button4);
-            tabPageUpdate.Controls.Add(button3);
-            tabPageUpdate.Controls.Add(button1);
-            tabPageUpdate.Controls.Add(button2);
-            tabPageUpdate.Controls.Add(radioButton2);
-            tabPageUpdate.Controls.Add(radioButton1);
-            tabPageUpdate.Controls.Add(comboBox1);
-            tabPageUpdate.Controls.Add(pictureBox1);
-            tabPageUpdate.Controls.Add(textBox3);
-            tabPageUpdate.Controls.Add(textBox2);
-            tabPageUpdate.Controls.Add(textBox1);
+            tabPageUpdate.Controls.Add(btnUploadImage);
+            tabPageUpdate.Controls.Add(bthRefresh);
+            tabPageUpdate.Controls.Add(bthDelete);
+            tabPageUpdate.Controls.Add(btnUpdate);
+            tabPageUpdate.Controls.Add(btnAdd);
+            tabPageUpdate.Controls.Add(rdoInactive);
+            tabPageUpdate.Controls.Add(rdoActive);
+            tabPageUpdate.Controls.Add(cboProductCategories);
+            tabPageUpdate.Controls.Add(pictureBoxProduct);
+            tabPageUpdate.Controls.Add(txtUnitPrice);
+            tabPageUpdate.Controls.Add(txtProductName);
+            tabPageUpdate.Controls.Add(txtProductId);
             tabPageUpdate.Controls.Add(label6);
             tabPageUpdate.Controls.Add(label5);
             tabPageUpdate.Controls.Add(label4);
@@ -96,137 +96,141 @@
             tabPageUpdate.Text = "CẬP NHẬT   ";
             tabPageUpdate.UseVisualStyleBackColor = true;
             // 
-            // button5
+            // btnUploadImage
             // 
-            button5.BackColor = Color.FromArgb(162, 192, 248);
-            button5.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button5.Location = new Point(1713, 819);
-            button5.Margin = new Padding(4);
-            button5.Name = "button5";
-            button5.Size = new Size(249, 84);
-            button5.TabIndex = 21;
-            button5.Text = "Chọn hình";
-            button5.UseVisualStyleBackColor = false;
+            btnUploadImage.BackColor = Color.FromArgb(162, 192, 248);
+            btnUploadImage.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnUploadImage.Location = new Point(1713, 819);
+            btnUploadImage.Margin = new Padding(4);
+            btnUploadImage.Name = "btnUploadImage";
+            btnUploadImage.Size = new Size(249, 84);
+            btnUploadImage.TabIndex = 21;
+            btnUploadImage.Text = "Chọn hình";
+            btnUploadImage.UseVisualStyleBackColor = false;
+            btnUploadImage.Click += btnUploadImage_Click;
             // 
-            // button4
+            // bthRefresh
             // 
-            button4.BackColor = Color.FromArgb(162, 192, 248);
-            button4.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold);
-            button4.Location = new Point(1278, 1080);
-            button4.Margin = new Padding(4);
-            button4.Name = "button4";
-            button4.Size = new Size(249, 82);
-            button4.TabIndex = 21;
-            button4.Text = "Làm mới";
-            button4.UseVisualStyleBackColor = false;
+            bthRefresh.BackColor = Color.FromArgb(162, 192, 248);
+            bthRefresh.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold);
+            bthRefresh.Location = new Point(1278, 1080);
+            bthRefresh.Margin = new Padding(4);
+            bthRefresh.Name = "bthRefresh";
+            bthRefresh.Size = new Size(249, 82);
+            bthRefresh.TabIndex = 21;
+            bthRefresh.Text = "Làm mới";
+            bthRefresh.UseVisualStyleBackColor = false;
+            bthRefresh.Click += bthRefresh_Click;
             // 
-            // button3
+            // bthDelete
             // 
-            button3.BackColor = Color.FromArgb(162, 192, 248);
-            button3.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold);
-            button3.Location = new Point(910, 1080);
-            button3.Margin = new Padding(4);
-            button3.Name = "button3";
-            button3.Size = new Size(249, 82);
-            button3.TabIndex = 21;
-            button3.Text = "Xóa";
-            button3.UseVisualStyleBackColor = false;
+            bthDelete.BackColor = Color.FromArgb(162, 192, 248);
+            bthDelete.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold);
+            bthDelete.Location = new Point(910, 1080);
+            bthDelete.Margin = new Padding(4);
+            bthDelete.Name = "bthDelete";
+            bthDelete.Size = new Size(249, 82);
+            bthDelete.TabIndex = 21;
+            bthDelete.Text = "Xóa";
+            bthDelete.UseVisualStyleBackColor = false;
+            bthDelete.Click += bthDelete_Click;
             // 
-            // button1
+            // btnUpdate
             // 
-            button1.BackColor = Color.FromArgb(162, 192, 248);
-            button1.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold);
-            button1.Location = new Point(540, 1080);
-            button1.Margin = new Padding(4);
-            button1.Name = "button1";
-            button1.Size = new Size(249, 82);
-            button1.TabIndex = 21;
-            button1.Text = "Sửa";
-            button1.UseVisualStyleBackColor = false;
+            btnUpdate.BackColor = Color.FromArgb(162, 192, 248);
+            btnUpdate.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold);
+            btnUpdate.Location = new Point(540, 1080);
+            btnUpdate.Margin = new Padding(4);
+            btnUpdate.Name = "btnUpdate";
+            btnUpdate.Size = new Size(249, 82);
+            btnUpdate.TabIndex = 21;
+            btnUpdate.Text = "Sửa";
+            btnUpdate.UseVisualStyleBackColor = false;
+            btnUpdate.Click += btnUpdate_Click;
             // 
-            // button2
+            // btnAdd
             // 
-            button2.BackColor = Color.FromArgb(162, 192, 248);
-            button2.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold);
-            button2.Location = new Point(169, 1080);
-            button2.Margin = new Padding(4);
-            button2.Name = "button2";
-            button2.Size = new Size(249, 82);
-            button2.TabIndex = 21;
-            button2.Text = "Thêm";
-            button2.UseVisualStyleBackColor = false;
+            btnAdd.BackColor = Color.FromArgb(162, 192, 248);
+            btnAdd.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold);
+            btnAdd.Location = new Point(169, 1080);
+            btnAdd.Margin = new Padding(4);
+            btnAdd.Name = "btnAdd";
+            btnAdd.Size = new Size(249, 82);
+            btnAdd.TabIndex = 21;
+            btnAdd.Text = "Thêm";
+            btnAdd.UseVisualStyleBackColor = false;
+            btnAdd.Click += btnAdd_Click;
             // 
-            // radioButton2
+            // rdoInactive
             // 
-            radioButton2.AutoSize = true;
-            radioButton2.Font = new Font("Segoe UI", 11F);
-            radioButton2.Location = new Point(979, 875);
-            radioButton2.Margin = new Padding(4);
-            radioButton2.Name = "radioButton2";
-            radioButton2.Size = new Size(216, 49);
-            radioButton2.TabIndex = 20;
-            radioButton2.TabStop = true;
-            radioButton2.Text = "Ngừng bán";
-            radioButton2.UseVisualStyleBackColor = true;
+            rdoInactive.AutoSize = true;
+            rdoInactive.Font = new Font("Segoe UI", 11F);
+            rdoInactive.Location = new Point(979, 875);
+            rdoInactive.Margin = new Padding(4);
+            rdoInactive.Name = "rdoInactive";
+            rdoInactive.Size = new Size(216, 49);
+            rdoInactive.TabIndex = 20;
+            rdoInactive.TabStop = true;
+            rdoInactive.Text = "Ngừng bán";
+            rdoInactive.UseVisualStyleBackColor = true;
             // 
-            // radioButton1
+            // rdoActive
             // 
-            radioButton1.AutoSize = true;
-            radioButton1.Font = new Font("Segoe UI", 11F);
-            radioButton1.Location = new Point(593, 875);
-            radioButton1.Margin = new Padding(4);
-            radioButton1.Name = "radioButton1";
-            radioButton1.Size = new Size(206, 49);
-            radioButton1.TabIndex = 19;
-            radioButton1.TabStop = true;
-            radioButton1.Text = "Hoạt động";
-            radioButton1.UseVisualStyleBackColor = true;
+            rdoActive.AutoSize = true;
+            rdoActive.Font = new Font("Segoe UI", 11F);
+            rdoActive.Location = new Point(593, 875);
+            rdoActive.Margin = new Padding(4);
+            rdoActive.Name = "rdoActive";
+            rdoActive.Size = new Size(206, 49);
+            rdoActive.TabIndex = 19;
+            rdoActive.TabStop = true;
+            rdoActive.Text = "Hoạt động";
+            rdoActive.UseVisualStyleBackColor = true;
             // 
-            // comboBox1
+            // cboProductCategories
             // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(592, 713);
-            comboBox1.Margin = new Padding(4);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(833, 53);
-            comboBox1.TabIndex = 18;
+            cboProductCategories.FormattingEnabled = true;
+            cboProductCategories.Location = new Point(592, 713);
+            cboProductCategories.Margin = new Padding(4);
+            cboProductCategories.Name = "cboProductCategories";
+            cboProductCategories.Size = new Size(833, 53);
+            cboProductCategories.TabIndex = 18;
             // 
-            // pictureBox1
+            // pictureBoxProduct
             // 
-            pictureBox1.Location = new Point(1531, 233);
-            pictureBox1.Margin = new Padding(4);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(622, 491);
-            pictureBox1.TabIndex = 16;
-            pictureBox1.TabStop = false;
-            pictureBox1.Click += pictureBox1_Click;
+            pictureBoxProduct.Location = new Point(1531, 233);
+            pictureBoxProduct.Margin = new Padding(4);
+            pictureBoxProduct.Name = "pictureBoxProduct";
+            pictureBoxProduct.Size = new Size(622, 491);
+            pictureBoxProduct.TabIndex = 16;
+            pictureBoxProduct.TabStop = false;
             // 
-            // textBox3
+            // txtUnitPrice
             // 
-            textBox3.Location = new Point(592, 546);
-            textBox3.Margin = new Padding(4);
-            textBox3.Multiline = true;
-            textBox3.Name = "textBox3";
-            textBox3.Size = new Size(842, 70);
-            textBox3.TabIndex = 15;
+            txtUnitPrice.Location = new Point(592, 546);
+            txtUnitPrice.Margin = new Padding(4);
+            txtUnitPrice.Multiline = true;
+            txtUnitPrice.Name = "txtUnitPrice";
+            txtUnitPrice.Size = new Size(842, 70);
+            txtUnitPrice.TabIndex = 15;
             // 
-            // textBox2
+            // txtProductName
             // 
-            textBox2.Location = new Point(592, 383);
-            textBox2.Margin = new Padding(4);
-            textBox2.Multiline = true;
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(842, 71);
-            textBox2.TabIndex = 14;
+            txtProductName.Location = new Point(592, 383);
+            txtProductName.Margin = new Padding(4);
+            txtProductName.Multiline = true;
+            txtProductName.Name = "txtProductName";
+            txtProductName.Size = new Size(842, 71);
+            txtProductName.TabIndex = 14;
             // 
-            // textBox1
+            // txtProductId
             // 
-            textBox1.Location = new Point(592, 229);
-            textBox1.Margin = new Padding(4);
-            textBox1.Multiline = true;
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(842, 70);
-            textBox1.TabIndex = 13;
+            txtProductId.Location = new Point(592, 229);
+            txtProductId.Margin = new Padding(4);
+            txtProductId.Multiline = true;
+            txtProductId.Name = "txtProductId";
+            txtProductId.Size = new Size(842, 70);
+            txtProductId.TabIndex = 13;
             // 
             // label6
             // 
@@ -297,7 +301,7 @@
             // 
             // tabPageList
             // 
-            tabPageList.Controls.Add(dataGridView1);
+            tabPageList.Controls.Add(dgvProdusts);
             tabPageList.Location = new Point(10, 55);
             tabPageList.Name = "tabPageList";
             tabPageList.Padding = new Padding(3);
@@ -306,14 +310,14 @@
             tabPageList.Text = "DANH SÁCH";
             tabPageList.UseVisualStyleBackColor = true;
             // 
-            // dataGridView1
+            // dgvProdusts
             // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(6, 17);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.RowHeadersWidth = 92;
-            dataGridView1.Size = new Size(2225, 1317);
-            dataGridView1.TabIndex = 0;
+            dgvProdusts.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvProdusts.Location = new Point(6, 17);
+            dgvProdusts.Name = "dgvProdusts";
+            dgvProdusts.RowHeadersWidth = 92;
+            dgvProdusts.Size = new Size(2225, 1317);
+            dgvProdusts.TabIndex = 0;
             // 
             // frmProduct
             // 
@@ -328,9 +332,9 @@
             tabControl1.ResumeLayout(false);
             tabPageUpdate.ResumeLayout(false);
             tabPageUpdate.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxProduct).EndInit();
             tabPageList.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvProdusts).EndInit();
             ResumeLayout(false);
         }
 
@@ -338,14 +342,14 @@
 
         private TabControl tabControl1;
         private TabPage tabPageUpdate;
-        private Button button2;
-        private RadioButton radioButton2;
-        private RadioButton radioButton1;
-        private ComboBox comboBox1;
-        private PictureBox pictureBox1;
-        private TextBox textBox3;
-        private TextBox textBox2;
-        private TextBox textBox1;
+        private Button btnAdd;
+        private RadioButton rdoInactive;
+        private RadioButton rdoActive;
+        private ComboBox cboProductCategories;
+        private PictureBox pictureBoxProduct;
+        private TextBox txtUnitPrice;
+        private TextBox txtProductName;
+        private TextBox txtProductId;
         private Label label6;
         private Label label5;
         private Label label4;
@@ -353,10 +357,10 @@
         private Label label2;
         private Label label1;
         private TabPage tabPageList;
-        private Button button1;
-        private Button button5;
-        private Button button4;
-        private Button button3;
-        private DataGridView dataGridView1;
+        private Button btnUpdate;
+        private Button btnUploadImage;
+        private Button bthRefresh;
+        private Button bthDelete;
+        private DataGridView dgvProdusts;
     }
 }

@@ -107,5 +107,18 @@ namespace DAL_Data_PolyCafe
             };
             return Utilities.ExecuteNonQuery(sql, parameters);
         }
+
+
+        //Update product image file path to database
+        public int UpdateImagePath(string productId, string imagePath)
+        {
+            string sql = $"UPDATE {DbTables.Product} SET {ProductColumns.Image} = @Image WHERE {ProductColumns.ProductId} = @ProductId";
+            var parameters = new SqlParameter[]
+            {
+                new SqlParameter("@ProductId", productId),
+                new SqlParameter("@Image", imagePath)
+            };
+            return Utilities.ExecuteNonQuery(sql, parameters);
+        }
     }
 }

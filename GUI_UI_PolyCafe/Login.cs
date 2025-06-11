@@ -80,5 +80,6 @@ namespace GUI_UI_PolyCafe
         {
             txtPassWord.UseSystemPasswordChar = !chkShowPassword.Checked;
         }
+
     }
 }

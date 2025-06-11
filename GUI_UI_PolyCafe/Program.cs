@@ -1,3 +1,6 @@
+using DBUTIL_Utilities_PolyCafe;
+using GUI_UI_PolyCafe;
+
 namespace GUI_UI_PolyCafe
 {
     internal static class Program
@@ -9,24 +12,28 @@ namespace GUI_UI_PolyCafe
         static void Main()
         {
             ApplicationConfiguration.Initialize();
-            Application.Run(new frmStaff());
+            // Show the main (home) screen first
+            using (var mainForm = new frmMainScreen())
+            {
+                // Show the welcome screen as a dialog
+                using (var frmWelcome = new Welcome())
+                {
+                    frmWelcome.ShowDialog();
+                }
 
-            //using (var frmWelcome = new Welcome())
-            //{
-            //    frmWelcome.ShowDialog();
-            //}
-
-            //using (var frmLogin = new Login())
-            //{
-            //    if (frmLogin.ShowDialog() == DialogResult.OK)
-            //    {
-            //        Application.Run(new frmMainScreen());
-            //    }
-            //    else
-            //    {
-            //        Application.Exit();
-            //    }
-            //}
+                // Show the login screen as a dialog
+                using (var frmLogin = new Login())
+                {
+                    if (frmLogin.ShowDialog() == DialogResult.OK)
+                    {
+                        Application.Run(mainForm);
+                    }
+                    else
+                    {
+                        Application.Exit();
+                    }
+                }
+            }
         }
     }
 }
@@ -44,6 +51,40 @@ namespace GUI_UI_PolyCafe
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//// Show splash screen first
+//using (var frmWelcome = new Welcome())
+//{
+//    frmWelcome.ShowDialog();
+//}
+
+//// Then show login form
+//using (var frmLogin = new Login())
+//{
+//    if (frmLogin.ShowDialog() == DialogResult.OK)
+//    {
+//        // If login successful, run main application
+//        Application.Run(new frmMainScreen());
+//    }
+//    else
+//    {
+//        // If login cancelled, exit application
+//        Application.Exit();
+//    }
+//}
 
 
 
@@ -96,4 +137,27 @@ namespace GUI_UI_PolyCafe
 //        }
 //    }
 
+//}
+
+
+
+//// Show splash screen first
+//using (var frmWelcome = new Welcome())
+//{
+//    frmWelcome.ShowDialog();
+//}
+
+//// Then show login form
+//using (var frmLogin = new Login())
+//{
+//    if (frmLogin.ShowDialog() == DialogResult.OK)
+//    {
+//        // If login successful, run main application
+//        Application.Run(new frmMainScreen());
+//    }
+//    else
+//    {
+//        // If login cancelled, exit application
+//        Application.Exit();
+//    }
 //}

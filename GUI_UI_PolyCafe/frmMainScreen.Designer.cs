@@ -178,7 +178,7 @@
             // 
             itmHelp.Image = Properties.Resources.Select_language;
             itmHelp.Name = "itmHelp";
-            itmHelp.Size = new Size(403, 48);
+            itmHelp.Size = new Size(283, 48);
             itmHelp.Text = "Trợ giúp";
             itmHelp.Click += itmHelp_Click;
             // 
@@ -186,7 +186,7 @@
             // 
             itmAbout.Image = Properties.Resources.information1;
             itmAbout.Name = "itmAbout";
-            itmAbout.Size = new Size(403, 48);
+            itmAbout.Size = new Size(283, 48);
             itmAbout.Text = "Giới thiệu";
             itmAbout.Click += itmAbout_Click;
             // 
@@ -217,7 +217,7 @@
             btnStaffManagement.ImageTransparentColor = Color.Magenta;
             btnStaffManagement.Name = "btnStaffManagement";
             btnStaffManagement.Size = new Size(52, 40);
-            btnStaffManagement.Text = "toolStripButton2";
+            btnStaffManagement.Text = "Quản lý nhân viên";
             btnStaffManagement.Click += btnStaffManagement_Click;
             // 
             // btnProductCategoriesManagemet
@@ -227,7 +227,7 @@
             btnProductCategoriesManagemet.ImageTransparentColor = Color.Magenta;
             btnProductCategoriesManagemet.Name = "btnProductCategoriesManagemet";
             btnProductCategoriesManagemet.Size = new Size(52, 40);
-            btnProductCategoriesManagemet.Text = "toolStripButton3";
+            btnProductCategoriesManagemet.Text = "Quản lý loại sản phẩm";
             btnProductCategoriesManagemet.Click += btnProductCategoriesManagemet_Click;
             // 
             // btnProductManagement
@@ -237,7 +237,7 @@
             btnProductManagement.ImageTransparentColor = Color.Magenta;
             btnProductManagement.Name = "btnProductManagement";
             btnProductManagement.Size = new Size(52, 40);
-            btnProductManagement.Text = "toolStripButton4";
+            btnProductManagement.Text = "Quản lý sản phẩm";
             btnProductManagement.Click += btnProductManagement_Click;
             // 
             // btnAbout
@@ -247,7 +247,7 @@
             btnAbout.ImageTransparentColor = Color.Magenta;
             btnAbout.Name = "btnAbout";
             btnAbout.Size = new Size(52, 40);
-            btnAbout.Text = "toolStripButton5";
+            btnAbout.Text = "Giới thiệu";
             btnAbout.Click += btnAbout_Click;
             // 
             // lblRole
@@ -320,6 +320,7 @@
             MainMenuStrip = menuStrip1;
             Name = "frmMainScreen";
             Text = "Trang chủ";
+            Load += frmMainScreen_Load;
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             toolStrip1.ResumeLayout(false);

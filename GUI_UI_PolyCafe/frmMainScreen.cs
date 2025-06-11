@@ -17,7 +17,6 @@ namespace GUI_UI_PolyCafe
         {
             InitializeComponent();
             SetupComponent(dataGridView: null);
-            UpdateUserInfo();
             InitializeUI();
         }
 
@@ -40,16 +39,32 @@ namespace GUI_UI_PolyCafe
         }
 
 
+        private void frmMainScreen_Load(object sender, EventArgs e)
+        {
+            UpdateUserInfo();
+        }
+
         private void UpdateUserInfo()
         {
-            lblAccount.Text = $"Welcome: {AuthUtil.CurrentUser.FullName}";
-            lblRole.Text = AuthUtil.IsManager() ? "Role: Admin" : "Role: Staff";
+            if (AuthUtil.CurrentUser != null)
+            {
+                lblAccount.Text = $"Welcome: {AuthUtil.CurrentUser.FullName}";
+                lblRole.Text = AuthUtil.IsManager() ? "Role: Admin" : "Role: Staff";
+            }
         }
+
 
 
         //Embed another form into the panel of main screen
         private void EmbedFormIntoPanel(Form form)
         {
+            // Dispose the old form if present
+            if (pnlMainContainer.Controls.Count > 0)
+            {
+                var oldForm = pnlMainContainer.Controls[0] as Form;
+                oldForm?.Dispose();
+            }
+
             form.TopLevel = false;
             form.FormBorderStyle = FormBorderStyle.None;
             form.Dock = DockStyle.Fill;
@@ -143,16 +158,11 @@ namespace GUI_UI_PolyCafe
 
             var changePasswordForm = new frmChangePassword();
             changePasswordForm.ShowDialog();
+
         }
 
         private void itmMembershipCardManagement_Click(object sender, EventArgs e)
         {
-            if (!AuthUtil.IsManager())
-            {
-                MessageBox.Show("You do not have permission to access this feature.", "Access Denied", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
             var membershipCardManagementForm = new frmMembershipCard();
             EmbedFormIntoPanel(membershipCardManagementForm);
         }
@@ -233,5 +243,7 @@ namespace GUI_UI_PolyCafe
             var aboutForm = new frmAbout();
             EmbedFormIntoPanel(aboutForm);
         }
+
+
     }
 }

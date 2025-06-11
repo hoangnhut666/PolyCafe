@@ -55,23 +55,23 @@ namespace GUI_UI_PolyCafe
 
             //Set up ComboBox for Products
             cboProductName.DataSource = productServices.GetAllProducts();
-            cboProductName.DisplayMember = "ProductName"; // Assuming Product has a Name property
-            cboProductName.ValueMember = "ProductId"; // Assuming Product has an Id property
-            cboProductName.SelectedIndex = -1; // No selection by default
+            cboProductName.DisplayMember = "ProductName"; 
+            cboProductName.ValueMember = "ProductId";
+            cboProductName.SelectedIndex = -1; 
 
 
             //Set up ComboBox for Membership Cards
             cboCardHolder.DataSource = membershipCardServices.GetAllMembershipCards();
-            cboCardHolder.DisplayMember = "CardHolder"; // Assuming MembershipCard has a CardHolder property
-            cboCardHolder.ValueMember = "CardId"; // Assuming MembershipCard has a CardId property
-            cboCardHolder.SelectedIndex = -1; // No selection by default
+            cboCardHolder.DisplayMember = "CardHolder";
+            cboCardHolder.ValueMember = "CardId"; 
+            cboCardHolder.SelectedIndex = -1; 
 
 
             //Set up ComboBox for Staff
             cboStaff.DataSource = staffServices.GetAllStaff();
-            cboStaff.DisplayMember = "FullName"; // Assuming Staff has a Name property
-            cboStaff.ValueMember = "Id"; // Assuming Staff has an Id property
-            cboStaff.SelectedIndex = -1; // No selection by default
+            cboStaff.DisplayMember = "FullName"; 
+            cboStaff.ValueMember = "Id"; 
+            cboStaff.SelectedIndex = -1; 
         }
 
 

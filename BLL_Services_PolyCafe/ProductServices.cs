@@ -61,5 +61,15 @@ namespace BLL_Services_PolyCafe
             }
             return productRepository.Delete(productId);
         }
+
+        //Save image path to the database
+        public int SaveImagePath(string productId, string imagePath)
+        {
+            if (string.IsNullOrEmpty(productId) || string.IsNullOrEmpty(imagePath))
+            {
+                throw new ArgumentException("Product ID and image path cannot be null or empty.");
+            }
+            return productRepository.UpdateImagePath(productId, imagePath);
+        }
     }
 }

@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using BLL_Services_PolyCafe;
 using DTO_Models_PolyCafe;
 using DAL_Data_PolyCafe;
+using DBUTIL_Utilities_PolyCafe;
 
 
 namespace GUI_UI_PolyCafe
@@ -37,7 +38,6 @@ namespace GUI_UI_PolyCafe
             StartPosition = FormStartPosition.CenterScreen;
         }
 
-        // Load all membership cards from the database and bind them to the DataGridView
         private void LoadAllMembershipCards()
         {
             try
@@ -79,7 +79,7 @@ namespace GUI_UI_PolyCafe
                 if (result > 0)
                 {
                     LoadAllMembershipCards();
-                    tabControl1.SelectedTab = tabPageListMembershipCards;
+                    tabControlMembershipCard.SelectedTab = tabPageListMembershipCards;
                     MessageBox.Show("Membership card added successfully.", "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
@@ -128,31 +128,41 @@ namespace GUI_UI_PolyCafe
         private void btnDelete_Click(object sender, EventArgs e)
         {
             // Check if a membership card is selected
-            if (dgvMembershipCards.SelectedRows.Count > 0)
+            if(txtCardId.Text == string.Empty)
             {
-                // Get the selected membership card ID
-                string? cardId = dgvMembershipCards.SelectedRows[0].Cells["CardId"].Value.ToString();
-                // Delete the membership card from the database
+                MessageBox.Show("Please select a membership card to delete.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            try
+            {
+                var confirmResult = MessageBox.Show("Are you sure you want to delete this membership card?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (confirmResult != DialogResult.Yes)
+                {
+                    return; 
+                }
+
+                string cardId = txtCardId.Text;
                 int result = MembershipCardServices.DeleteMembershipCard(cardId);
                 if (result > 0)
                 {
-                    LoadAllMembershipCards();
                     MessageBox.Show("Membership card deleted successfully.", "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LoadAllMembershipCards();
+                    btnRefresh.PerformClick(); 
                 }
                 else
                 {
                     MessageBox.Show("Failed to delete membership card.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            else
+            catch (Exception)
             {
-                MessageBox.Show("Please select a membership card to delete.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("An error occurred while deleting the membership card. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-            //Refresh the all fields
             txtCardId.Clear();
             txtCardHolder.Clear();
             chkStatus.Checked = false;
@@ -173,19 +183,23 @@ namespace GUI_UI_PolyCafe
                 chkStatus.Checked = selectedCard.Status;
 
                 //Direct to the update section tab
-                tabControl1.SelectedTab = tabPageUpdate;
+                tabControlMembershipCard.SelectedTab = tabPageUpdate;
             }
             else
             {
-                // Clear the controls if no row is selected
                 txtCardId.Clear();
                 txtCardHolder.Clear();
                 chkStatus.Checked = false;
             }
         }
 
-
-
+        private void frmMembershipCard_Load(object sender, EventArgs e)
+        {
+            if (!AuthUtil.IsManager())
+            {
+                tabControlMembershipCard.TabPages.Remove(tabPageUpdate);
+            }
+        }
     }
 }
 

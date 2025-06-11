@@ -13,16 +13,8 @@ namespace DAL_Data_PolyCafe
 {
     public class ProductCategoryRepository
     {
-        public string GenerateProductCategoryId()
-        {
-            string prefix = "LSP";
-            string query = $"SELECT COUNT(*) FROM {DbTables.ProductCategory}";
-            int count = Convert.ToInt32(Utilities.ExecuteScalar(query));
-            return prefix + (count + 1).ToString("D3");
-        }
 
-
-        public List<ProductCategory> GetAllProductCategories()
+        public List<ProductCategory> GetAll()
         {
             string query = $"SELECT * FROM {DbTables.ProductCategory}";
             List<ProductCategory> productCategories = Utilities.ExecuteQuery(query, reader =>
@@ -34,10 +26,11 @@ namespace DAL_Data_PolyCafe
                     Notes = reader[ProductCategoryColumns.Notes].ToString(),
                 };
             });
-            return productCategories ;
+            return productCategories;
         }
 
-        public int Insert(ProductCategory productCategory) {
+        public int Insert(ProductCategory productCategory)
+        {
             string query = $"INSERT INTO {DbTables.ProductCategory} ({ProductCategoryColumns.CategoryId}, " +
                            $"{ProductCategoryColumns.CategoryName} , {ProductCategoryColumns.Notes})" +
                            $"VALUES (@CategoryId, @CategoryName, @Notes)";
@@ -48,35 +41,41 @@ namespace DAL_Data_PolyCafe
                 new SqlParameter("@CategoryName", productCategory.CategoryName),
                 new SqlParameter("@Notes", productCategory.Notes)
             };
-            
-            return Utilities.ExecuteNonQuery(query, parameters);
-        }
-
-
-        public int Update(ProductCategory productCategory) {
-            string query = $"UPDATE {DbTables.ProductCategory}" +
-                           $"{ProductCategoryColumns.CategoryName} " +
-                           $"{ProductCategoryColumns.Notes}";
-
-            SqlParameter[] parameters = new SqlParameter[] {
-                new SqlParameter("@CategoryName", productCategory.CategoryName),
-                new SqlParameter("@Notes", productCategory.Notes),
-            };
 
             return Utilities.ExecuteNonQuery(query, parameters);
         }
 
 
-
-        public int Delete(string categoryId) {
-            string query = $"DELETE FROM {DbTables.ProductCategory}" +
+        public int Update(ProductCategory productCategory)
+        {
+            string query = $"UPDATE {DbTables.ProductCategory} SET " +
+                           $"{ProductCategoryColumns.CategoryName} = @CategoryName, " +
+                           $"{ProductCategoryColumns.Notes} = @Notes " +
                            $"WHERE {ProductCategoryColumns.CategoryId} = @CategoryId";
-
             SqlParameter[] parameters = new SqlParameter[] {
+                new SqlParameter("@CategoryId", productCategory.CategoryId),
+                new SqlParameter("@CategoryName", productCategory.CategoryName),
+                new SqlParameter("@Notes", productCategory.Notes)
+            };
+            return Utilities.ExecuteNonQuery(query, parameters);
+        }
+
+
+
+        // Delete a product category by ID
+        public int Delete(string categoryId)
+        {
+            if (string.IsNullOrEmpty(categoryId))
+            {
+                throw new ArgumentException("Category ID cannot be null or empty.", nameof(categoryId));
+            }
+            string query = $"DELETE FROM {DbTables.ProductCategory} WHERE {ProductCategoryColumns.CategoryId} = @CategoryId";
+            SqlParameter[] parameters = new SqlParameter[]
+            {
                 new SqlParameter("@CategoryId", categoryId)
             };
-
             return Utilities.ExecuteNonQuery(query, parameters);
+
         }
     }
 }

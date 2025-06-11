@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            tabControl1 = new TabControl();
+            tabControlMembershipCard = new TabControl();
             tabPageUpdate = new TabPage();
             btnRefresh = new Button();
             btnDelete = new Button();
@@ -43,21 +43,21 @@
             label1 = new Label();
             tabPageListMembershipCards = new TabPage();
             dgvMembershipCards = new DataGridView();
-            tabControl1.SuspendLayout();
+            tabControlMembershipCard.SuspendLayout();
             tabPageUpdate.SuspendLayout();
             tabPageListMembershipCards.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvMembershipCards).BeginInit();
             SuspendLayout();
             // 
-            // tabControl1
+            // tabControlMembershipCard
             // 
-            tabControl1.Controls.Add(tabPageUpdate);
-            tabControl1.Controls.Add(tabPageListMembershipCards);
-            tabControl1.Location = new Point(0, 12);
-            tabControl1.Name = "tabControl1";
-            tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(2260, 1409);
-            tabControl1.TabIndex = 0;
+            tabControlMembershipCard.Controls.Add(tabPageUpdate);
+            tabControlMembershipCard.Controls.Add(tabPageListMembershipCards);
+            tabControlMembershipCard.Location = new Point(0, 12);
+            tabControlMembershipCard.Name = "tabControlMembershipCard";
+            tabControlMembershipCard.SelectedIndex = 0;
+            tabControlMembershipCard.Size = new Size(2260, 1409);
+            tabControlMembershipCard.TabIndex = 0;
             // 
             // tabPageUpdate
             // 
@@ -225,10 +225,11 @@
             AutoScaleDimensions = new SizeF(15F, 37F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(2272, 1421);
-            Controls.Add(tabControl1);
+            Controls.Add(tabControlMembershipCard);
             Name = "frmMembershipCard";
             Text = "Quản Lý Thẻ Lưu Động";
-            tabControl1.ResumeLayout(false);
+            Load += frmMembershipCard_Load;
+            tabControlMembershipCard.ResumeLayout(false);
             tabPageUpdate.ResumeLayout(false);
             tabPageUpdate.PerformLayout();
             tabPageListMembershipCards.ResumeLayout(false);
@@ -238,7 +239,7 @@
 
         #endregion
 
-        private TabControl tabControl1;
+        private TabControl tabControlMembershipCard;
         private TabPage tabPageUpdate;
         private TabPage tabPageListMembershipCards;
         private CheckBox chkStatus;

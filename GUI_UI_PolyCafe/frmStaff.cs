@@ -65,33 +65,33 @@ namespace GUI_UI_PolyCafe
             {
                 //Get a new membership card object with the data from the form fields
                 Staff staff = new Staff
-            {
-                Id = StaffServices.GenerateStaffId(),
-                FullName = txtFullName.Text.Trim(),
-                Email = txtEmail.Text.Trim(),
-                Password = txtPassword.Text.Trim() == txtConfirmPassword.Text.Trim() ? txtPassword.Text.Trim() : throw new ArgumentException("Passwords do not match"),
-                Role = rdoManager.Checked ? 1 : 0,
-                Status = rdoActive.Checked ? 1 : 0,
-            };
+                {
+                    Id = StaffServices.GenerateStaffId(),
+                    FullName = txtFullName.Text.Trim(),
+                    Email = txtEmail.Text.Trim(),
+                    Password = txtPassword.Text.Trim() == txtConfirmPassword.Text.Trim() ? txtPassword.Text.Trim() : throw new ArgumentException("Passwords do not match"),
+                    Role = rdoManager.Checked ? 1 : 0,
+                    Status = rdoActive.Checked ? 1 : 0,
+                };
 
-            if (!IsStaffValid(staff))
-            {
-                return;
-            }
+                if (!IsStaffValid(staff))
+                {
+                    return;
+                }
 
-            // Add the staff to the database
-            int result = StaffServices.AddStaff(staff);
-            if (result > 0)
-            {
-                MessageBox.Show("Staff added successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LoadAllStaff();
-                ClearInputFields();
-            }
-            else
-            {
-                MessageBox.Show("Failed to add staff. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // Add the staff to the database
+                int result = StaffServices.AddStaff(staff);
+                if (result > 0)
+                {
+                    MessageBox.Show("Staff added successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LoadAllStaff();
+                    ClearInputFields();
+                }
+                else
+                {
+                    MessageBox.Show("Failed to add staff. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-            }
+                }
             }
             catch (Exception ex)
             {
