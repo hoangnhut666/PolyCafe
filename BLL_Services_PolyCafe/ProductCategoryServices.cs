@@ -25,6 +25,16 @@ namespace BLL_Services_PolyCafe
             return productCategoryRepository.GetAll();
         }
 
+        //Get product category by creteria
+        public List<ProductCategory> GetProductCategoriesByCriteria(string columnName, string value)
+        {
+            if (string.IsNullOrEmpty(columnName) || string.IsNullOrEmpty(value))
+            {
+                throw new ArgumentException("Column name and value cannot be null or empty.");
+            }
+            return productCategoryRepository.GetProductCategoriesByCriteria(columnName, value);
+        }
+
         // Get product categories id
         public string GenerateProductCategoryId()
         {

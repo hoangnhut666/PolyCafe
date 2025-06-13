@@ -49,12 +49,12 @@
             label2 = new Label();
             label1 = new Label();
             tabPageList = new TabPage();
-            dgvProdusts = new DataGridView();
+            dgvProducts = new DataGridView();
             tabControl1.SuspendLayout();
             tabPageUpdate.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxProduct).BeginInit();
             tabPageList.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvProdusts).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvProducts).BeginInit();
             SuspendLayout();
             // 
             // tabControl1
@@ -66,6 +66,7 @@
             tabControl1.SelectedIndex = 0;
             tabControl1.Size = new Size(2257, 1410);
             tabControl1.TabIndex = 0;
+            tabControl1.Selected += tabControl1_Selected;
             // 
             // tabPageUpdate
             // 
@@ -100,7 +101,7 @@
             // 
             btnUploadImage.BackColor = Color.FromArgb(162, 192, 248);
             btnUploadImage.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnUploadImage.Location = new Point(1713, 819);
+            btnUploadImage.Location = new Point(1704, 776);
             btnUploadImage.Margin = new Padding(4);
             btnUploadImage.Name = "btnUploadImage";
             btnUploadImage.Size = new Size(249, 84);
@@ -302,24 +303,25 @@
             // 
             // tabPageList
             // 
-            tabPageList.Controls.Add(dgvProdusts);
-            tabPageList.Location = new Point(10, 63);
+            tabPageList.Controls.Add(dgvProducts);
+            tabPageList.Location = new Point(10, 55);
             tabPageList.Name = "tabPageList";
             tabPageList.Padding = new Padding(3);
-            tabPageList.Size = new Size(2237, 1337);
+            tabPageList.Size = new Size(2237, 1345);
             tabPageList.TabIndex = 1;
             tabPageList.Text = "DANH SÁCH";
             tabPageList.UseVisualStyleBackColor = true;
             // 
-            // dgvProdusts
+            // dgvProducts
             // 
-            dgvProdusts.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvProdusts.Location = new Point(6, 17);
-            dgvProdusts.Name = "dgvProdusts";
-            dgvProdusts.RowHeadersWidth = 92;
-            dgvProdusts.Size = new Size(2225, 1317);
-            dgvProdusts.TabIndex = 0;
-            dgvProdusts.CellClick += dgvProdusts_CellClick;
+            dgvProducts.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvProducts.Location = new Point(6, 17);
+            dgvProducts.Name = "dgvProducts";
+            dgvProducts.RowHeadersWidth = 92;
+            dgvProducts.Size = new Size(2225, 1317);
+            dgvProducts.TabIndex = 0;
+            dgvProducts.CellClick += dgvProdusts_CellClick;
+            dgvProducts.CellFormatting += dgvProducts_CellFormatting;
             // 
             // frmProduct
             // 
@@ -336,7 +338,7 @@
             tabPageUpdate.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxProduct).EndInit();
             tabPageList.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dgvProdusts).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvProducts).EndInit();
             ResumeLayout(false);
         }
 
@@ -363,6 +365,6 @@
         private Button btnUploadImage;
         private Button bthRefresh;
         private Button bthDelete;
-        private DataGridView dgvProdusts;
+        private DataGridView dgvProducts;
     }
 }

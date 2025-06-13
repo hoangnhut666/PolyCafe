@@ -265,18 +265,6 @@ namespace GUI_UI_PolyCafe
             rdoManager.Checked = false;
         }
 
-        //Check if the staff information is valid before adding or updating
-        private bool IsValidStaff(Staff staff)
-        {
-            if (string.IsNullOrWhiteSpace(staff.FullName) ||
-                string.IsNullOrWhiteSpace(staff.Password) ||
-                string.IsNullOrWhiteSpace(staff.Email))
-            {
-                MessageBox.Show("Please fill in all required fields.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
-            }
-            return true;
-        }
 
         private void chk_displayPassword_CheckedChanged(object sender, EventArgs e)
         {

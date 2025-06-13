@@ -29,6 +29,32 @@ namespace DAL_Data_PolyCafe
             return productCategories;
         }
 
+
+        // Get product categories by criteria
+        public List<ProductCategory> GetProductCategoriesByCriteria(string columnName, string value)
+        {
+            if (string.IsNullOrEmpty(columnName) || string.IsNullOrEmpty(value))
+            {
+                throw new ArgumentException("Column name and value cannot be null or empty.");
+            }
+            string query = $"SELECT * FROM {DbTables.ProductCategory} WHERE {columnName} = @Value";
+            SqlParameter[] parameters = new SqlParameter[]
+            {
+                new SqlParameter("@Value", value)
+            };
+            List<ProductCategory> productCategories = Utilities.ExecuteQuery(query, reader =>
+            {
+                return new ProductCategory
+                {
+                    CategoryId = reader[ProductCategoryColumns.CategoryId].ToString(),
+                    CategoryName = reader[ProductCategoryColumns.CategoryName].ToString(),
+                    Notes = reader[ProductCategoryColumns.Notes].ToString(),
+                };
+            }, parameters);
+            return productCategories;
+        }
+
+
         public int Insert(ProductCategory productCategory)
         {
             string query = $"INSERT INTO {DbTables.ProductCategory} ({ProductCategoryColumns.CategoryId}, " +

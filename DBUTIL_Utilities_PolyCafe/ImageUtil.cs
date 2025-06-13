@@ -40,24 +40,5 @@ namespace DBUTIL_Utilities_PolyCafe
             return relativePath;
         }
 
-
-        //Load an image from a file path and return it as a Bitmap object.
-        //public static Bitmap LoadImageFromFile(string filePath)
-        //{
-        //    if (string.IsNullOrEmpty(filePath) || !File.Exists(filePath))
-        //    {
-        //        throw new FileNotFoundException("The specified image file does not exist.", filePath);
-        //    }
-        //    try
-        //    {
-        //        return new Bitmap(filePath);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw new Exception("Error loading image from file.", ex);
-        //    }
-        //}
-
-
     }
 }

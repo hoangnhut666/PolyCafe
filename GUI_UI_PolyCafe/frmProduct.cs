@@ -4,12 +4,15 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using BLL_Services_PolyCafe;
+using DAL_Data_PolyCafe.Constants;
 using DBUTIL_Utilities_PolyCafe;
 using DTO_Models_PolyCafe;
+using DBUTIL_Utilities_PolyCafe.ValidationHelper;
 
 namespace GUI_UI_PolyCafe
 {
@@ -17,34 +20,37 @@ namespace GUI_UI_PolyCafe
     {
         private ProductServices ProductServices { get; set; }
         private ProductCategoryServices ProductCategoryServices { get; set; }
+        private ProductValidationHelper ProductValidationHelper { get; set; }
         public frmProduct()
         {
             ProductServices = new ProductServices();
             ProductCategoryServices = new ProductCategoryServices();
+            ProductValidationHelper = new ProductValidationHelper();
             InitializeComponent();
-            SetupComponent(dgvProdusts);
-
+            SetupComponent(dgvProducts);
         }
 
         private void LoadAllProducts()
         {
-            try
+            var products = ProductServices.GetAllProducts();
+            var productListWithImages = products.Select(p => new
             {
-                var products = ProductServices.GetAllProducts();
-                if (products != null && products.Count > 0)
-                {
-                    dgvProdusts.DataSource = products;
-                }
-                else
-                {
-                    MessageBox.Show("No products found.");
-                    dgvProdusts.DataSource = null;
-                }
+                p.ProductId,
+                p.ProductName,
+                p.Price,
+                p.CategoryId,
+                p.Status,
+                Image = !string.IsNullOrEmpty(p.Image) && File.Exists(p.Image) ? LoadImageFromFile(p.Image) : null
+            }).ToList();
+
+            if (productListWithImages != null && productListWithImages.Count > 0)
+            {
+                dgvProducts.DataSource = productListWithImages;
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show($"An error occurred while loading products: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                dgvProdusts.DataSource = null;
+                MessageBox.Show("No products found.");
+                dgvProducts.DataSource = null;
             }
         }
 
@@ -81,6 +87,12 @@ namespace GUI_UI_PolyCafe
             dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView.AutoGenerateColumns = true;
             dataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridView.RowTemplate.Height = 180;
+            DataGridViewImageColumn imageColumn = (DataGridViewImageColumn)dgvProducts.Columns["Image"];
+            if (imageColumn != null)
+            {
+                imageColumn.ImageLayout = DataGridViewImageCellLayout.Zoom;
+            }
 
 
             //Set up combox
@@ -88,6 +100,9 @@ namespace GUI_UI_PolyCafe
             cboProductCategories.DisplayMember = "CategoryName";
             cboProductCategories.ValueMember = "CategoryId";
             cboProductCategories.SelectedIndex = -1;
+
+            //Set up picture box
+            pictureBoxProduct.SizeMode = PictureBoxSizeMode.Zoom;
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -101,15 +116,17 @@ namespace GUI_UI_PolyCafe
                     ProductName = txtProductName.Text,
                     Price = decimal.Parse(txtUnitPrice.Text),
                     CategoryId = cboProductCategories.SelectedValue?.ToString(),
-                    Image = " ",
+                    Image = pictureBoxProduct.ImageLocation ?? " ",
                     Status = rdoActive.Checked
                 };
 
                 //Check if product is valid
-                if (!IsValidProduct(product))
+                if (!ProductValidationHelper.IsValidProductId(product))
                 {
+                    MessageBox.Show(ProductValidationHelper.ErrorMessage, "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
+
 
                 //Add product to database
                 int result = ProductServices.AddProduct(product);
@@ -144,17 +161,18 @@ namespace GUI_UI_PolyCafe
                 //Get a new membership card object with the data from the form fields
                 Product product = new Product
                 {
-                    ProductId = ProductServices.GenerateProductId(),
+                    ProductId = txtProductId.Text,
                     ProductName = txtProductName.Text,
                     Price = decimal.Parse(txtUnitPrice.Text),
                     CategoryId = cboProductCategories.SelectedValue?.ToString(),
-                    Image = " ",
+                    Image = pictureBoxProduct.ImageLocation ?? " ",
                     Status = rdoActive.Checked
                 };
 
                 //Check if product is valid
-                if (!IsValidProduct(product))
+                if (!ProductValidationHelper.IsValidProductId(product))
                 {
+                    MessageBox.Show(ProductValidationHelper.ErrorMessage, "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -170,12 +188,12 @@ namespace GUI_UI_PolyCafe
                 {
                     MessageBox.Show("Failed to update product. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-            }
+        }
             catch (Exception ex)
             {
                 MessageBox.Show($"An error occurred while updating product: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
+}
 
 
 
@@ -231,139 +249,255 @@ namespace GUI_UI_PolyCafe
                 {
                     string selectedImagePath = openFileDialog.FileName;
 
-                    // Preview the image in a PictureBox (optional)
-                    pictureBoxProduct.Image = Image.FromFile(selectedImagePath);
-
                     // Create folder and copy the image file. 
                     string newImagePath = ImageUtil.CopyImageToProjectFolder(selectedImagePath);
 
-                    // Save the new image path to the database.
-                    ProductServices.SaveImagePath(txtProductId.Text, newImagePath);
+                    pictureBoxProduct.Image = Image.FromFile(newImagePath);
+                    pictureBoxProduct.ImageLocation = newImagePath;
                 }
             }
         }
+
 
         private void ClearInputFields()
         {
             txtProductId.Clear();
             txtProductName.Clear();
             txtUnitPrice.Clear();
-
-        }
-
-
-        //Check if the product is valid
-        private bool IsValidProduct(Product product)
-        {
-            if (string.IsNullOrEmpty(product.ProductName))
-            {
-                MessageBox.Show("Please fill in all required fields.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
-            }
-
-            return true;
-        }
-
-
-        //Load the real image of product instead of its path in datagridview
-        private void dgvProdusts_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
-        {
-            if (dgvProdusts.Columns[e.ColumnIndex].Name == "Image" && e.Value != null)
-            {
-                string? imagePath = e.Value.ToString();
-                if (!string.IsNullOrEmpty(imagePath) && File.Exists(imagePath))
-                {
-                    try
-                    {
-                        e.Value = Bitmap.FromFile(imagePath);
-                        e.FormattingApplied = true;
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"Error loading image: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        e.Value = null; 
-                    }
-                }
-            }
+            cboProductCategories.SelectedIndex = -1;
+            rdoActive.Checked = true;
+            pictureBoxProduct.Image = null;
         }
 
 
         private void dgvProdusts_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (dgvProdusts.SelectedRows.Count > 0)
+            if (e.RowIndex >= 0 && e.RowIndex < dgvProducts.Rows.Count)
             {
-                DataGridViewRow selectedRow = dgvProdusts.SelectedRows[0];
-                Product selectedProduct = (Product)selectedRow.DataBoundItem;
+                DataGridViewRow selectedRow = dgvProducts.Rows[e.RowIndex];
+                txtProductId.Text = selectedRow.Cells["ProductId"].Value?.ToString();
+                txtProductName.Text = selectedRow.Cells["ProductName"].Value?.ToString();
+                txtUnitPrice.Text = selectedRow.Cells["Price"].Value?.ToString();
+                cboProductCategories.SelectedValue = selectedRow.Cells["CategoryId"].Value?.ToString();
+                rdoActive.Checked = (bool)selectedRow.Cells["Status"].Value;
+                pictureBoxProduct.Image = (Image)selectedRow.Cells["Image"].Value;
 
-                //Fill the input fields with the selected product's data
-                txtProductId.Text = selectedProduct.ProductId;
-                txtProductName.Text = selectedProduct.ProductName;
-                txtUnitPrice.Text = selectedProduct.Price.ToString();
-                cboProductCategories.SelectedValue = selectedProduct.CategoryId;
-                rdoActive.Checked = selectedProduct.Status;
-
-
-                if(selectedProduct.Image != null && selectedProduct.Image != " ")
-                {
-                    try
-                    {
-                        if (File.Exists(selectedProduct.Image))
-                        {
-                            pictureBoxProduct.Image = new Bitmap(selectedProduct.Image);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"Error loading product image: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        pictureBoxProduct.Image = null;
-                    }
-                }
-                else
-                {
-                    pictureBoxProduct.Image = null; 
-                }
-
-                ////Load the product image with the path from the database
-                //if (!string.IsNullOrEmpty(selectedProduct.Image))
-                //{
-                //    try
-                //    {
-                //        pictureBoxProduct.Image = Image.FromFile(selectedProduct.Image);
-                //    }
-                //    catch (Exception ex)
-                //    {
-                //        MessageBox.Show($"Error loading product image: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                //        pictureBoxProduct.Image = null; // Clear the image if there's an error
-                //    }
-                //}
-                //else
-                //{
-                //    pictureBoxProduct.Image = null; // Clear the image if no path is provided
-                //}
-
-
-                ////Load product image with Bitmap from the database
-                //if (!string.IsNullOrEmpty(selectedProduct.Image))
-                //{
-                //    try
-                //    {
-                //        pictureBoxProduct.Image = ImageUtil.LoadImageFromFile(selectedProduct.Image);
-                //    }
-                //    catch (Exception ex)
-                //    {
-                //        MessageBox.Show($"Error loading product image: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                //        pictureBoxProduct.Image = null; // Clear the image if there's an error
-                //    }
-                //}
-                //else
-                //{
-                //    pictureBoxProduct.Image = null; // Clear the image if no path is provided
-                //}
-
-                //Direct to update section tab
                 tabControl1.SelectedTab = tabPageUpdate;
             }
         }
+
+        private void dgvProducts_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (dgvProducts.Columns[e.ColumnIndex].Name == "CategoryId" && e.Value != null)
+            {
+                var categories = ProductCategoryServices.GetProductCategoriesByCriteria($"{ProductCategoryColumns.CategoryId}", e.Value.ToString());
+                if (categories != null && categories.Count > 0)
+                {
+                    e.Value = categories[0].CategoryName;
+                }
+                else
+                {
+                    e.Value = "Unknown";
+                }
+            }
+        }
+
+        private void tabControl1_Selected(object sender, TabControlEventArgs e)
+        {
+            LoadAllProducts();
+        }
+
+
+        //Load an image from a file path and return it as a Bitmap object.
+        public static Bitmap LoadImageFromFile(string filePath)
+        {
+            if (string.IsNullOrEmpty(filePath) || !File.Exists(filePath))
+            {
+                throw new FileNotFoundException("The specified image file does not exist.", filePath);
+            }
+            try
+            {
+                return new Bitmap(filePath);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error loading image from file.", ex);
+            }
+        }
+
+
     }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//Load the real image of product instead of its path in datagridview
+//private void dgvProdusts_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+//{
+//    if (dgvProdusts.Columns[e.ColumnIndex].Name == "Image" && e.Value != null)
+//    {
+//        string? imagePath = e.Value.ToString();
+//        if (!string.IsNullOrEmpty(imagePath) && File.Exists(imagePath))
+//        {
+//            try
+//            {
+//                e.Value = Bitmap.FromFile(imagePath);
+//                e.FormattingApplied = true;
+//            }
+//            catch (Exception ex)
+//            {
+//                MessageBox.Show($"Error loading image: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+//                e.Value = null;
+//            }
+//        }
+//    }
+//}
+
+
+
+//private Image CreateThumbnail(string imagePath, int width = 100, int height = 100)
+//{
+//    try
+//    {
+//        //if (!File.Exists(imagePath))
+//        //    return Properties.Resources.DefaultProductImage;
+
+//        using (var originalImage = Image.FromFile(imagePath))
+//        {
+//            // Calculate aspect ratio
+//            float ratio = Math.Min((float)width / originalImage.Width, (float)height / originalImage.Height);
+//            int newWidth = (int)(originalImage.Width * ratio);
+//            int newHeight = (int)(originalImage.Height * ratio);
+
+//            var thumbnail = new Bitmap(newWidth, newHeight);
+//            using (var graphics = Graphics.FromImage(thumbnail))
+//            {
+//                graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+//                graphics.DrawImage(originalImage, 0, 0, newWidth, newHeight);
+//            }
+//            return thumbnail;
+//        }
+//    }
+//    catch
+//    {
+//        return null; // or return a default image if you have one
+//                     //return Properties.Resources.DefaultProductImage;
+//    }
+//}
+
+
+
+//try
+//{
+//    var products = ProductServices.GetAllProducts();
+//    if (products != null && products.Count > 0)
+//    {
+//        dgvProdusts.DataSource = products;
+//    }
+//    else
+//    {
+//        MessageBox.Show("No products found.");
+//        dgvProdusts.DataSource = null;
+//    }
+//}
+//catch (Exception ex)
+//{
+//    MessageBox.Show($"An error occurred while loading products: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+//    dgvProdusts.DataSource = null;
+//}
+
+
+//if (dgvProdusts.SelectedRows.Count > 0)
+//{
+//    DataGridViewRow selectedRow = dgvProdusts.SelectedRows[0];
+//    Product selectedProduct = (Product)selectedRow.DataBoundItem;
+
+//    // Fill the input fields with the selected product's data
+//    txtProductId.Text = selectedProduct.ProductId;
+//    txtProductName.Text = selectedProduct.ProductName;
+//    txtUnitPrice.Text = selectedProduct.Price.ToString();
+//    cboProductCategories.SelectedValue = selectedProduct.CategoryId;
+//    rdoActive.Checked = selectedProduct.Status;
+//    pictureBoxProduct.Image = LoadImageFromFile(selectedProduct.Image);
+
+
+//    tabControl1.SelectedTab = tabPageUpdate;
+//}
+
+
+
+//private void btnUploadImage_Click(object sender, EventArgs e)
+//{
+//    using (OpenFileDialog openFileDialog = new OpenFileDialog())
+//    {
+//        openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+//        openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp;";
+//        openFileDialog.Title = "Select a Product Image";
+
+//        if (openFileDialog.ShowDialog() == DialogResult.OK)
+//        {
+//            string selectedImagePath = openFileDialog.FileName;
+
+//            // Preview the image in a PictureBox (optional)
+//            pictureBoxProduct.Image = Image.FromFile(selectedImagePath);
+
+//            // Create folder and copy the image file. 
+//            string newImagePath = ImageUtil.CopyImageToProjectFolder(selectedImagePath);
+
+//            // Save the new image path to the database.
+//            ProductServices.SaveImagePath(txtProductId.Text, newImagePath);
+
+//            MessageBox.Show("Image uploaded successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+//        }
+//    }
+//}
+
+
+//private void btnSaveImage_Click(object sender, EventArgs e)
+//{
+//    // Check if an image is selected
+//    if (pictureBoxProduct.Image == null)
+//    {
+//        MessageBox.Show("Please upload an image first.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+//        return;
+//    }
+
+//    // Check if the product ID is valid
+//    if (string.IsNullOrEmpty(txtProductId.Text))
+//    {
+//        MessageBox.Show("Please select a product to save the image.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+//        return;
+//    }
+
+//    try
+//    {
+//        // Get the product ID from the text box
+//        string productId = txtProductId.Text;
+//        // Save the image path to the database
+//        string imagePath = pictureBoxProduct.ImageLocation;
+//        ProductServices.SaveImagePath(productId, imagePath);
+//        MessageBox.Show("Image saved successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+//    }
+//    catch (Exception ex)
+//    {
+//        MessageBox.Show($"An error occurred while saving the image: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+//    }
+//}

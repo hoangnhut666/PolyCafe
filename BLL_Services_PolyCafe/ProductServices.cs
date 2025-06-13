@@ -24,6 +24,17 @@ namespace BLL_Services_PolyCafe
         }
 
 
+        // Get product by ID
+        public Product? GetProductById(string productId)
+        {
+            if (string.IsNullOrEmpty(productId))
+            {
+                throw new ArgumentException("Product ID cannot be null or empty.", nameof(productId));
+            }
+            return productRepository.GetProductsByCriteria(ProductColumns.ProductId, productId).FirstOrDefault();
+        }
+
+
         //Generate id automaticly
         public string GenerateProductId()
         {
