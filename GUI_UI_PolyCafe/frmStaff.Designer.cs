@@ -30,14 +30,15 @@
         {
             tabControl = new TabControl();
             tabPageUpdate = new TabPage();
+            rdoManager = new RadioButton();
+            chk_active = new CheckBox();
+            rdoEmployee = new RadioButton();
+            chk_displayConfirmPassword = new CheckBox();
+            chk_displayPassword = new CheckBox();
             btnRefresh = new Button();
             btnDelete = new Button();
             btnUpdate = new Button();
             btnAdd = new Button();
-            rdoInactive = new RadioButton();
-            rdoManager = new RadioButton();
-            rdoActive = new RadioButton();
-            rdoEmployee = new RadioButton();
             txtConfirmPassword = new TextBox();
             txtPassword = new TextBox();
             txtEmail = new TextBox();
@@ -53,14 +54,10 @@
             label1 = new Label();
             tabPageList = new TabPage();
             dgvStaff = new DataGridView();
-            groupBox1 = new GroupBox();
-            groupBox2 = new GroupBox();
             tabControl.SuspendLayout();
             tabPageUpdate.SuspendLayout();
             tabPageList.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvStaff).BeginInit();
-            groupBox1.SuspendLayout();
-            groupBox2.SuspendLayout();
             SuspendLayout();
             // 
             // tabControl
@@ -75,8 +72,11 @@
             // 
             // tabPageUpdate
             // 
-            tabPageUpdate.Controls.Add(groupBox2);
-            tabPageUpdate.Controls.Add(groupBox1);
+            tabPageUpdate.Controls.Add(rdoManager);
+            tabPageUpdate.Controls.Add(chk_active);
+            tabPageUpdate.Controls.Add(rdoEmployee);
+            tabPageUpdate.Controls.Add(chk_displayConfirmPassword);
+            tabPageUpdate.Controls.Add(chk_displayPassword);
             tabPageUpdate.Controls.Add(btnRefresh);
             tabPageUpdate.Controls.Add(btnDelete);
             tabPageUpdate.Controls.Add(btnUpdate);
@@ -94,6 +94,7 @@
             tabPageUpdate.Controls.Add(label3);
             tabPageUpdate.Controls.Add(label2);
             tabPageUpdate.Controls.Add(label1);
+            tabPageUpdate.Font = new Font("Segoe UI", 11F);
             tabPageUpdate.Location = new Point(10, 55);
             tabPageUpdate.Name = "tabPageUpdate";
             tabPageUpdate.Padding = new Padding(3);
@@ -101,6 +102,63 @@
             tabPageUpdate.TabIndex = 0;
             tabPageUpdate.Text = "CẬP NHẬT";
             tabPageUpdate.UseVisualStyleBackColor = true;
+            // 
+            // rdoManager
+            // 
+            rdoManager.AutoSize = true;
+            rdoManager.Font = new Font("Segoe UI", 12F);
+            rdoManager.Location = new Point(1857, 577);
+            rdoManager.Name = "rdoManager";
+            rdoManager.Size = new Size(172, 52);
+            rdoManager.TabIndex = 3;
+            rdoManager.TabStop = true;
+            rdoManager.Text = "Quản lý";
+            rdoManager.UseVisualStyleBackColor = true;
+            // 
+            // chk_active
+            // 
+            chk_active.AutoSize = true;
+            chk_active.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            chk_active.Location = new Point(525, 749);
+            chk_active.Name = "chk_active";
+            chk_active.Size = new Size(207, 49);
+            chk_active.TabIndex = 8;
+            chk_active.Text = "Hoạt động";
+            chk_active.UseVisualStyleBackColor = true;
+            // 
+            // rdoEmployee
+            // 
+            rdoEmployee.AutoSize = true;
+            rdoEmployee.Font = new Font("Segoe UI", 12F);
+            rdoEmployee.Location = new Point(1493, 577);
+            rdoEmployee.Name = "rdoEmployee";
+            rdoEmployee.Size = new Size(211, 52);
+            rdoEmployee.TabIndex = 3;
+            rdoEmployee.TabStop = true;
+            rdoEmployee.Text = "Nhân viên";
+            rdoEmployee.UseVisualStyleBackColor = true;
+            // 
+            // chk_displayConfirmPassword
+            // 
+            chk_displayConfirmPassword.AutoSize = true;
+            chk_displayConfirmPassword.Location = new Point(1494, 459);
+            chk_displayConfirmPassword.Name = "chk_displayConfirmPassword";
+            chk_displayConfirmPassword.Size = new Size(264, 49);
+            chk_displayConfirmPassword.TabIndex = 7;
+            chk_displayConfirmPassword.Text = "Hiện mật khẩu";
+            chk_displayConfirmPassword.UseVisualStyleBackColor = true;
+            chk_displayConfirmPassword.CheckedChanged += chk_displayConfirmPassword_CheckedChanged;
+            // 
+            // chk_displayPassword
+            // 
+            chk_displayPassword.AutoSize = true;
+            chk_displayPassword.Location = new Point(1494, 268);
+            chk_displayPassword.Name = "chk_displayPassword";
+            chk_displayPassword.Size = new Size(264, 49);
+            chk_displayPassword.TabIndex = 7;
+            chk_displayPassword.Text = "Hiện mật khẩu";
+            chk_displayPassword.UseVisualStyleBackColor = true;
+            chk_displayPassword.CheckedChanged += chk_displayPassword_CheckedChanged;
             // 
             // btnRefresh
             // 
@@ -154,100 +212,55 @@
             btnAdd.UseVisualStyleBackColor = false;
             btnAdd.Click += btnAdd_Click;
             // 
-            // rdoInactive
-            // 
-            rdoInactive.AutoSize = true;
-            rdoInactive.Font = new Font("Segoe UI", 12F);
-            rdoInactive.Location = new Point(323, 42);
-            rdoInactive.Name = "rdoInactive";
-            rdoInactive.Size = new Size(335, 52);
-            rdoInactive.TabIndex = 3;
-            rdoInactive.TabStop = true;
-            rdoInactive.Text = "Ngưng hoạt động";
-            rdoInactive.UseVisualStyleBackColor = true;
-            // 
-            // rdoManager
-            // 
-            rdoManager.AutoSize = true;
-            rdoManager.Font = new Font("Segoe UI", 12F);
-            rdoManager.Location = new Point(323, 42);
-            rdoManager.Name = "rdoManager";
-            rdoManager.Size = new Size(172, 52);
-            rdoManager.TabIndex = 3;
-            rdoManager.TabStop = true;
-            rdoManager.Text = "Quản lý";
-            rdoManager.UseVisualStyleBackColor = true;
-            // 
-            // rdoActive
-            // 
-            rdoActive.AutoSize = true;
-            rdoActive.Font = new Font("Segoe UI", 12F);
-            rdoActive.Location = new Point(27, 42);
-            rdoActive.Name = "rdoActive";
-            rdoActive.Size = new Size(221, 52);
-            rdoActive.TabIndex = 3;
-            rdoActive.TabStop = true;
-            rdoActive.Text = "Hoạt động";
-            rdoActive.UseVisualStyleBackColor = true;
-            // 
-            // rdoEmployee
-            // 
-            rdoEmployee.AutoSize = true;
-            rdoEmployee.Font = new Font("Segoe UI", 12F);
-            rdoEmployee.Location = new Point(27, 38);
-            rdoEmployee.Name = "rdoEmployee";
-            rdoEmployee.Size = new Size(211, 52);
-            rdoEmployee.TabIndex = 3;
-            rdoEmployee.TabStop = true;
-            rdoEmployee.Text = "Nhân viên";
-            rdoEmployee.UseVisualStyleBackColor = true;
-            // 
             // txtConfirmPassword
             // 
-            txtConfirmPassword.Location = new Point(932, 652);
-            txtConfirmPassword.Multiline = true;
+            txtConfirmPassword.Font = new Font("Segoe UI", 11F);
+            txtConfirmPassword.Location = new Point(1494, 379);
             txtConfirmPassword.Name = "txtConfirmPassword";
-            txtConfirmPassword.Size = new Size(680, 63);
+            txtConfirmPassword.Size = new Size(573, 51);
             txtConfirmPassword.TabIndex = 2;
             // 
             // txtPassword
             // 
-            txtPassword.Location = new Point(932, 528);
-            txtPassword.Multiline = true;
+            txtPassword.Font = new Font("Segoe UI", 11F);
+            txtPassword.Location = new Point(1494, 190);
             txtPassword.Name = "txtPassword";
-            txtPassword.Size = new Size(680, 63);
+            txtPassword.Size = new Size(575, 51);
             txtPassword.TabIndex = 2;
             // 
             // txtEmail
             // 
-            txtEmail.Location = new Point(927, 401);
+            txtEmail.Font = new Font("Segoe UI", 11F);
+            txtEmail.Location = new Point(521, 566);
             txtEmail.Multiline = true;
             txtEmail.Name = "txtEmail";
-            txtEmail.Size = new Size(680, 63);
+            txtEmail.Size = new Size(520, 63);
             txtEmail.TabIndex = 2;
             // 
             // txtFullName
             // 
-            txtFullName.Location = new Point(927, 276);
+            txtFullName.Font = new Font("Segoe UI", 11F);
+            txtFullName.Location = new Point(521, 381);
             txtFullName.Multiline = true;
             txtFullName.Name = "txtFullName";
-            txtFullName.Size = new Size(680, 63);
-            txtFullName.TabIndex = 2;
+            txtFullName.Size = new Size(520, 63);
+            txtFullName.TabIndex = 0;
             // 
             // txtStaffId
             // 
-            txtStaffId.Location = new Point(927, 146);
+            txtStaffId.Font = new Font("Segoe UI", 11F);
+            txtStaffId.Location = new Point(521, 190);
             txtStaffId.Multiline = true;
             txtStaffId.Name = "txtStaffId";
             txtStaffId.ReadOnly = true;
-            txtStaffId.Size = new Size(680, 63);
+            txtStaffId.Size = new Size(520, 63);
             txtStaffId.TabIndex = 2;
             // 
             // label8
             // 
             label8.AutoSize = true;
             label8.Font = new Font("Segoe UI", 12F);
-            label8.Location = new Point(560, 932);
+            label8.Location = new Point(246, 747);
             label8.Name = "label8";
             label8.Size = new Size(185, 48);
             label8.TabIndex = 1;
@@ -257,7 +270,7 @@
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI", 12F);
-            label7.Location = new Point(560, 806);
+            label7.Location = new Point(1158, 577);
             label7.Name = "label7";
             label7.Size = new Size(130, 48);
             label7.TabIndex = 1;
@@ -267,7 +280,7 @@
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI", 12F);
-            label6.Location = new Point(560, 667);
+            label6.Location = new Point(1147, 381);
             label6.Name = "label6";
             label6.Size = new Size(329, 48);
             label6.TabIndex = 1;
@@ -277,7 +290,7 @@
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 12F);
-            label5.Location = new Point(560, 534);
+            label5.Location = new Point(1154, 197);
             label5.Name = "label5";
             label5.Size = new Size(176, 48);
             label5.TabIndex = 1;
@@ -287,7 +300,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 12F);
-            label4.Location = new Point(555, 411);
+            label4.Location = new Point(246, 566);
             label4.Name = "label4";
             label4.Size = new Size(113, 48);
             label4.TabIndex = 1;
@@ -297,7 +310,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 12F);
-            label3.Location = new Point(555, 268);
+            label3.Location = new Point(246, 373);
             label3.Name = "label3";
             label3.Size = new Size(181, 48);
             label3.TabIndex = 1;
@@ -307,7 +320,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 12F);
-            label2.Location = new Point(555, 147);
+            label2.Location = new Point(246, 191);
             label2.Name = "label2";
             label2.Size = new Size(241, 48);
             label2.TabIndex = 1;
@@ -344,26 +357,7 @@
             dgvStaff.Size = new Size(2250, 1336);
             dgvStaff.TabIndex = 0;
             dgvStaff.CellClick += dgvStaff_CellClick;
-            // 
-            // groupBox1
-            // 
-            groupBox1.Controls.Add(rdoManager);
-            groupBox1.Controls.Add(rdoEmployee);
-            groupBox1.Location = new Point(905, 775);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(709, 109);
-            groupBox1.TabIndex = 5;
-            groupBox1.TabStop = false;
-            // 
-            // groupBox2
-            // 
-            groupBox2.Controls.Add(rdoActive);
-            groupBox2.Controls.Add(rdoInactive);
-            groupBox2.Location = new Point(903, 890);
-            groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(709, 112);
-            groupBox2.TabIndex = 6;
-            groupBox2.TabStop = false;
+            dgvStaff.CellFormatting += dgvStaff_CellFormatting;
             // 
             // frmStaff
             // 
@@ -378,10 +372,6 @@
             tabPageUpdate.PerformLayout();
             tabPageList.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvStaff).EndInit();
-            groupBox1.ResumeLayout(false);
-            groupBox1.PerformLayout();
-            groupBox2.ResumeLayout(false);
-            groupBox2.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -409,10 +399,9 @@
         private Button btnUpdate;
         private RadioButton rdoManager;
         private DataGridView dgvStaff;
-        private RadioButton rdoInactive;
-        private RadioButton rdoActive;
         private Label label8;
-        private GroupBox groupBox2;
-        private GroupBox groupBox1;
+        private CheckBox chk_displayPassword;
+        private CheckBox chk_displayConfirmPassword;
+        private CheckBox chk_active;
     }
 }

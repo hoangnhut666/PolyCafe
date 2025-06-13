@@ -229,6 +229,7 @@
             txtProductId.Margin = new Padding(4);
             txtProductId.Multiline = true;
             txtProductId.Name = "txtProductId";
+            txtProductId.ReadOnly = true;
             txtProductId.Size = new Size(842, 70);
             txtProductId.TabIndex = 13;
             // 
@@ -302,10 +303,10 @@
             // tabPageList
             // 
             tabPageList.Controls.Add(dgvProdusts);
-            tabPageList.Location = new Point(10, 55);
+            tabPageList.Location = new Point(10, 63);
             tabPageList.Name = "tabPageList";
             tabPageList.Padding = new Padding(3);
-            tabPageList.Size = new Size(2237, 1345);
+            tabPageList.Size = new Size(2237, 1337);
             tabPageList.TabIndex = 1;
             tabPageList.Text = "DANH SÁCH";
             tabPageList.UseVisualStyleBackColor = true;
@@ -318,6 +319,7 @@
             dgvProdusts.RowHeadersWidth = 92;
             dgvProdusts.Size = new Size(2225, 1317);
             dgvProdusts.TabIndex = 0;
+            dgvProdusts.CellClick += dgvProdusts_CellClick;
             // 
             // frmProduct
             // 

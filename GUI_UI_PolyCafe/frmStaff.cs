@@ -8,16 +8,22 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using BLL_Services_PolyCafe;
+using DAL_Data_PolyCafe.Constants;
+using DBUTIL_Utilities_PolyCafe;
 using DTO_Models_PolyCafe;
+using DBUTIL_Utilities_PolyCafe.ValidationHelper;
 
 namespace GUI_UI_PolyCafe
 {
     public partial class frmStaff : Form
     {
         private StaffServices StaffServices { get; set; }
+        private StaffValidationHelper StaffValidationHelper { get; set; }
+
         public frmStaff()
         {
             StaffServices = new StaffServices();
+            StaffValidationHelper = new StaffValidationHelper();
             InitializeComponent();
             SetupComponent(dgvStaff);
             LoadAllStaff();
@@ -33,7 +39,11 @@ namespace GUI_UI_PolyCafe
 
             //Set up Form
             StartPosition = FormStartPosition.CenterScreen;
-            rdoActive.Checked = true;
+
+            //Hide password fields by default
+            txtPassword.UseSystemPasswordChar = true;
+            txtConfirmPassword.UseSystemPasswordChar = true;
+
         }
 
 
@@ -45,6 +55,7 @@ namespace GUI_UI_PolyCafe
                 if (staff != null && staff.Count > 0)
                 {
                     dgvStaff.DataSource = staff;
+                    dgvStaff.Columns["Password"].Visible = false;
                 }
                 else
                 {
@@ -63,7 +74,7 @@ namespace GUI_UI_PolyCafe
         {
             try
             {
-                //Get a new membership card object with the data from the form fields
+                //Get the staff information from the input fields
                 Staff staff = new Staff
                 {
                     Id = StaffServices.GenerateStaffId(),
@@ -71,11 +82,13 @@ namespace GUI_UI_PolyCafe
                     Email = txtEmail.Text.Trim(),
                     Password = txtPassword.Text.Trim() == txtConfirmPassword.Text.Trim() ? txtPassword.Text.Trim() : throw new ArgumentException("Passwords do not match"),
                     Role = rdoManager.Checked ? 1 : 0,
-                    Status = rdoActive.Checked ? 1 : 0,
+                    Status = chk_active.Checked ? 1 : 0, 
                 };
 
-                if (!IsStaffValid(staff))
+                // Check if the staff information is valid
+                if (!StaffValidationHelper.IsValidStaff(staff))
                 {
+                    MessageBox.Show(StaffValidationHelper.ErrorMessage, "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -116,13 +129,26 @@ namespace GUI_UI_PolyCafe
                     FullName = txtFullName.Text.Trim(),
                     Email = txtEmail.Text.Trim(),
                     Password = txtPassword.Text.Trim() == txtConfirmPassword.Text.Trim() ? txtPassword.Text.Trim() : throw new ArgumentException("Passwords do not match"),
-                    Role = rdoManager.Checked ? 1 : 0,
-                    Status = rdoActive.Checked ? 1 : 0,
+                    Status = chk_active.Checked ? 1 : 0,
+                    Role = rdoManager.Checked ? 1 : 0, 
                 };
-                if (!IsStaffValid(staff))
+
+                //Prevent updating the role of a staff member
+                Staff? selectedStaff = StaffServices.GetStaffByCriteria(StaffColumns.Id, staff.Id);
+                if (selectedStaff != null && selectedStaff.Role != staff.Role)
                 {
+                    MessageBox.Show("You cannot change the role of a staff", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
+
+
+                // Check if the staff information is valid
+                if (!StaffValidationHelper.IsValidStaff(staff))
+                {
+                    MessageBox.Show(StaffValidationHelper.ErrorMessage, "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
 
                 // Update the staff in the database
                 int result = StaffServices.UpdateStaff(staff);
@@ -152,6 +178,15 @@ namespace GUI_UI_PolyCafe
                 return;
             }
 
+            // Check if the selected staff member is an admin or manager
+            Staff? selectedStaff = StaffServices.GetStaffByCriteria(StaffColumns.Id,txtStaffId.Text);
+            if (selectedStaff != null && selectedStaff.Role == 1 )
+            {
+                MessageBox.Show("You can not detele another admin or manager", "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+
             try
             {
                 // Get the staff ID from the input field
@@ -161,9 +196,8 @@ namespace GUI_UI_PolyCafe
                 var confirmResult = MessageBox.Show("Are you sure you want to delete this staff member?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (confirmResult != DialogResult.Yes)
                 {
-                    return; // User cancelled the deletion
+                    return; 
                 }
-
 
                 // Delete the staff member from the database
                 int result = StaffServices.DeleteStaff(staffId);
@@ -205,8 +239,9 @@ namespace GUI_UI_PolyCafe
                 txtEmail.Text = selectedStaff.Email;
                 txtPassword.Text = selectedStaff.Password;
                 txtConfirmPassword.Text = selectedStaff.Password;
-                rdoActive.Checked = selectedStaff.Status == 1;
                 rdoManager.Checked = selectedStaff.Role == 1;
+                rdoEmployee.Checked = selectedStaff.Role == 0;
+                chk_active.Checked = selectedStaff.Status == 1;
 
                 // Direct to the update section tab
                 tabControl.SelectedTab = tabPageUpdate;
@@ -227,12 +262,11 @@ namespace GUI_UI_PolyCafe
             txtEmail.Clear();
             txtPassword.Clear();
             txtConfirmPassword.Clear();
-            rdoActive.Checked = true;
             rdoManager.Checked = false;
         }
 
         //Check if the staff information is valid before adding or updating
-        private bool IsStaffValid(Staff staff)
+        private bool IsValidStaff(Staff staff)
         {
             if (string.IsNullOrWhiteSpace(staff.FullName) ||
                 string.IsNullOrWhiteSpace(staff.Password) ||
@@ -242,6 +276,38 @@ namespace GUI_UI_PolyCafe
                 return false;
             }
             return true;
+        }
+
+        private void chk_displayPassword_CheckedChanged(object sender, EventArgs e)
+        {
+            txtPassword.UseSystemPasswordChar = !chk_displayPassword.Checked;
+        }
+
+        private void chk_displayConfirmPassword_CheckedChanged(object sender, EventArgs e)
+        {
+            txtConfirmPassword.UseSystemPasswordChar = !chk_displayConfirmPassword.Checked;
+        }
+
+        private void dgvStaff_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (dgvStaff.Columns[e.ColumnIndex].Name == "Role" && e.Value != null)
+            {
+                int roleValue;
+                if (int.TryParse(e.Value.ToString(), out roleValue))
+                {
+                    e.Value = roleValue == 1 ? "Quản lý" : "Nhân viên";
+                    e.FormattingApplied = true;
+                }
+            }
+            else if (dgvStaff.Columns[e.ColumnIndex].Name == "Status" && e.Value != null)
+            {
+                int statusValue;
+                if (int.TryParse(e.Value.ToString(), out statusValue))
+                {
+                    e.Value = statusValue == 1 ? "Hoạt động" : "Không hoạt động";
+                    e.FormattingApplied = true;
+                }
+            }
         }
     }
 }
