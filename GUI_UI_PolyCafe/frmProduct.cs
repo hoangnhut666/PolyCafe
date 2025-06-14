@@ -188,12 +188,12 @@ namespace GUI_UI_PolyCafe
                 {
                     MessageBox.Show("Failed to update product. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-        }
+            }
             catch (Exception ex)
             {
                 MessageBox.Show($"An error occurred while updating product: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-}
+        }
 
 
 
@@ -217,12 +217,18 @@ namespace GUI_UI_PolyCafe
                 }
 
                 int result = ProductServices.DeleteProduct(productId);
+
+
                 if (result > 0)
                 {
                     MessageBox.Show("Product deleted successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     LoadAllProducts();
                     ClearInputFields();
                 }
+
+                //Delete the product in new folder
+                DeleteImageFile(pictureBoxProduct.ImageLocation);
+
             }
             catch (Exception ex)
             {
@@ -252,8 +258,10 @@ namespace GUI_UI_PolyCafe
                     // Create folder and copy the image file. 
                     string newImagePath = ImageUtil.CopyImageToProjectFolder(selectedImagePath);
 
-                    pictureBoxProduct.Image = Image.FromFile(newImagePath);
+                    //pictureBoxProduct.Image = Image.FromFile(newImagePath);
+                    pictureBoxProduct.Image = LoadImageFromFile(newImagePath);
                     pictureBoxProduct.ImageLocation = newImagePath;
+                    
                 }
             }
         }
@@ -308,7 +316,6 @@ namespace GUI_UI_PolyCafe
         }
 
 
-        //Load an image from a file path and return it as a Bitmap object.
         public static Bitmap LoadImageFromFile(string filePath)
         {
             if (string.IsNullOrEmpty(filePath) || !File.Exists(filePath))
@@ -317,7 +324,10 @@ namespace GUI_UI_PolyCafe
             }
             try
             {
-                return new Bitmap(filePath);
+                using (var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+                {
+                    return new Bitmap(fs);
+                }
             }
             catch (Exception ex)
             {
@@ -326,9 +336,29 @@ namespace GUI_UI_PolyCafe
         }
 
 
+        //Delete the image file from the project folder
+        private void DeleteImageFile(string? imagePath)
+        {
+            if (!string.IsNullOrEmpty(imagePath) && File.Exists(imagePath))
+            {
+                try
+                {
+                    // Dispose the image if it's loaded in the PictureBox
+                    if (pictureBoxProduct.Image != null)
+                    {
+                        pictureBoxProduct.Image.Dispose();
+                    }
+                    File.Delete(imagePath);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error deleting image file: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
     }
 }
-
 
 
 

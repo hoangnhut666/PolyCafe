@@ -35,7 +35,7 @@ namespace GUI_UI_PolyCafe
                 }
             }
 
-            //Application.Run(new frmProduct());
+            //Application.Run(new frmInvoiceManagement());
         }
     }
 }

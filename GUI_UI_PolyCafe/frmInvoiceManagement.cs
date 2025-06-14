@@ -101,28 +101,6 @@ namespace GUI_UI_PolyCafe
             }
         }
 
-        //Load invoice by staff ID criteria
-        private void LoadInvoicesByStaffId(string staffId)
-        {
-            try
-            {
-                var invoices = invoiceServices.GetInvoicesByCriteria("StaffId", staffId);
-                if (invoices != null && invoices.Count > 0)
-                {
-                    dgvInvoices.DataSource = invoices;
-                }
-                else
-                {
-                    MessageBox.Show("No invoices found for the selected staff.");
-                    dgvInvoices.DataSource = null;
-                }
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                dgvInvoices.DataSource = null;
-            }
-        }
 
 
         //Load all invoice details
@@ -392,25 +370,20 @@ namespace GUI_UI_PolyCafe
 
         private void dgvInvoices_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            // Check if a row is selected
-            if (dgvInvoices.SelectedRows.Count > 0)
+            // Ensure a row is selected
+            if (e.RowIndex >= 0 && e.RowIndex < dgvInvoices.Rows.Count)
             {
                 // Get the selected invoice
-                Invoice selectedInvoice = (Invoice)dgvInvoices.SelectedRows[0].DataBoundItem;
-                // Fill the controls with the selected invoice's data
+                DataGridViewRow selectedRow = dgvInvoices.Rows[e.RowIndex];
+                Invoice selectedInvoice = (Invoice)selectedRow.DataBoundItem;
+                // Populate the form fields with the selected invoice data
                 txtInvoiceId.Text = selectedInvoice.Id;
                 cboCardHolder.SelectedValue = selectedInvoice.CardId;
                 cboStaff.SelectedValue = selectedInvoice.StaffId;
                 dtpDate.Value = selectedInvoice.Date;
                 rdoPaid.Checked = selectedInvoice.Status;
-            }
-            else
-            {
-                // Clear the controls if no row is selected
-                cboCardHolder.SelectedIndex = -1;
-                cboStaff.SelectedIndex = -1;
-                dtpDate.Value = DateTime.Now;
-                rdoPaid.Checked = false;
+                // Load invoice details for the selected invoice
+                LoadAllInvoiceDetails();
             }
         }
 
@@ -560,6 +533,31 @@ namespace GUI_UI_PolyCafe
 //        }
 //    }
 //    catch (Exception e )
+//    {
+//        MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+//        dgvInvoices.DataSource = null;
+//    }
+//}
+
+
+
+//Load invoice by staff ID criteria
+//private void LoadInvoicesByStaffId(string staffId)
+//{
+//    try
+//    {
+//        var invoices = invoiceServices.GetInvoicesByCriteria("StaffId", staffId);
+//        if (invoices != null && invoices.Count > 0)
+//        {
+//            dgvInvoices.DataSource = invoices;
+//        }
+//        else
+//        {
+//            MessageBox.Show("No invoices found for the selected staff.");
+//            dgvInvoices.DataSource = null;
+//        }
+//    }
+//    catch (Exception e)
 //    {
 //        MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 //        dgvInvoices.DataSource = null;
