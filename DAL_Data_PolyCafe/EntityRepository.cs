@@ -12,7 +12,7 @@ namespace DAL_Data_PolyCafe
     public class EntityRepository
     {
         //Auto generate ID for a specific table
-        public static string GenerateId(string tableName, string columnName ,string prefix)
+        public static string GenerateId(string tableName, string columnName, string prefix)
         {
             string query = $"SELECT TOP 1 {columnName} FROM {tableName} ORDER BY {columnName} DESC";
             try
@@ -41,8 +41,34 @@ namespace DAL_Data_PolyCafe
                 throw new Exception($"Error generating new ID for table {tableName}: " + ex.Message);
             }
         }
+
+
+        //Check if a record exists in a specific table by criteria
+        public static bool RecordExists(string tableName, string columnName, string value)
+        {
+            string query = $"SELECT COUNT(*) FROM {tableName} WHERE {columnName} = @value";
+            SqlParameter param = new SqlParameter("@value", value);
+            try
+            {
+                int count = (int)Utilities.ExecuteScalar(query, param);
+                return count > 0;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error checking existence of record in table {tableName}: " + ex.Message);
+            }
+        }
     }
 }
+
+
+
+
+
+
+
+
+
 
 
 

@@ -21,7 +21,7 @@ namespace DBUTIL_Utilities_PolyCafe.ValidationHelper
             }
 
             //Check if the unit price is a positive decimal number
-            if (product.Price <= 0)
+            if (product.UnitPrice <= 0)
             {
                 ErrorMessage = "Product price must be a positive number.";
                 return false;

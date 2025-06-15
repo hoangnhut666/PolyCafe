@@ -32,6 +32,29 @@ namespace DAL_Data_PolyCafe
             return invoiceDetails;
         }
 
+        //Get an invoice detail by specific criteria
+        public List<InvoiceDetail> GetInvoiceDetailsByCriteria(string columnName, string value)
+        {
+            string sql = $"SELECT * FROM {DbTables.InvoiceDetail} WHERE {columnName} = @Value";
+            var parameters = new SqlParameter[]
+            {
+                new SqlParameter("@Value", value)
+            };
+            List<InvoiceDetail> invoiceDetails = Utilities.ExecuteQuery(sql, reader =>
+            {
+                return new InvoiceDetail
+                {
+                    Id = Convert.ToInt32(reader[InvoiceDetailColumns.Id]),
+                    InvoiceId = reader[InvoiceDetailColumns.InvoiceId].ToString(),
+                    ProductId = reader[InvoiceDetailColumns.ProductId].ToString(),
+                    Quantity = Convert.ToInt32(reader[InvoiceDetailColumns.Quantity]),
+                    UnitPrice = Convert.ToDecimal(reader[InvoiceDetailColumns.UnitPrice])
+                };
+            }, parameters);
+            return invoiceDetails;
+        }
+
+
 
         //Add a new invoice detail to the database
         public void InsertInvoiceDetail(InvoiceDetail invoiceDetail)

@@ -29,35 +29,50 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
+            btnExport = new Button();
             button1 = new Button();
-            dateTimePicker2 = new DateTimePicker();
-            dateTimePicker1 = new DateTimePicker();
-            comboBox1 = new ComboBox();
+            dtpToDate = new DateTimePicker();
+            dtpFromDate = new DateTimePicker();
+            cboCategory = new ComboBox();
             label3 = new Label();
             label2 = new Label();
             label1 = new Label();
-            dataGridView1 = new DataGridView();
+            dgvReport = new DataGridView();
             panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvReport).BeginInit();
             SuspendLayout();
             // 
             // panel1
             // 
             panel1.BackColor = SystemColors.GradientInactiveCaption;
+            panel1.Controls.Add(btnExport);
             panel1.Controls.Add(button1);
-            panel1.Controls.Add(dateTimePicker2);
-            panel1.Controls.Add(dateTimePicker1);
-            panel1.Controls.Add(comboBox1);
+            panel1.Controls.Add(dtpToDate);
+            panel1.Controls.Add(dtpFromDate);
+            panel1.Controls.Add(cboCategory);
             panel1.Controls.Add(label3);
             panel1.Controls.Add(label2);
             panel1.Controls.Add(label1);
             panel1.Font = new Font("Segoe UI", 11F);
             panel1.Location = new Point(14, 15);
-            panel1.Margin = new Padding(4, 4, 4, 4);
+            panel1.Margin = new Padding(4);
             panel1.Name = "panel1";
             panel1.Size = new Size(2698, 161);
             panel1.TabIndex = 0;
-            panel1.Paint += panel1_Paint;
+            // 
+            // btnExport
+            // 
+            btnExport.BackColor = Color.CornflowerBlue;
+            btnExport.BackgroundImageLayout = ImageLayout.Zoom;
+            btnExport.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnExport.ForeColor = Color.Transparent;
+            btnExport.Location = new Point(2008, 36);
+            btnExport.Name = "btnExport";
+            btnExport.Size = new Size(194, 79);
+            btnExport.TabIndex = 4;
+            btnExport.Text = "Thống kê";
+            btnExport.UseVisualStyleBackColor = false;
+            btnExport.Click += btnExport_Click;
             // 
             // button1
             // 
@@ -66,44 +81,43 @@
             button1.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button1.ForeColor = Color.Transparent;
             button1.Location = new Point(2431, 38);
-            button1.Margin = new Padding(4, 4, 4, 4);
+            button1.Margin = new Padding(4);
             button1.Name = "button1";
             button1.Size = new Size(233, 96);
             button1.TabIndex = 3;
             button1.Text = "Thống kê";
             button1.UseVisualStyleBackColor = false;
             // 
-            // dateTimePicker2
+            // dtpToDate
             // 
-            dateTimePicker2.Location = new Point(1723, 54);
-            dateTimePicker2.Margin = new Padding(4, 4, 4, 4);
-            dateTimePicker2.Name = "dateTimePicker2";
-            dateTimePicker2.Size = new Size(522, 51);
-            dateTimePicker2.TabIndex = 2;
+            dtpToDate.Location = new Point(1476, 52);
+            dtpToDate.Margin = new Padding(4);
+            dtpToDate.Name = "dtpToDate";
+            dtpToDate.Size = new Size(442, 51);
+            dtpToDate.TabIndex = 2;
             // 
-            // dateTimePicker1
+            // dtpFromDate
             // 
-            dateTimePicker1.Location = new Point(978, 53);
-            dateTimePicker1.Margin = new Padding(4, 4, 4, 4);
-            dateTimePicker1.Name = "dateTimePicker1";
-            dateTimePicker1.Size = new Size(522, 51);
-            dateTimePicker1.TabIndex = 2;
+            dtpFromDate.Location = new Point(785, 53);
+            dtpFromDate.Margin = new Padding(4);
+            dtpFromDate.Name = "dtpFromDate";
+            dtpFromDate.Size = new Size(450, 51);
+            dtpFromDate.TabIndex = 2;
             // 
-            // comboBox1
+            // cboCategory
             // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(261, 54);
-            comboBox1.Margin = new Padding(4, 4, 4, 4);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(454, 53);
-            comboBox1.TabIndex = 1;
-            comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
+            cboCategory.FormattingEnabled = true;
+            cboCategory.Location = new Point(261, 54);
+            cboCategory.Margin = new Padding(4);
+            cboCategory.Name = "cboCategory";
+            cboCategory.Size = new Size(339, 53);
+            cboCategory.TabIndex = 1;
             // 
             // label3
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 11F);
-            label3.Location = new Point(1556, 58);
+            label3.Location = new Point(1309, 56);
             label3.Margin = new Padding(4, 0, 4, 0);
             label3.Name = "label3";
             label3.Size = new Size(159, 45);
@@ -114,7 +128,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 11F);
-            label2.Location = new Point(834, 58);
+            label2.Location = new Point(641, 58);
             label2.Margin = new Padding(4, 0, 4, 0);
             label2.Name = "label2";
             label2.Size = new Size(136, 45);
@@ -132,43 +146,45 @@
             label1.TabIndex = 0;
             label1.Text = "Loại sản phẩm";
             // 
-            // dataGridView1
+            // dgvReport
             // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(14, 184);
-            dataGridView1.Margin = new Padding(4, 4, 4, 4);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.RowHeadersWidth = 92;
-            dataGridView1.Size = new Size(2698, 1530);
-            dataGridView1.TabIndex = 1;
+            dgvReport.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvReport.Location = new Point(14, 184);
+            dgvReport.Margin = new Padding(4);
+            dgvReport.Name = "dgvReport";
+            dgvReport.RowHeadersWidth = 92;
+            dgvReport.Size = new Size(2698, 1530);
+            dgvReport.TabIndex = 1;
+            dgvReport.CellFormatting += dgvReport_CellFormatting;
             // 
             // frmRevenueByCategory
             // 
             AutoScaleDimensions = new SizeF(18F, 45F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(2272, 1421);
-            Controls.Add(dataGridView1);
+            Controls.Add(dgvReport);
             Controls.Add(panel1);
             Font = new Font("Segoe UI", 11F);
-            Margin = new Padding(4, 4, 4, 4);
+            Margin = new Padding(4);
             Name = "frmRevenueByCategory";
             Text = "Thống Kê Doanh Thu Theo Loại Sản Phẩm";
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvReport).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
         private Panel panel1;
-        private ComboBox comboBox1;
+        private ComboBox cboCategory;
         private Label label2;
         private Label label1;
         private Button button1;
-        private DateTimePicker dateTimePicker2;
-        private DateTimePicker dateTimePicker1;
+        private DateTimePicker dtpToDate;
+        private DateTimePicker dtpFromDate;
         private Label label3;
-        private DataGridView dataGridView1;
+        private DataGridView dgvReport;
+        private Button btnExport;
     }
 }

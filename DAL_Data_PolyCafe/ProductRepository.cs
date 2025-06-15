@@ -22,7 +22,7 @@ namespace DAL_Data_PolyCafe
                 {
                     ProductId = reader[ProductColumns.ProductId].ToString(),
                     ProductName = reader[ProductColumns.ProductName].ToString(),
-                    Price = Convert.ToDecimal(reader[ProductColumns.Price]),
+                    UnitPrice = Convert.ToDecimal(reader[ProductColumns.Price]),
                     CategoryId = reader[ProductColumns.CategoryId].ToString(),
                     Image = reader[ProductColumns.Image].ToString(),
                     Status = Convert.ToBoolean(reader[ProductColumns.Status])
@@ -45,7 +45,7 @@ namespace DAL_Data_PolyCafe
                 {
                     ProductId = reader[ProductColumns.ProductId].ToString(),
                     ProductName = reader[ProductColumns.ProductName].ToString(),
-                    Price = Convert.ToDecimal(reader[ProductColumns.Price]),
+                    UnitPrice = Convert.ToDecimal(reader[ProductColumns.Price]),
                     CategoryId = reader[ProductColumns.CategoryId].ToString(),
                     Image = reader[ProductColumns.Image].ToString(),
                     Status = Convert.ToBoolean(reader[ProductColumns.Status])
@@ -65,7 +65,7 @@ namespace DAL_Data_PolyCafe
             {
                 new SqlParameter("@ProductId", product.ProductId),
                 new SqlParameter("@ProductName", product.ProductName),
-                new SqlParameter("@Price", product.Price),
+                new SqlParameter("@Price", product.UnitPrice),
                 new SqlParameter("@CategoryId", product.CategoryId),
                 new SqlParameter("@Image", product.Image),
                 new SqlParameter("@Status", product.Status)
@@ -88,7 +88,7 @@ namespace DAL_Data_PolyCafe
             {
                 new SqlParameter("@ProductId", product.ProductId),
                 new SqlParameter("@ProductName", product.ProductName),
-                new SqlParameter("@Price", product.Price),
+                new SqlParameter("@Price", product.UnitPrice),
                 new SqlParameter("@CategoryId", product.CategoryId),
                 new SqlParameter("@Image", product.Image),
                 new SqlParameter("@Status", product.Status)

@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            tabControl1 = new TabControl();
+            tabControl = new TabControl();
             tabPageInvoice = new TabPage();
             btnDeleteDetail = new Button();
             btnPay = new Button();
@@ -50,7 +50,7 @@
             label4 = new Label();
             groupBox1 = new GroupBox();
             dtpDate = new DateTimePicker();
-            radioButton1 = new RadioButton();
+            rdoUnpaid = new RadioButton();
             rdoPaid = new RadioButton();
             cboStaff = new ComboBox();
             label8 = new Label();
@@ -63,7 +63,7 @@
             label1 = new Label();
             tabPageInvoiceDetail = new TabPage();
             dgvInvoiceDetails = new DataGridView();
-            tabControl1.SuspendLayout();
+            tabControl.SuspendLayout();
             tabPageInvoice.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvInvoices).BeginInit();
             groupBox2.SuspendLayout();
@@ -72,15 +72,15 @@
             ((System.ComponentModel.ISupportInitialize)dgvInvoiceDetails).BeginInit();
             SuspendLayout();
             // 
-            // tabControl1
+            // tabControl
             // 
-            tabControl1.Controls.Add(tabPageInvoice);
-            tabControl1.Controls.Add(tabPageInvoiceDetail);
-            tabControl1.Location = new Point(7, 12);
-            tabControl1.Name = "tabControl1";
-            tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(2253, 1403);
-            tabControl1.TabIndex = 0;
+            tabControl.Controls.Add(tabPageInvoice);
+            tabControl.Controls.Add(tabPageInvoiceDetail);
+            tabControl.Location = new Point(7, 12);
+            tabControl.Name = "tabControl";
+            tabControl.SelectedIndex = 0;
+            tabControl.Size = new Size(2253, 1403);
+            tabControl.TabIndex = 0;
             // 
             // tabPageInvoice
             // 
@@ -281,6 +281,7 @@
             txtAmount.Location = new Point(287, 408);
             txtAmount.Multiline = true;
             txtAmount.Name = "txtAmount";
+            txtAmount.ReadOnly = true;
             txtAmount.Size = new Size(448, 61);
             txtAmount.TabIndex = 1;
             // 
@@ -291,6 +292,7 @@
             txtQuantity.Name = "txtQuantity";
             txtQuantity.Size = new Size(448, 61);
             txtQuantity.TabIndex = 1;
+            txtQuantity.TextChanged += txtQuantity_TextChanged;
             // 
             // label4
             // 
@@ -305,7 +307,7 @@
             // groupBox1
             // 
             groupBox1.Controls.Add(dtpDate);
-            groupBox1.Controls.Add(radioButton1);
+            groupBox1.Controls.Add(rdoUnpaid);
             groupBox1.Controls.Add(rdoPaid);
             groupBox1.Controls.Add(cboStaff);
             groupBox1.Controls.Add(label8);
@@ -329,28 +331,28 @@
             dtpDate.Size = new Size(435, 43);
             dtpDate.TabIndex = 4;
             // 
-            // radioButton1
+            // rdoUnpaid
             // 
-            radioButton1.AutoSize = true;
-            radioButton1.Font = new Font("Segoe UI", 12F);
-            radioButton1.Location = new Point(609, 357);
-            radioButton1.Name = "radioButton1";
-            radioButton1.Size = new Size(244, 52);
-            radioButton1.TabIndex = 3;
-            radioButton1.TabStop = true;
-            radioButton1.Text = "Đã xác nhận";
-            radioButton1.UseVisualStyleBackColor = true;
+            rdoUnpaid.AutoSize = true;
+            rdoUnpaid.Font = new Font("Segoe UI", 12F);
+            rdoUnpaid.Location = new Point(584, 359);
+            rdoUnpaid.Name = "rdoUnpaid";
+            rdoUnpaid.Size = new Size(323, 52);
+            rdoUnpaid.TabIndex = 3;
+            rdoUnpaid.TabStop = true;
+            rdoUnpaid.Text = "Chưa Thanh Toán";
+            rdoUnpaid.UseVisualStyleBackColor = true;
             // 
             // rdoPaid
             // 
             rdoPaid.AutoSize = true;
             rdoPaid.Font = new Font("Segoe UI", 12F);
-            rdoPaid.Location = new Point(263, 357);
+            rdoPaid.Location = new Point(263, 359);
             rdoPaid.Name = "rdoPaid";
-            rdoPaid.Size = new Size(265, 52);
+            rdoPaid.Size = new Size(275, 52);
             rdoPaid.TabIndex = 3;
             rdoPaid.TabStop = true;
-            rdoPaid.Text = "Chờ xác nhận";
+            rdoPaid.Text = "Đã thanh toán";
             rdoPaid.UseVisualStyleBackColor = true;
             // 
             // cboStaff
@@ -460,15 +462,15 @@
             dgvInvoiceDetails.TabIndex = 0;
             dgvInvoiceDetails.CellClick += dgvInvoiceDetails_CellClick;
             // 
-            // frmManageInvoices
+            // frmInvoiceManagement
             // 
             AutoScaleDimensions = new SizeF(15F, 37F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(2272, 1421);
-            Controls.Add(tabControl1);
-            Name = "frmManageInvoices";
+            Controls.Add(tabControl);
+            Name = "frmInvoiceManagement";
             Text = "Quản lý phiếu bán hàng";
-            tabControl1.ResumeLayout(false);
+            tabControl.ResumeLayout(false);
             tabPageInvoice.ResumeLayout(false);
             tabPageInvoice.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvInvoices).EndInit();
@@ -483,7 +485,7 @@
 
         #endregion
 
-        private TabControl tabControl1;
+        private TabControl tabControl;
         private TabPage tabPageInvoice;
         private Label label1;
         private TabPage tabPageInvoiceDetail;
@@ -520,7 +522,7 @@
         private ComboBox cboStaff;
         private DateTimePicker dtpDate;
         private ComboBox cboProductName;
-        private RadioButton radioButton1;
+        private RadioButton rdoUnpaid;
         private TextBox txtAmount;
     }
 }

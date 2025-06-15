@@ -37,7 +37,7 @@ namespace GUI_UI_PolyCafe
             {
                 p.ProductId,
                 p.ProductName,
-                p.Price,
+                p.UnitPrice,
                 p.CategoryId,
                 p.Status,
                 Image = !string.IsNullOrEmpty(p.Image) && File.Exists(p.Image) ? LoadImageFromFile(p.Image) : null
@@ -114,7 +114,7 @@ namespace GUI_UI_PolyCafe
                 {
                     ProductId = ProductServices.GenerateProductId(),
                     ProductName = txtProductName.Text,
-                    Price = decimal.Parse(txtUnitPrice.Text),
+                    UnitPrice = decimal.Parse(txtUnitPrice.Text),
                     CategoryId = cboProductCategories.SelectedValue?.ToString(),
                     Image = pictureBoxProduct.ImageLocation ?? " ",
                     Status = rdoActive.Checked
@@ -163,7 +163,7 @@ namespace GUI_UI_PolyCafe
                 {
                     ProductId = txtProductId.Text,
                     ProductName = txtProductName.Text,
-                    Price = decimal.Parse(txtUnitPrice.Text),
+                    UnitPrice = decimal.Parse(txtUnitPrice.Text),
                     CategoryId = cboProductCategories.SelectedValue?.ToString(),
                     Image = pictureBoxProduct.ImageLocation ?? " ",
                     Status = rdoActive.Checked

@@ -23,6 +23,13 @@ namespace BLL_Services_PolyCafe
             return invoiceDetailsRepository.GetInvoiceDetails();
         }
 
+        // Get invoice details by specific criteria (e.g., InvoiceId, ProductId, etc.)
+        public List<InvoiceDetail> GetInvoiceDetailsByCriteria(string columnName, string value)
+        {
+            return invoiceDetailsRepository.GetInvoiceDetailsByCriteria(columnName, value);
+        }
+
+
         // Add a new invoice detail
         public void AddInvoiceDetail(InvoiceDetail invoiceDetail)
         {

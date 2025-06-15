@@ -28,35 +28,36 @@
         /// </summary>
         private void InitializeComponent()
         {
-            dataGridView1 = new DataGridView();
+            dgvReport = new DataGridView();
             panel1 = new Panel();
-            button1 = new Button();
-            dateTimePicker2 = new DateTimePicker();
-            dateTimePicker1 = new DateTimePicker();
-            comboBox1 = new ComboBox();
+            btnExport = new Button();
+            dtpToDate = new DateTimePicker();
+            dtpFromDate = new DateTimePicker();
+            cboEmployee = new ComboBox();
             label3 = new Label();
             label2 = new Label();
             label1 = new Label();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvReport).BeginInit();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
-            // dataGridView1
+            // dgvReport
             // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(21, 193);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.RowHeadersWidth = 92;
-            dataGridView1.Size = new Size(2239, 1216);
-            dataGridView1.TabIndex = 3;
+            dgvReport.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvReport.Location = new Point(21, 193);
+            dgvReport.Name = "dgvReport";
+            dgvReport.RowHeadersWidth = 92;
+            dgvReport.Size = new Size(2239, 1216);
+            dgvReport.TabIndex = 3;
+            dgvReport.CellFormatting += dgvReport_CellFormatting;
             // 
             // panel1
             // 
             panel1.BackColor = SystemColors.GradientInactiveCaption;
-            panel1.Controls.Add(button1);
-            panel1.Controls.Add(dateTimePicker2);
-            panel1.Controls.Add(dateTimePicker1);
-            panel1.Controls.Add(comboBox1);
+            panel1.Controls.Add(btnExport);
+            panel1.Controls.Add(dtpToDate);
+            panel1.Controls.Add(dtpFromDate);
+            panel1.Controls.Add(cboEmployee);
             panel1.Controls.Add(label3);
             panel1.Controls.Add(label2);
             panel1.Controls.Add(label1);
@@ -65,40 +66,41 @@
             panel1.Size = new Size(2248, 157);
             panel1.TabIndex = 2;
             // 
-            // button1
+            // btnExport
             // 
-            button1.BackColor = Color.CornflowerBlue;
-            button1.BackgroundImageLayout = ImageLayout.Zoom;
-            button1.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button1.ForeColor = Color.Transparent;
-            button1.Location = new Point(2026, 31);
-            button1.Name = "button1";
-            button1.Size = new Size(194, 79);
-            button1.TabIndex = 3;
-            button1.Text = "Thống kê";
-            button1.UseVisualStyleBackColor = false;
+            btnExport.BackColor = Color.CornflowerBlue;
+            btnExport.BackgroundImageLayout = ImageLayout.Zoom;
+            btnExport.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnExport.ForeColor = Color.Transparent;
+            btnExport.Location = new Point(2026, 31);
+            btnExport.Name = "btnExport";
+            btnExport.Size = new Size(194, 79);
+            btnExport.TabIndex = 3;
+            btnExport.Text = "Thống kê";
+            btnExport.UseVisualStyleBackColor = false;
+            btnExport.Click += btnExport_Click;
             // 
-            // dateTimePicker2
+            // dtpToDate
             // 
-            dateTimePicker2.Location = new Point(1493, 56);
-            dateTimePicker2.Name = "dateTimePicker2";
-            dateTimePicker2.Size = new Size(450, 43);
-            dateTimePicker2.TabIndex = 2;
+            dtpToDate.Location = new Point(1493, 56);
+            dtpToDate.Name = "dtpToDate";
+            dtpToDate.Size = new Size(450, 43);
+            dtpToDate.TabIndex = 2;
             // 
-            // dateTimePicker1
+            // dtpFromDate
             // 
-            dateTimePicker1.Location = new Point(839, 54);
-            dateTimePicker1.Name = "dateTimePicker1";
-            dateTimePicker1.Size = new Size(428, 43);
-            dateTimePicker1.TabIndex = 2;
+            dtpFromDate.Location = new Point(839, 54);
+            dtpFromDate.Name = "dtpFromDate";
+            dtpFromDate.Size = new Size(428, 43);
+            dtpFromDate.TabIndex = 2;
             // 
-            // comboBox1
+            // cboEmployee
             // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(241, 52);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(423, 45);
-            comboBox1.TabIndex = 1;
+            cboEmployee.FormattingEnabled = true;
+            cboEmployee.Location = new Point(241, 52);
+            cboEmployee.Name = "cboEmployee";
+            cboEmployee.Size = new Size(423, 45);
+            cboEmployee.TabIndex = 1;
             // 
             // label3
             // 
@@ -135,11 +137,11 @@
             AutoScaleDimensions = new SizeF(15F, 37F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(2272, 1421);
-            Controls.Add(dataGridView1);
+            Controls.Add(dgvReport);
             Controls.Add(panel1);
             Name = "frmRevenueByStaff";
             Text = "Thống kê doanh thu theo nhân viên";
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvReport).EndInit();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ResumeLayout(false);
@@ -147,12 +149,12 @@
 
         #endregion
 
-        private DataGridView dataGridView1;
+        private DataGridView dgvReport;
         private Panel panel1;
-        private Button button1;
-        private DateTimePicker dateTimePicker2;
-        private DateTimePicker dateTimePicker1;
-        private ComboBox comboBox1;
+        private Button btnExport;
+        private DateTimePicker dtpToDate;
+        private DateTimePicker dtpFromDate;
+        private ComboBox cboEmployee;
         private Label label3;
         private Label label2;
         private Label label1;

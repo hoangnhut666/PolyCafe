@@ -13,95 +13,6 @@ namespace DBUTIL_Utilities_PolyCafe
     {
         private static readonly string connString = @"Server=.\;Database=PolyCafe;Integrated Security=True;TrustServerCertificate=True;";
 
-        private static SqlCommand GetCommand(string sql, CommandType cmdType, List<SqlParameter>? parameters = null)
-        {
-            SqlConnection conn = new SqlConnection(connString);
-            SqlCommand cmd = new SqlCommand(sql, conn);
-            cmd.CommandType = cmdType;
-
-            if (parameters != null)
-            {
-                cmd.Parameters.AddRange(parameters.ToArray());
-            }
-
-            return cmd;
-        }
-
-        public static void Update(string sql, List<Object> args, CommandType cmdType = CommandType.Text)
-        {
-            SqlCommand cmd = GetCommand(sql, cmdType);
-            cmd.Connection.Open();
-            cmd.Transaction = cmd.Connection.BeginTransaction();
-            try
-            {
-                cmd.ExecuteNonQuery();
-                cmd.Transaction.Commit();
-            }
-            catch (Exception)
-            {
-                cmd.Transaction.Rollback();
-                Console.WriteLine($"Error in Update: {sql}");
-                throw;
-            }
-        }
-
-
-        public static SqlDataReader Query(string sql, List<SqlParameter>? parameters = null, CommandType cmdType = CommandType.Text)
-        {
-            try
-            {
-                SqlCommand cmd = GetCommand(sql, cmdType, parameters);
-                cmd.Connection.Open();
-                return cmd.ExecuteReader(CommandBehavior.CloseConnection);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error in Query: {ex.Message}");
-                throw;
-            }
-        }
-
-
-
-
-        public static Object Value(string sql, List<object> args, CommandType cmdType = CommandType.Text)
-        {
-            try
-            {
-                SqlCommand cmd = GetCommand(sql, cmdType);
-                using (cmd.Connection)
-                {
-                    cmd.Connection.Open();
-                    using (SqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        Object result = new object();
-
-                        if (reader.Read())
-                        {
-                            for (int i = 0; i < reader.FieldCount; i++)
-                            {
-                                string columnName = reader.GetName(i);
-                                PropertyInfo propertyInfo = result.GetType().GetProperty(columnName);
-
-                                if (propertyInfo != null)
-                                {
-                                    var value = reader.IsDBNull(i) ? null : reader[columnName];
-                                    propertyInfo.SetValue(result, value);
-                                }
-                            }
-                        }
-                        return result;
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                Console.WriteLine($"Error in Value: {sql}");
-                throw;
-            }
-        }
-
-
         public static DataTable ExecuteDataTable(string commandText, params SqlParameter[] parameters)
         {
             using (SqlConnection connection = new SqlConnection(connString))
@@ -204,6 +115,41 @@ namespace DBUTIL_Utilities_PolyCafe
                     throw new Exception($"Error executing scalar command: {commandText}", ex);
                 }
             }
+        }
+
+
+        public static List<T> ExecuteStoredProcedure<T>(string storedProcedureName, Func<IDataReader, T> mapFunction, params SqlParameter[] parameters)
+        {
+            List<T> result = new List<T>();
+
+            using (SqlConnection connection = new SqlConnection(connString))
+            using (SqlCommand command = new SqlCommand(storedProcedureName, connection))
+            {
+                try
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    if (parameters != null && parameters.Length > 0)
+                    {
+                        command.Parameters.AddRange(parameters);
+                    }
+
+                    connection.Open();
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            result.Add(mapFunction(reader));
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Error executing stored procedure: {storedProcedureName}", ex);
+                }
+            }
+
+            return result;
         }
     }
 }
@@ -484,5 +430,101 @@ namespace DBUTIL_Utilities_PolyCafe
 //    {
 //        Console.WriteLine($"Error in Value: {ex.Message}");
 //        return null;
+//    }
+//}
+
+
+
+
+
+
+
+
+
+//private static SqlCommand GetCommand(string sql, CommandType cmdType, List<SqlParameter>? parameters = null)
+//{
+//    SqlConnection conn = new SqlConnection(connString);
+//    SqlCommand cmd = new SqlCommand(sql, conn);
+//    cmd.CommandType = cmdType;
+
+//    if (parameters != null)
+//    {
+//        cmd.Parameters.AddRange(parameters.ToArray());
+//    }
+
+//    return cmd;
+//}
+
+//public static void Update(string sql, List<Object> args, CommandType cmdType = CommandType.Text)
+//{
+//    SqlCommand cmd = GetCommand(sql, cmdType);
+//    cmd.Connection.Open();
+//    cmd.Transaction = cmd.Connection.BeginTransaction();
+//    try
+//    {
+//        cmd.ExecuteNonQuery();
+//        cmd.Transaction.Commit();
+//    }
+//    catch (Exception)
+//    {
+//        cmd.Transaction.Rollback();
+//        Console.WriteLine($"Error in Update: {sql}");
+//        throw;
+//    }
+//}
+
+
+//public static SqlDataReader Query(string sql, List<SqlParameter>? parameters = null, CommandType cmdType = CommandType.Text)
+//{
+//    try
+//    {
+//        SqlCommand cmd = GetCommand(sql, cmdType, parameters);
+//        cmd.Connection.Open();
+//        return cmd.ExecuteReader(CommandBehavior.CloseConnection);
+//    }
+//    catch (Exception ex)
+//    {
+//        Console.WriteLine($"Error in Query: {ex.Message}");
+//        throw;
+//    }
+//}
+
+
+
+
+//public static Object Value(string sql, List<object> args, CommandType cmdType = CommandType.Text)
+//{
+//    try
+//    {
+//        SqlCommand cmd = GetCommand(sql, cmdType);
+//        using (cmd.Connection)
+//        {
+//            cmd.Connection.Open();
+//            using (SqlDataReader reader = cmd.ExecuteReader())
+//            {
+//                Object result = new object();
+
+//                if (reader.Read())
+//                {
+//                    for (int i = 0; i < reader.FieldCount; i++)
+//                    {
+//                        string columnName = reader.GetName(i);
+//                        PropertyInfo propertyInfo = result.GetType().GetProperty(columnName);
+
+//                        if (propertyInfo != null)
+//                        {
+//                            var value = reader.IsDBNull(i) ? null : reader[columnName];
+//                            propertyInfo.SetValue(result, value);
+//                        }
+//                    }
+//                }
+//                return result;
+//            }
+//        }
+//    }
+//    catch (Exception)
+//    {
+//        Console.WriteLine($"Error in Value: {sql}");
+//        throw;
 //    }
 //}
