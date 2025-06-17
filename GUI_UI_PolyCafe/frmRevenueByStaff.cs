@@ -64,10 +64,10 @@ namespace GUI_UI_PolyCafe
                 return;
             }
 
-            //try
-            //{
-            // Get report data
-            List<RevenueByEmployeeReport> reportData = reportServices.GetRevenueByEmployee(
+            try
+            {
+                // Get report data
+                List<RevenueByEmployeeReport> reportData = reportServices.GetRevenueByEmployee(
                 cboEmployee.SelectedValue?.ToString() ?? string.Empty,
                 dtpFromDate.Value.Date,
                 dtpToDate.Value.Date);
@@ -79,12 +79,12 @@ namespace GUI_UI_PolyCafe
                 MessageBox.Show("No data found for the selected criteria.", "Information",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show($"An error occurred while generating the report: {ex.Message}", "Error",
-            //        MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //}
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred while generating the report: {ex.Message}", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void dgvReport_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)

@@ -36,6 +36,7 @@ namespace DBUTIL_Utilities_PolyCafe.ValidationHelper
                 return false;
             }
 
+
             return true;
         }
 

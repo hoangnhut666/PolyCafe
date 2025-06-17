@@ -42,6 +42,7 @@ namespace GUI_UI_PolyCafe
             InitializeComponent();
             SetupComponent();
             LoadForm();
+            ClearInvoiceDetails();
         }
 
 
@@ -66,7 +67,6 @@ namespace GUI_UI_PolyCafe
         private void LoadForm()
         {
             LoadAllInvoices();
-            LoadAllInvoiceDetails();
             LoadComboboxData();
         }
 
@@ -162,7 +162,7 @@ namespace GUI_UI_PolyCafe
                 if (invoice.Status == true)
                 {
                     InvoiceDetail? invoiceDetail = invoiceDetailsServices.GetInvoiceDetailsByCriteria(InvoiceDetailColumns.InvoiceId, invoice.Id).FirstOrDefault();
-                    if (invoiceDetail == null )
+                    if (invoiceDetail == null)
                     {
                         MessageBox.Show("You cannot pay an invoice without details.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
@@ -219,6 +219,14 @@ namespace GUI_UI_PolyCafe
             }
 
 
+            //Check if the invoice has details
+            if (selectedDetail != null)
+            {
+                MessageBox.Show("You cannot update an invoice that already has details.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+
             // Get the updated invoice object with the data from the form fields
             Invoice updateInvoice = new Invoice
             {
@@ -228,17 +236,14 @@ namespace GUI_UI_PolyCafe
                 Status = rdoPaid.Checked
             };
 
-            //if (selectedDetail != null)
-            //{
-            //    if (updateInvoice.Id != selectedInvoice.Id || updateInvoice.StaffId != selectedInvoice.StaffId)
-            //    {
-            //        MessageBox.Show("You can only change customer information and payment status for invoices that already have invoice details.", 
-            //            "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-            //        return;
-            //    }
+            //Check if the changed invoice is relative to another staff member
+            if (selectedInvoice.StaffId != updateInvoice.StaffId && !AuthUtil.IsManager())
+            {
+                MessageBox.Show("You can only update your own invoices.", "Access Denied", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
-            //}
 
             // Check if the invoice is valid before updating
             if (!invoiceValidationHelper.IsValidateInvoice(updateInvoice))
@@ -264,16 +269,18 @@ namespace GUI_UI_PolyCafe
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            //Check if the user is staff. If so, they can only delete their own invoices
-            //if (!AuthUtil.IsManager())
-            //{
-            //    MessageBox.Show("You can only delete your own invoices.", "Access Denied", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            //    return;
-            //}
-
             if (string.IsNullOrEmpty(txtInvoiceId.Text))
             {
                 MessageBox.Show("Please select a invoice to delete.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+
+            // Check if the invoice is paid
+            Invoice? invoice = invoiceServices.GetInvoicesByCriteria(InvoiceColumns.Id, txtInvoiceId.Text.Trim()).FirstOrDefault();
+            if (invoice != null && invoice.Status)
+            {
+                MessageBox.Show("You cannot delete a paid invoice.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -307,10 +314,6 @@ namespace GUI_UI_PolyCafe
         }
 
 
-
-
-
-
         private void btnAddDetail_Click(object sender, EventArgs e)
         {
             // Ensure that the invoice ID is not empty
@@ -320,8 +323,17 @@ namespace GUI_UI_PolyCafe
                 return;
             }
 
-            //Check if the invoice is already paid
             Invoice? invoice = invoiceServices.GetInvoicesByCriteria(InvoiceColumns.Id, txtInvoiceId.Text.Trim()).FirstOrDefault();
+
+
+            //Check if the invoice exists
+            if (invoice == null)
+            {
+                MessageBox.Show("The selected invoice does not exist in database.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            //Check if the invoice is already paid
             if (invoice != null && invoice.Status)
             {
                 MessageBox.Show("You cannot add details to a paid invoice.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -470,6 +482,12 @@ namespace GUI_UI_PolyCafe
             Invoice? invoice = invoiceServices.GetInvoicesByCriteria(InvoiceColumns.Id, txtInvoiceId.Text.Trim()).FirstOrDefault();
             InvoiceDetail? invoiceDetail = invoiceDetailsServices.GetInvoiceDetailsByCriteria(InvoiceDetailColumns.InvoiceId, txtInvoiceId.Text.Trim()).FirstOrDefault();
 
+            //Check if the invoice is exist
+            if (invoice == null)
+            {
+                MessageBox.Show("The selected invoice does not exist.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
             //Check if the invoice is paid
             if (invoice != null && invoice.Status)
@@ -486,32 +504,30 @@ namespace GUI_UI_PolyCafe
 
 
             //Check if the invoice is valid
-            if (invoice == null || invoiceValidationHelper.IsValidateInvoice(invoice))
+            if (invoice ==null || !invoiceValidationHelper.IsValidateInvoice(invoice))
             {
-                MessageBox.Show("The selected invoice does not valid.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(invoiceValidationHelper.ErrorMessage, "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
 
             //Check if the details is valid
-            if (invoiceDetail == null || invoiceDetailsValidationHelper.IsValidInvoiceDetail(invoiceDetail))
+            if (invoiceDetail == null || !invoiceDetailsValidationHelper.IsValidInvoiceDetail(invoiceDetail))
             {
-                MessageBox.Show("The selected invoice details does not valid.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(invoiceDetailsValidationHelper.ErrorMessage, "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             // Confirm payment
             DialogResult result = MessageBox.Show("Are you sure you want to pay this invoice?", "Confirm Payment", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (result == DialogResult.No)
+            if (result == DialogResult.Yes)
             {
                 invoice.Status = true;
                 invoiceServices.UpdateInvoice(invoice);
-                invoiceDetail.UnitPrice = decimal.Parse(txtAmount.Text);
-                invoiceDetailsServices.UpdateInvoiceDetail(invoiceDetail);
                 MessageBox.Show("Invoice paid successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                rdoPaid.Checked = true;
+                rdoUnpaid.Checked = false;
                 LoadAllInvoices();
-                LoadAllInvoiceDetails();
-                ClearInvoice();
             }
         }
 
@@ -529,22 +545,9 @@ namespace GUI_UI_PolyCafe
                 cboStaff.SelectedValue = selectedInvoice.StaffId;
                 dtpDate.Value = Convert.ToDateTime(selectedInvoice.Date);
                 rdoPaid.Checked = selectedInvoice.Status;
+                rdoUnpaid.Checked = !selectedInvoice.Status;
 
-                InvoiceDetail? invoiceDetail = invoiceDetailsServices.GetInvoiceDetailsByCriteria(InvoiceDetailColumns.InvoiceId, txtInvoiceId.Text).FirstOrDefault();
-                if (invoiceDetail != null)
-                {
-                    cboProductName.SelectedValue = invoiceDetail.ProductId;
-                    txtUnitPrice.Text = invoiceDetail.UnitPrice.ToString("F2");
-                    txtQuantity.Text = invoiceDetail.Quantity.ToString();
-                    txtAmount.Text = (invoiceDetail.UnitPrice * invoiceDetail.Quantity).ToString("F2");
-                }
-                else
-                {
-                    ClearInvoiceDetails();
-                }
-
-                // Load invoice details for the selected invoice
-                LoadAllInvoiceDetails();
+                ClearInvoiceDetails();
             }
         }
 
@@ -611,6 +614,17 @@ namespace GUI_UI_PolyCafe
         private void dgvInvoices_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             tabControl.SelectedTab = tabPageInvoiceDetail;
+
+            List<InvoiceDetail> invoiceDetails = invoiceDetailsServices.GetInvoiceDetailsByCriteria(InvoiceDetailColumns.InvoiceId, txtInvoiceId.Text.Trim());
+            if (invoiceDetails != null && invoiceDetails.Count > 0)
+            {
+                dgvInvoiceDetails.DataSource = invoiceDetails;
+            }
+            else
+            {
+                MessageBox.Show("No invoice details found for the selected invoice.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                dgvInvoiceDetails.DataSource = null;
+            }
         }
 
         private void cboProductName_SelectedIndexChanged(object sender, EventArgs e)
@@ -640,6 +654,22 @@ namespace GUI_UI_PolyCafe
             else
             {
                 txtAmount.Clear();
+            }
+        }
+
+        private void tabControl_Selected(object sender, TabControlEventArgs e)
+        {
+            if (txtInvoiceId.Text != null)
+            {
+                List<InvoiceDetail> invoiceDetails = invoiceDetailsServices.GetInvoiceDetailsByCriteria(InvoiceDetailColumns.InvoiceId, txtInvoiceId.Text.Trim());
+                if (invoiceDetails != null && invoiceDetails.Count > 0)
+                {
+                    dgvInvoiceDetails.DataSource = invoiceDetails;
+                }
+                else
+                {
+                    dgvInvoiceDetails.DataSource = null;
+                }
             }
         }
     }
@@ -744,4 +774,18 @@ namespace GUI_UI_PolyCafe
 //        Date = dtpDate.Value,
 //        Status = rdoPaid.Checked
 //    };
+//}
+
+
+//InvoiceDetail? invoiceDetail = invoiceDetailsServices.GetInvoiceDetailsByCriteria(InvoiceDetailColumns.InvoiceId, txtInvoiceId.Text).FirstOrDefault();
+//if (invoiceDetail != null)
+//{
+//    cboProductName.SelectedValue = invoiceDetail.ProductId;
+//    txtUnitPrice.Text = invoiceDetail.UnitPrice.ToString("F2");
+//    txtQuantity.Text = invoiceDetail.Quantity.ToString();
+//    txtAmount.Text = (invoiceDetail.UnitPrice * invoiceDetail.Quantity).ToString("F2");
+//}
+//else
+//{
+//    ClearInvoiceDetails();
 //}

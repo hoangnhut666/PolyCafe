@@ -81,6 +81,7 @@
             tabControl.SelectedIndex = 0;
             tabControl.Size = new Size(2253, 1403);
             tabControl.TabIndex = 0;
+            tabControl.Selected += tabControl_Selected;
             // 
             // tabPageInvoice
             // 
@@ -333,25 +334,25 @@
             // 
             // rdoUnpaid
             // 
+            rdoUnpaid.AutoCheck = false;
             rdoUnpaid.AutoSize = true;
             rdoUnpaid.Font = new Font("Segoe UI", 12F);
             rdoUnpaid.Location = new Point(584, 359);
             rdoUnpaid.Name = "rdoUnpaid";
             rdoUnpaid.Size = new Size(323, 52);
             rdoUnpaid.TabIndex = 3;
-            rdoUnpaid.TabStop = true;
             rdoUnpaid.Text = "Chưa Thanh Toán";
             rdoUnpaid.UseVisualStyleBackColor = true;
             // 
             // rdoPaid
             // 
+            rdoPaid.AutoCheck = false;
             rdoPaid.AutoSize = true;
             rdoPaid.Font = new Font("Segoe UI", 12F);
             rdoPaid.Location = new Point(263, 359);
             rdoPaid.Name = "rdoPaid";
             rdoPaid.Size = new Size(275, 52);
             rdoPaid.TabIndex = 3;
-            rdoPaid.TabStop = true;
             rdoPaid.Text = "Đã thanh toán";
             rdoPaid.UseVisualStyleBackColor = true;
             // 
