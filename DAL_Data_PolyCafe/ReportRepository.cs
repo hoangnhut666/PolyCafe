@@ -7,7 +7,6 @@ using DAL_Data_PolyCafe.Constants;
 using DBUTIL_Utilities_PolyCafe;
 using DTO_Models_PolyCafe;
 using Microsoft.Data.SqlClient;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace DAL_Data_PolyCafe
 {

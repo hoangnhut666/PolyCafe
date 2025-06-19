@@ -13,30 +13,30 @@ namespace GUI_UI_PolyCafe
         static void Main()
         {
             ApplicationConfiguration.Initialize();
-            //Show the main(home) screen first
-            //using (var mainForm = new frmMainScreen())
-            //{
-            //    // Show the welcome screen as a dialog
-            //    using (var frmWelcome = new Welcome())
-            //    {
-            //        frmWelcome.ShowDialog();
-            //    }
+            
+            using (var mainForm = new frmMainScreen())
+            {
+                // Show the welcome screen as a dialog
+                using (var frmWelcome = new Welcome())
+                {
+                    frmWelcome.ShowDialog();
+                }
 
-            //    // Show the login screen as a dialog
-            //    using (var frmLogin = new Login())
-            //    {
-            //        if (frmLogin.ShowDialog() == DialogResult.OK)
-            //        {
-            //            Application.Run(mainForm);
-            //        }
-            //        else
-            //        {
-            //            Application.Exit();
-            //        }
-            //    }
-            //}
+                // Show the login screen as a dialog
+                using (var frmLogin = new Login())
+                {
+                    if (frmLogin.ShowDialog() == DialogResult.OK)
+                    {
+                        Application.Run(mainForm);
+                    }
+                    else
+                    {
+                        Application.Exit();
+                    }
+                }
+            }
 
-            Application.Run(new frmInvoiceManagement());
+            //Application.Run(new frmInvoiceManagement());
         }
     }
 }

@@ -13,32 +13,6 @@ namespace DBUTIL_Utilities_PolyCafe
     {
         private static readonly string connString = @"Server=.\;Database=PolyCafe;Integrated Security=True;TrustServerCertificate=True;";
 
-        public static DataTable ExecuteDataTable(string commandText, params SqlParameter[] parameters)
-        {
-            using (SqlConnection connection = new SqlConnection(connString))
-            using (SqlCommand command = new SqlCommand(commandText, connection))
-            {
-                try
-                {
-                    if (parameters != null)
-                    {
-                        command.Parameters.AddRange(parameters);
-                    }
-
-                    using (SqlDataAdapter adapter = new SqlDataAdapter(command))
-                    {
-                        DataTable dt = new DataTable();
-                        adapter.Fill(dt);
-                        return dt;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception($"Error executing DataTable query: {commandText}", ex);
-                }
-            }
-        }
-
         public static List<T> ExecuteQuery<T>(string query, Func<IDataReader, T> mapFunction, params SqlParameter[] parameters)
         {
             List<T> result = new List<T>();
@@ -321,7 +295,31 @@ namespace DBUTIL_Utilities_PolyCafe
 //}
 
 
+//public static DataTable ExecuteDataTable(string commandText, params SqlParameter[] parameters)
+//{
+//    using (SqlConnection connection = new SqlConnection(connString))
+//    using (SqlCommand command = new SqlCommand(commandText, connection))
+//    {
+//        try
+//        {
+//            if (parameters != null)
+//            {
+//                command.Parameters.AddRange(parameters);
+//            }
 
+//            using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+//            {
+//                DataTable dt = new DataTable();
+//                adapter.Fill(dt);
+//                return dt;
+//            }
+//        }
+//        catch (Exception ex)
+//        {
+//            throw new Exception($"Error executing DataTable query: {commandText}", ex);
+//        }
+//    }
+//}
 
 
 

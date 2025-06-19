@@ -232,6 +232,7 @@ namespace GUI_UI_PolyCafe
             {
                 Id = invoiceId,
                 CardId = cboCardHolder.SelectedValue?.ToString(),
+                StaffId = cboStaff.SelectedValue?.ToString() ?? string.Empty,
                 Date = dtpDate.Value,
                 Status = rdoPaid.Checked
             };
@@ -504,7 +505,7 @@ namespace GUI_UI_PolyCafe
 
 
             //Check if the invoice is valid
-            if (invoice ==null || !invoiceValidationHelper.IsValidateInvoice(invoice))
+            if (invoice == null || !invoiceValidationHelper.IsValidateInvoice(invoice))
             {
                 MessageBox.Show(invoiceValidationHelper.ErrorMessage, "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;

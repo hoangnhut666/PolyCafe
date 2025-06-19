@@ -24,7 +24,7 @@ namespace GUI_UI_PolyCafe
                 Invoke(new Action(() =>
                 {
                     this.Dispose();
-                }));
+                }));;
             });
         }
 

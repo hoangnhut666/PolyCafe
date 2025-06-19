@@ -10,17 +10,20 @@ namespace DBUTIL_Utilities_PolyCafe
 {
     public static class AuthUtil
     {
-        private static Staff _currentUser;
+        private static Staff? currentUser;
 
-        public static Staff CurrentUser
+        public static Staff? CurrentUser
         {
-            get => _currentUser;
-            private set => _currentUser = value;
+            get => currentUser;
+            private set => currentUser = value;
         }
 
-        public static bool IsLoggedIn() => _currentUser != null;
+        public static bool IsLoggedIn()
+        {
+            return currentUser != null;
+        }
 
-        public static bool IsManager() => IsLoggedIn() && _currentUser.Role == 1;
+        public static bool IsManager() => IsLoggedIn() && currentUser.Role == 1;
 
         public static void Login(Staff staff)
         {
@@ -40,16 +43,5 @@ namespace DBUTIL_Utilities_PolyCafe
             }
         }
 
-        public static void UpdateCurrentUser(Staff staff)
-        {
-            if (IsLoggedIn())
-            {
-                CurrentUser = staff;
-            }
-            else
-            {
-                throw new InvalidOperationException("No user is currently logged in.");
-            }
-        }
     }
 }

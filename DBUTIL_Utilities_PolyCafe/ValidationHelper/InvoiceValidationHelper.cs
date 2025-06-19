@@ -27,6 +27,13 @@ namespace DBUTIL_Utilities_PolyCafe.ValidationHelper
             }
 
 
+            if (invoice.Date > DateTime.Now)
+            {
+                ErrorMessage = "Invoice date cannot be in the future.";
+                return false;
+            }
+
+
             return true;
         }
     }

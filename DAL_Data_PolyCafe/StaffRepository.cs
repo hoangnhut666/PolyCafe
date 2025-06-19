@@ -13,7 +13,6 @@ namespace DAL_Data_PolyCafe
 {
     public class StaffRepository
     {
-
         public List<Staff> GetAll()
         {
             string sql = $"SELECT * FROM {DbTables.Staff}";

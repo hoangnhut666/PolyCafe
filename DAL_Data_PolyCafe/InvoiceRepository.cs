@@ -13,31 +13,6 @@ namespace DAL_Data_PolyCafe
 {
     public class InvoiceRepository
     {
-
-        public string GenerateInvoiceId()
-        {
-            string prefix = "PBH";
-            string query = $"SELECT {InvoiceColumns.Id} FROM {DbTables.Invoice} ORDER BY {InvoiceColumns.Id} DESC";
-            try
-            {
-                // Get the maximum InvoiceId from the database
-                string lastInvoiceId = Utilities.ExecuteScalar(query)?.ToString() ?? string.Empty;
-                if (string.IsNullOrEmpty(lastInvoiceId))
-                {
-                    return prefix + "001";
-                }
-                // Extract the numeric part and increment it
-                string numericPart = lastInvoiceId.Substring(prefix.Length);
-                int nextNumber = int.Parse(numericPart) + 1;
-                return prefix + nextNumber.ToString("D3");
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error generating new InvoiceId: " + ex.Message);
-            }
-        }
-
-
         public List<Invoice> GetAllInvoices()
         {
             string sql = $"SELECT * FROM {DbTables.Invoice}";
@@ -78,21 +53,6 @@ namespace DAL_Data_PolyCafe
             return invoices;
         }
 
-
-        public DataTable GetDetailsByInvoiceId(string invoiceId)
-        {
-            string sql = $"SELECT c.*, p.{ProductColumns.ProductName} " +
-                        $"FROM {DbTables.InvoiceDetail} c " +
-                        $"JOIN {DbTables.Product} p ON c.{ProductColumns.ProductId} = p.{ProductColumns.ProductId} " +
-                        $"WHERE c.{InvoiceColumns.Id} = @InvoiceId";
-
-            SqlParameter[] parameters = new SqlParameter[]
-            {
-                new SqlParameter("@InvoiceId", invoiceId)
-            };
-
-            return Utilities.ExecuteDataTable(sql, parameters);
-        }
 
 
         public int Insert(Invoice invoice)
@@ -146,3 +106,55 @@ namespace DAL_Data_PolyCafe
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//public DataTable GetDetailsByInvoiceId(string invoiceId)
+//{
+//    string sql = $"SELECT c.*, p.{ProductColumns.ProductName} " +
+//                $"FROM {DbTables.InvoiceDetail} c " +
+//                $"JOIN {DbTables.Product} p ON c.{ProductColumns.ProductId} = p.{ProductColumns.ProductId} " +
+//                $"WHERE c.{InvoiceColumns.Id} = @InvoiceId";
+
+//    SqlParameter[] parameters = new SqlParameter[]
+//    {
+//                new SqlParameter("@InvoiceId", invoiceId)
+//    };
+
+//    return Utilities.ExecuteDataTable(sql, parameters);
+//}
+
+
+//public string GenerateInvoiceId()
+//{
+//    string prefix = "PBH";
+//    string query = $"SELECT {InvoiceColumns.Id} FROM {DbTables.Invoice} ORDER BY {InvoiceColumns.Id} DESC";
+//    try
+//    {
+//        // Get the maximum InvoiceId from the database
+//        string lastInvoiceId = Utilities.ExecuteScalar(query)?.ToString() ?? string.Empty;
+//        if (string.IsNullOrEmpty(lastInvoiceId))
+//        {
+//            return prefix + "001";
+//        }
+//        // Extract the numeric part and increment it
+//        string numericPart = lastInvoiceId.Substring(prefix.Length);
+//        int nextNumber = int.Parse(numericPart) + 1;
+//        return prefix + nextNumber.ToString("D3");
+//    }
+//    catch (Exception ex)
+//    {
+//        throw new Exception("Error generating new InvoiceId: " + ex.Message);
+//    }
+//}

@@ -1,4 +1,5 @@
 ﻿using DAL_Data_PolyCafe;
+using DAL_Data_PolyCafe.Constants;
 using DTO_Models_PolyCafe;
 
 namespace BLL_Services_PolyCafe
@@ -20,7 +21,7 @@ namespace BLL_Services_PolyCafe
         // Generate a new invoice ID
         public string GenerateInvoiceId()
         {
-            return invoiceRepository.GenerateInvoiceId();
+            return EntityRepository.GenerateId(DbTables.Invoice,InvoiceColumns.Id, "PBH");
         }
 
         // Get list of invoice by criteria such as StaffId, CardId, etc.
