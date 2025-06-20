@@ -31,10 +31,6 @@ namespace GUI_UI_PolyCafe
             timerClock.Start();
             timerClock.Tick += TimerClock_Tick;
 
-            // Configure menu items based on user role
-            itmStaffManagement.Visible = AuthUtil.IsManager();
-            btnStaffManagement.Visible = AuthUtil.IsManager();
-
             EmbedFormIntoPanel(new frmAbout());
         }
 

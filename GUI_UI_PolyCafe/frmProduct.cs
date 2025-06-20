@@ -285,7 +285,7 @@ namespace GUI_UI_PolyCafe
                 DataGridViewRow selectedRow = dgvProducts.Rows[e.RowIndex];
                 txtProductId.Text = selectedRow.Cells["ProductId"].Value?.ToString();
                 txtProductName.Text = selectedRow.Cells["ProductName"].Value?.ToString();
-                txtUnitPrice.Text = selectedRow.Cells["Price"].Value?.ToString();
+                txtUnitPrice.Text = selectedRow.Cells["UnitPrice"].Value?.ToString();
                 cboProductCategories.SelectedValue = selectedRow.Cells["CategoryId"].Value?.ToString();
                 rdoActive.Checked = (bool)selectedRow.Cells["Status"].Value;
                 pictureBoxProduct.Image = (Image)selectedRow.Cells["Image"].Value;
