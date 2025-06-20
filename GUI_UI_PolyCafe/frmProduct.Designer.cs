@@ -64,7 +64,7 @@
             tabControl1.Location = new Point(3, -1);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(2257, 1410);
+            tabControl1.Size = new Size(2263, 1418);
             tabControl1.TabIndex = 0;
             tabControl1.Selected += tabControl1_Selected;
             // 
@@ -304,10 +304,10 @@
             // tabPageList
             // 
             tabPageList.Controls.Add(dgvProducts);
-            tabPageList.Location = new Point(10, 55);
+            tabPageList.Location = new Point(10, 63);
             tabPageList.Name = "tabPageList";
             tabPageList.Padding = new Padding(3);
-            tabPageList.Size = new Size(2237, 1345);
+            tabPageList.Size = new Size(2243, 1345);
             tabPageList.TabIndex = 1;
             tabPageList.Text = "DANH SÁCH";
             tabPageList.UseVisualStyleBackColor = true;
@@ -318,7 +318,7 @@
             dgvProducts.Location = new Point(6, 17);
             dgvProducts.Name = "dgvProducts";
             dgvProducts.RowHeadersWidth = 92;
-            dgvProducts.Size = new Size(2225, 1317);
+            dgvProducts.Size = new Size(2231, 1159);
             dgvProducts.TabIndex = 0;
             dgvProducts.CellClick += dgvProdusts_CellClick;
             dgvProducts.CellFormatting += dgvProducts_CellFormatting;

@@ -34,6 +34,13 @@ namespace BLL_Services_PolyCafe
             return staffList.FirstOrDefault();
         }
 
+        //Get all available staff members by criteria
+        public List<Staff> GetAvailableStaffByCriteria(string columnName, string value)
+        {
+            var staffList = staffRepository.GetStaffListByCriteria(columnName, value);
+            return staffList;
+        }
+
         public List<Staff> GetStaffListByCriteria(string columnName, string value)
         {
             var staffList = staffRepository.GetStaffListByCriteria(columnName, value);

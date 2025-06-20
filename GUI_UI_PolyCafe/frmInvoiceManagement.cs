@@ -93,7 +93,7 @@ namespace GUI_UI_PolyCafe
             }
             else
             {
-                cboStaff.DataSource = staffServices.GetAllStaff();
+                cboStaff.DataSource = staffServices.GetAvailableStaffByCriteria(StaffColumns.Status, "1"); 
             }
             cboStaff.DisplayMember = "FullName";
             cboStaff.ValueMember = "Id";
