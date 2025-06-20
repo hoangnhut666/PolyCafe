@@ -18,6 +18,16 @@ namespace BLL_Services_PolyCafe
             return invoiceRepository.GetAllInvoices();
         }
 
+        //Get all invoices by StaffId
+        public List<Invoice> GetInvoicesByStaffId(string staffId)
+        {
+            if (string.IsNullOrEmpty(staffId))
+            {
+                throw new ArgumentException("Staff ID cannot be null or empty.", nameof(staffId));
+            }
+            return invoiceRepository.GetInvoicesByCriteria(InvoiceColumns.StaffId, staffId);
+        }
+
         // Generate a new invoice ID
         public string GenerateInvoiceId()
         {

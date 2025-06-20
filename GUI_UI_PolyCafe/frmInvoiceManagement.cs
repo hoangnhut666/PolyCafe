@@ -85,9 +85,15 @@ namespace GUI_UI_PolyCafe
             cboCardHolder.ValueMember = "CardId";
             cboCardHolder.SelectedIndex = -1;
 
-
             //Set up ComboBox for Staff
-            cboStaff.DataSource = staffServices.GetAllStaff();
+            if (_userId != null)
+            {
+                cboStaff.DataSource = staffServices.GetStaffListByCriteria(StaffColumns.Id, _userId);
+            }
+            else
+            {
+                cboStaff.DataSource = staffServices.GetAllStaff();
+            }
             cboStaff.DisplayMember = "FullName";
             cboStaff.ValueMember = "Id";
             cboStaff.SelectedIndex = -1;
@@ -102,7 +108,7 @@ namespace GUI_UI_PolyCafe
                 if (_userId != null)
                 {
                     // Load invoices by staff ID if user ID is provided
-                    invoices = invoiceServices.GetInvoicesByCriteria(InvoiceColumns.Id, _userId);
+                    invoices = invoiceServices.GetInvoicesByCriteria(InvoiceColumns.StaffId, _userId);
                     dgvInvoices.DataSource = invoices;
                 }
                 else
@@ -116,30 +122,6 @@ namespace GUI_UI_PolyCafe
             {
                 MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 dgvInvoices.DataSource = null;
-            }
-        }
-
-
-
-        //Load all invoice details
-        private void LoadAllInvoiceDetails()
-        {
-            try
-            {
-                var invoiceDetails = invoiceDetailsServices.GetAllInvoiceDetails();
-                if (invoiceDetails != null && invoiceDetails.Count > 0)
-                {
-                    dgvInvoiceDetails.DataSource = invoiceDetails;
-                }
-                else
-                {
-                    MessageBox.Show("No invoice details found.");
-                    dgvInvoiceDetails.DataSource = null;
-                }
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -182,7 +164,7 @@ namespace GUI_UI_PolyCafe
                 if (result > 0)
                 {
                     MessageBox.Show("Invoice added successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    dgvInvoices.DataSource = invoiceServices.GetAllInvoices();
+                    LoadAllInvoices();
                     ClearInvoice();
                 }
                 else
@@ -258,9 +240,8 @@ namespace GUI_UI_PolyCafe
             if (result > 0)
             {
                 MessageBox.Show("Invoice updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                dgvInvoices.DataSource = invoiceServices.GetAllInvoices();
+                LoadAllInvoices();
                 ClearInvoice();
-                LoadAllInvoiceDetails();
             }
             else
             {
@@ -363,7 +344,6 @@ namespace GUI_UI_PolyCafe
             // Add the invoice detail to the database
             invoiceDetailsServices.AddInvoiceDetail(invoiceDetail);
             MessageBox.Show("Invoice detail added successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            LoadAllInvoiceDetails();
             LoadAllInvoices();
             ClearInvoiceDetails();
             ClearInvoice();
@@ -421,7 +401,6 @@ namespace GUI_UI_PolyCafe
                 // Update the invoice detail in the database
                 invoiceDetailsServices.UpdateInvoiceDetail(updatedDetail);
                 MessageBox.Show("Invoice detail updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LoadAllInvoiceDetails();
                 ClearInvoiceDetails();
             }
             catch (Exception ex)
@@ -465,7 +444,6 @@ namespace GUI_UI_PolyCafe
             {
                 invoiceDetailsServices.DeleteInvoiceDetail(selectedDetailId);
                 MessageBox.Show("Invoice detail deleted successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LoadAllInvoiceDetails();
                 ClearInvoiceDetails();
             }
         }
@@ -789,4 +767,28 @@ namespace GUI_UI_PolyCafe
 //else
 //{
 //    ClearInvoiceDetails();
+//}
+
+
+
+//Load all invoice details
+//private void LoadAllInvoiceDetails()
+//{
+//    try
+//    {
+//        var invoiceDetails = invoiceDetailsServices.GetAllInvoiceDetails();
+//        if (invoiceDetails != null && invoiceDetails.Count > 0)
+//        {
+//            dgvInvoiceDetails.DataSource = invoiceDetails;
+//        }
+//        else
+//        {
+//            MessageBox.Show("No invoice details found.");
+//            dgvInvoiceDetails.DataSource = null;
+//        }
+//    }
+//    catch (Exception e)
+//    {
+//        MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+//    }
 //}

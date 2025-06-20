@@ -333,6 +333,7 @@
             Margin = new Padding(4);
             Name = "frmProduct";
             Text = "Quản lý sản phẩm";
+            Load += frmProduct_Load;
             tabControl1.ResumeLayout(false);
             tabPageUpdate.ResumeLayout(false);
             tabPageUpdate.PerformLayout();

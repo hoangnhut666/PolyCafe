@@ -34,6 +34,12 @@ namespace BLL_Services_PolyCafe
             return staffList.FirstOrDefault();
         }
 
+        public List<Staff> GetStaffListByCriteria(string columnName, string value)
+        {
+            var staffList = staffRepository.GetStaffListByCriteria(columnName, value);
+            return staffList;
+        }
+
         // Add a new staff member
         public int AddStaff(Staff staff)
         {

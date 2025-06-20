@@ -261,7 +261,7 @@ namespace GUI_UI_PolyCafe
                     //pictureBoxProduct.Image = Image.FromFile(newImagePath);
                     pictureBoxProduct.Image = LoadImageFromFile(newImagePath);
                     pictureBoxProduct.ImageLocation = newImagePath;
-                    
+
                 }
             }
         }
@@ -357,6 +357,13 @@ namespace GUI_UI_PolyCafe
             }
         }
 
+        private void frmProduct_Load(object sender, EventArgs e)
+        {
+            if (!AuthUtil.IsManager())
+            {
+                tabControl1.TabPages.Remove(tabPageUpdate);
+            }
+        }
     }
 }
 

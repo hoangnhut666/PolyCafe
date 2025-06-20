@@ -124,12 +124,6 @@ namespace GUI_UI_PolyCafe
 
         private void itmProductManagement_Click(object sender, EventArgs e)
         {
-            if (!AuthUtil.IsManager())
-            {
-                MessageBox.Show("You do not have permission to access this feature.", "Access Denied", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
             var productManagementForm = new frmProduct();
             EmbedFormIntoPanel(productManagementForm);
         }

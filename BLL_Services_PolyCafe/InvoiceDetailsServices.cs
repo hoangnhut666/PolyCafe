@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DAL_Data_PolyCafe;
 using DTO_Models_PolyCafe;
+using DAL_Data_PolyCafe.Constants;
 
 namespace BLL_Services_PolyCafe
 {
@@ -29,6 +30,13 @@ namespace BLL_Services_PolyCafe
             return invoiceDetailsRepository.GetInvoiceDetailsByCriteria(columnName, value);
         }
 
+
+        // Get all invoice details by ID
+        public List<InvoiceDetail> GetALLInvoiceDetailByInvoiceId(int id)
+        {
+            var invoiceDetails = invoiceDetailsRepository.GetInvoiceDetailsByCriteria(InvoiceDetailColumns.Id, id.ToString());
+            return invoiceDetails;
+        }
 
         // Add a new invoice detail
         public void AddInvoiceDetail(InvoiceDetail invoiceDetail)
