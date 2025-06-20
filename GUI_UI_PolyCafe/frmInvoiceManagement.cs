@@ -28,6 +28,7 @@ namespace GUI_UI_PolyCafe
         private readonly InvoiceDetailsValidationHelper invoiceDetailsValidationHelper;
 
         private readonly string? _userId;
+        private int selectedInvoiceDetailId = 0;
 
         public frmInvoiceManagement(string? userId = null)
         {
@@ -361,11 +362,11 @@ namespace GUI_UI_PolyCafe
                 }
 
                 //Check if the details is exist
-                if (invoiceDetailsServices.GetInvoiceDetailsByCriteria(InvoiceDetailColumns.InvoiceId, txtInvoiceId.Text.Trim()).Count == 0)
-                {
-                    MessageBox.Show("No invoice details found for the selected invoice.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
+                //if (invoiceDetailsServices.GetInvoiceDetailsByCriteria(InvoiceDetailColumns.InvoiceId, txtInvoiceId.Text.Trim()).Count == 0)
+                //{
+                //    MessageBox.Show("No invoice details found for the selected invoice.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //    return;
+                //}
 
 
                 //Check if the invoid is already paid, if so cannot update the details
@@ -383,7 +384,7 @@ namespace GUI_UI_PolyCafe
                 // Get the updated invoice detail from the form fields
                 InvoiceDetail updatedDetail = new InvoiceDetail
                 {
-                    Id = invoiceDetailsServices.GetInvoiceDetailsByCriteria(InvoiceDetailColumns.InvoiceId, txtInvoiceId.Text.Trim()).FirstOrDefault()?.Id ?? 0,
+                    Id = selectedInvoiceDetailId,
                     InvoiceId = txtInvoiceId.Text.Trim(),
                     ProductId = cboProductName.SelectedValue?.ToString() ?? string.Empty,
                     UnitPrice = decimal.TryParse(txtUnitPrice.Text, out decimal unitPrice) ? unitPrice : 0,
@@ -554,6 +555,7 @@ namespace GUI_UI_PolyCafe
                     rdoPaid.Checked = invoice.Status;
                 }
 
+                selectedInvoiceDetailId = selectedDetail.Id;
                 tabControl.SelectedTab = tabPageInvoice;
             }
         }
@@ -638,18 +640,17 @@ namespace GUI_UI_PolyCafe
 
         private void tabControl_Selected(object sender, TabControlEventArgs e)
         {
-            if (txtInvoiceId.Text != null)
+            string? invoiceId = dgvInvoices.SelectedRows.Count > 0 ? dgvInvoices.SelectedRows[0].Cells["Id"].Value.ToString() : string.Empty;
+            List<InvoiceDetail> invoiceDetails = invoiceDetailsServices.GetALLInvoiceDetailById(invoiceId);
+            if (invoiceDetails != null && invoiceDetails.Count > 0)
             {
-                List<InvoiceDetail> invoiceDetails = invoiceDetailsServices.GetInvoiceDetailsByCriteria(InvoiceDetailColumns.InvoiceId, txtInvoiceId.Text.Trim());
-                if (invoiceDetails != null && invoiceDetails.Count > 0)
-                {
-                    dgvInvoiceDetails.DataSource = invoiceDetails;
-                }
-                else
-                {
-                    dgvInvoiceDetails.DataSource = null;
-                }
+                dgvInvoiceDetails.DataSource = invoiceDetails;
             }
+            else
+            {
+                dgvInvoiceDetails.DataSource = null;
+            }
+
         }
     }
 }

@@ -32,9 +32,9 @@ namespace BLL_Services_PolyCafe
 
 
         // Get all invoice details by ID
-        public List<InvoiceDetail> GetALLInvoiceDetailByInvoiceId(int id)
+        public List<InvoiceDetail> GetALLInvoiceDetailById(string id)
         {
-            var invoiceDetails = invoiceDetailsRepository.GetInvoiceDetailsByCriteria(InvoiceDetailColumns.Id, id.ToString());
+            var invoiceDetails = invoiceDetailsRepository.GetInvoiceDetailsByCriteria(InvoiceDetailColumns.InvoiceId, id);
             return invoiceDetails;
         }
 
