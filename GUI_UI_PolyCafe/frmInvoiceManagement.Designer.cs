@@ -207,7 +207,7 @@
             dgvInvoices.Location = new Point(6, 762);
             dgvInvoices.Name = "dgvInvoices";
             dgvInvoices.RowHeadersWidth = 92;
-            dgvInvoices.Size = new Size(2221, 570);
+            dgvInvoices.Size = new Size(2221, 447);
             dgvInvoices.TabIndex = 2;
             dgvInvoices.CellClick += dgvInvoices_CellClick;
             dgvInvoices.CellDoubleClick += dgvInvoices_CellDoubleClick;
