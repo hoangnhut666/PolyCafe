@@ -219,6 +219,7 @@
             dgvMembershipCards.Size = new Size(2234, 1332);
             dgvMembershipCards.TabIndex = 0;
             dgvMembershipCards.CellClick += dgvMembershipCards_CellClick;
+            dgvMembershipCards.DataBindingComplete += dgvMembershipCards_DataBindingComplete;
             // 
             // frmMembershipCard
             // 

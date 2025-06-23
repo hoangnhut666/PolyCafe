@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DTO_Models_PolyCafe;
+using System.Text.RegularExpressions;
 
 namespace DBUTIL_Utilities_PolyCafe.ValidationHelper
 {
@@ -40,6 +41,14 @@ namespace DBUTIL_Utilities_PolyCafe.ValidationHelper
                 ErrorMessage = "Staff password cannot be null or empty.";
                 return false;
             }
+
+            //Check if the email is in a valid format with a simple regex
+            if (!Regex.IsMatch(staff.Email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+            {
+                ErrorMessage = "Staff email is not in a valid format.";
+                return false;
+            }
+
 
             return true;
         }

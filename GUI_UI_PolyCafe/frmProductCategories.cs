@@ -193,7 +193,7 @@ namespace GUI_UI_PolyCafe
                 txtCategoryName.Text = selectedCategory.CategoryName;
                 txtNotes.Text = selectedCategory.Notes;
 
-                tabControl.SelectedTab = tabPageUpdate; 
+                tabControl.SelectedTab = tabPageUpdate;
             }
             else
             {
@@ -219,6 +219,11 @@ namespace GUI_UI_PolyCafe
             return true;
         }
 
-
+        private void dgvProductCategories_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            dgvProductCategories.Columns["CategoryId"].HeaderText = "Mã loại";
+            dgvProductCategories.Columns["CategoryName"].HeaderText = "Tên loại";
+            dgvProductCategories.Columns["Notes"].HeaderText = "Ghi chú";
+        }
     }
 }

@@ -364,9 +364,18 @@ namespace GUI_UI_PolyCafe
                 tabControl1.TabPages.Remove(tabPageUpdate);
             }
         }
+
+        private void dgvProducts_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            dgvProducts.Columns["ProductId"].HeaderText = "Mã sản phẩm";
+            dgvProducts.Columns["ProductName"].HeaderText = "Tên sản phẩm";
+            dgvProducts.Columns["UnitPrice"].HeaderText = "Đơn giá";
+            dgvProducts.Columns["CategoryId"].HeaderText = "Mã loại";
+            dgvProducts.Columns["Status"].HeaderText = "Trạng thái";
+            dgvProducts.Columns["Image"].HeaderText = "Hình ảnh";
+        }
     }
 }
-
 
 
 

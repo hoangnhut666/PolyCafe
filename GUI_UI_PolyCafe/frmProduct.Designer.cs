@@ -92,7 +92,7 @@
             tabPageUpdate.Location = new Point(10, 63);
             tabPageUpdate.Name = "tabPageUpdate";
             tabPageUpdate.Padding = new Padding(3);
-            tabPageUpdate.Size = new Size(2237, 1337);
+            tabPageUpdate.Size = new Size(2243, 1345);
             tabPageUpdate.TabIndex = 0;
             tabPageUpdate.Text = "CẬP NHẬT   ";
             tabPageUpdate.UseVisualStyleBackColor = true;
@@ -322,6 +322,7 @@
             dgvProducts.TabIndex = 0;
             dgvProducts.CellClick += dgvProdusts_CellClick;
             dgvProducts.CellFormatting += dgvProducts_CellFormatting;
+            dgvProducts.DataBindingComplete += dgvProducts_DataBindingComplete;
             // 
             // frmProduct
             // 

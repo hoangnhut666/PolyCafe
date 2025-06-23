@@ -128,7 +128,7 @@ namespace GUI_UI_PolyCafe
         private void btnDelete_Click(object sender, EventArgs e)
         {
             // Check if a membership card is selected
-            if(txtCardId.Text == string.Empty)
+            if (txtCardId.Text == string.Empty)
             {
                 MessageBox.Show("Please select a membership card to delete.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -139,7 +139,7 @@ namespace GUI_UI_PolyCafe
                 var confirmResult = MessageBox.Show("Are you sure you want to delete this membership card?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (confirmResult != DialogResult.Yes)
                 {
-                    return; 
+                    return;
                 }
 
                 string cardId = txtCardId.Text;
@@ -148,7 +148,7 @@ namespace GUI_UI_PolyCafe
                 {
                     MessageBox.Show("Membership card deleted successfully.", "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     LoadAllMembershipCards();
-                    btnRefresh.PerformClick(); 
+                    btnRefresh.PerformClick();
                 }
                 else
                 {
@@ -200,9 +200,15 @@ namespace GUI_UI_PolyCafe
                 tabControlMembershipCard.TabPages.Remove(tabPageUpdate);
             }
         }
+
+        private void dgvMembershipCards_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            dgvMembershipCards.Columns["CardId"].HeaderText = "Mã Thẻ";
+            dgvMembershipCards.Columns["CardHolder"].HeaderText = "Chủ Sở Hữu";  
+            dgvMembershipCards.Columns["Status"].HeaderText = "Trạng Thái";
+        }
     }
 }
-
 
 
 

@@ -93,7 +93,7 @@ namespace GUI_UI_PolyCafe
             }
             else
             {
-                cboStaff.DataSource = staffServices.GetAvailableStaffByCriteria(StaffColumns.Status, "1"); 
+                cboStaff.DataSource = staffServices.GetStaffListByCriteria(StaffColumns.Status, "1");
             }
             cboStaff.DisplayMember = "FullName";
             cboStaff.ValueMember = "Id";
@@ -521,7 +521,7 @@ namespace GUI_UI_PolyCafe
                 Invoice selectedInvoice = (Invoice)selectedRow.DataBoundItem;
                 // Populate the form fields with the selected invoice data
                 txtInvoiceId.Text = selectedInvoice.Id;
-                cboCardHolder.SelectedValue = selectedInvoice.CardId;
+                cboCardHolder.SelectedValue = selectedInvoice.CardId ?? string.Empty;
                 cboStaff.SelectedValue = selectedInvoice.StaffId;
                 dtpDate.Value = Convert.ToDateTime(selectedInvoice.Date);
                 rdoPaid.Checked = selectedInvoice.Status;
@@ -650,14 +650,102 @@ namespace GUI_UI_PolyCafe
             {
                 dgvInvoiceDetails.DataSource = null;
             }
+        }
 
+        private void dgvInvoiceDetails_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            dgvInvoiceDetails.Columns["Id"].HeaderText = "Mã Chi Tiết";
+            dgvInvoiceDetails.Columns["InvoiceId"].HeaderText = "Mã Phiếu";
+            dgvInvoiceDetails.Columns["ProductId"].HeaderText = "Mã Sản Phẩm";
+            dgvInvoiceDetails.Columns["Quantity"].HeaderText = "Số Lượng";
+            dgvInvoiceDetails.Columns["UnitPrice"].HeaderText = "Đơn Giá";
+        }
+
+        private void dgvInvoices_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            dgvInvoices.Columns["Id"].HeaderText = "Mã Phiếu";
+            dgvInvoices.Columns["CardId"].HeaderText = "Tên Khách Hàng";
+            dgvInvoices.Columns["StaffId"].HeaderText = "Tên Nhân Viên";
+            dgvInvoices.Columns["Date"].HeaderText = "Ngày Tạo";
+            dgvInvoices.Columns["Status"].HeaderText = "Trạng Thái";
+        }
+
+        private void dgvInvoices_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (dgvInvoices.Columns[e.ColumnIndex].Name == "CardId" && e.Value != null)
+            {
+                var card = membershipCardServices.GetAllMembershipCards()
+                    .FirstOrDefault(c => c.CardId == e.Value.ToString());
+                e.Value = card?.CardHolder ?? "";
+                e.FormattingApplied = true;
+            }
+            else if (dgvInvoices.Columns[e.ColumnIndex].Name == "StaffId" && e.Value != null)
+            {
+                var staff = staffServices.GetAllStaff()
+                    .FirstOrDefault(s => s.Id == e.Value.ToString());
+                e.Value = staff?.FullName ?? "";
+                e.FormattingApplied = true;
+            }
         }
     }
 }
 
 
+//private void dgvInvoices_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+//{
+//    if (dgvInvoices.Columns[e.ColumnIndex].Name == "CardId" && e.Value != null)
+//    {
+//        var card = membershipCardServices.GetAllMembershipCards()
+//            .FirstOrDefault(c => c.CardId == e.Value.ToString());
+//        e.Value = card?.CardHolder ?? "";
+//        e.FormattingApplied = true;
+//    }
+//    else if (dgvInvoices.Columns[e.ColumnIndex].Name == "StaffId" && e.Value != null)
+//    {
+//        var staff = staffServices.GetAllStaff()
+//            .FirstOrDefault(s => s.Id == e.Value.ToString());
+//        e.Value = staff?.FullName ?? "";
+//        e.FormattingApplied = true;
+//    }
+//}
 
 
+//public const string Id = "Id";
+//public const string InvoiceId = "MaPhieu";
+//public const string ProductId = "MaSanPham";
+//public const string Quantity = "SoLuong";
+//public const string UnitPrice = "DonGia";
+
+
+//public const string Id = "MaPhieu";
+//public const string CardId = "MaThe";
+//public const string StaffId = "MaNhanVien";
+//public const string Date = "NgayTao";
+//public const string Status = "TrangThai";
+
+
+
+//private void dgvStaff_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+//{
+//    if (dgvStaff.Columns[e.ColumnIndex].Name == "Role" && e.Value != null)
+//    {
+//        int roleValue;
+//        if (int.TryParse(e.Value.ToString(), out roleValue))
+//        {
+//            e.Value = roleValue == 1 ? "Quản lý" : "Nhân viên";
+//            e.FormattingApplied = true;
+//        }
+//    }
+//    else if (dgvStaff.Columns[e.ColumnIndex].Name == "Status" && e.Value != null)
+//    {
+//        int statusValue;
+//        if (int.TryParse(e.Value.ToString(), out statusValue))
+//        {
+//            e.Value = statusValue == 1 ? "Hoạt động" : "Không hoạt động";
+//            e.FormattingApplied = true;
+//        }
+//    }
+//}
 
 
 

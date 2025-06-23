@@ -211,6 +211,8 @@
             dgvInvoices.TabIndex = 2;
             dgvInvoices.CellClick += dgvInvoices_CellClick;
             dgvInvoices.CellDoubleClick += dgvInvoices_CellDoubleClick;
+            dgvInvoices.CellFormatting += dgvInvoices_CellFormatting;
+            dgvInvoices.DataBindingComplete += dgvInvoices_DataBindingComplete;
             // 
             // groupBox2
             // 
@@ -462,6 +464,7 @@
             dgvInvoiceDetails.Size = new Size(2221, 1306);
             dgvInvoiceDetails.TabIndex = 0;
             dgvInvoiceDetails.CellClick += dgvInvoiceDetails_CellClick;
+            dgvInvoiceDetails.DataBindingComplete += dgvInvoiceDetails_DataBindingComplete;
             // 
             // frmInvoiceManagement
             // 

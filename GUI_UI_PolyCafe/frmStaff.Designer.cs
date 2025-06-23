@@ -358,6 +358,7 @@
             dgvStaff.TabIndex = 0;
             dgvStaff.CellClick += dgvStaff_CellClick;
             dgvStaff.CellFormatting += dgvStaff_CellFormatting;
+            dgvStaff.DataBindingComplete += dgvStaff_DataBindingComplete;
             // 
             // frmStaff
             // 

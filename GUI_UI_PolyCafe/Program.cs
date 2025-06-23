@@ -13,7 +13,7 @@ namespace GUI_UI_PolyCafe
         static void Main()
         {
             ApplicationConfiguration.Initialize();
-            
+
             using (var mainForm = new frmMainScreen())
             {
                 // Show the welcome screen as a dialog

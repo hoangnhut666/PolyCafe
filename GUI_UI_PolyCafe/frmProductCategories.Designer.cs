@@ -214,6 +214,7 @@
             dgvProductCategories.Size = new Size(2227, 1332);
             dgvProductCategories.TabIndex = 0;
             dgvProductCategories.CellClick += dgvProductCategories_CellClick;
+            dgvProductCategories.DataBindingComplete += dgvProductCategories_DataBindingComplete;
             // 
             // frmProductCategories
             // 

@@ -82,7 +82,7 @@ namespace GUI_UI_PolyCafe
                     Email = txtEmail.Text.Trim(),
                     Password = txtPassword.Text.Trim() == txtConfirmPassword.Text.Trim() ? txtPassword.Text.Trim() : throw new ArgumentException("Passwords do not match"),
                     Role = rdoManager.Checked ? 1 : 0,
-                    Status = chk_active.Checked ? 1 : 0, 
+                    Status = chk_active.Checked ? 1 : 0,
                 };
 
                 // Check if the staff information is valid
@@ -130,7 +130,7 @@ namespace GUI_UI_PolyCafe
                     Email = txtEmail.Text.Trim(),
                     Password = txtPassword.Text.Trim() == txtConfirmPassword.Text.Trim() ? txtPassword.Text.Trim() : throw new ArgumentException("Passwords do not match"),
                     Status = chk_active.Checked ? 1 : 0,
-                    Role = rdoManager.Checked ? 1 : 0, 
+                    Role = rdoManager.Checked ? 1 : 0,
                 };
 
                 //Prevent updating the role of a staff member
@@ -179,8 +179,8 @@ namespace GUI_UI_PolyCafe
             }
 
             // Check if the selected staff member is an admin or manager
-            Staff? selectedStaff = StaffServices.GetStaffByCriteria(StaffColumns.Id,txtStaffId.Text);
-            if (selectedStaff != null && selectedStaff.Role == 1 )
+            Staff? selectedStaff = StaffServices.GetStaffByCriteria(StaffColumns.Id, txtStaffId.Text);
+            if (selectedStaff != null && selectedStaff.Role == 1)
             {
                 MessageBox.Show("You can not detele another admin or manager", "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
@@ -196,7 +196,7 @@ namespace GUI_UI_PolyCafe
                 var confirmResult = MessageBox.Show("Are you sure you want to delete this staff member?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (confirmResult != DialogResult.Yes)
                 {
-                    return; 
+                    return;
                 }
 
                 // Delete the staff member from the database
@@ -248,7 +248,6 @@ namespace GUI_UI_PolyCafe
             }
             else
             {
-                // Clear the input fields if no row is selected
                 ClearInputFields();
             }
         }
@@ -296,6 +295,16 @@ namespace GUI_UI_PolyCafe
                     e.FormattingApplied = true;
                 }
             }
+        }
+
+        private void dgvStaff_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            dgvStaff.Columns["Id"].HeaderText = "Mã nhân viên";
+            dgvStaff.Columns["FullName"].HeaderText = "Họ và tên";
+            dgvStaff.Columns["Email"].HeaderText = "Email";
+            dgvStaff.Columns["Password"].HeaderText = "Mật khẩu";
+            dgvStaff.Columns["Role"].HeaderText = "Vai trò";
+            dgvStaff.Columns["Status"].HeaderText = "Trạng thái";
         }
     }
 }

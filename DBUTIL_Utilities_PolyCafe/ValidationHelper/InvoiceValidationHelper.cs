@@ -15,21 +15,21 @@ namespace DBUTIL_Utilities_PolyCafe.ValidationHelper
         {
             if (string.IsNullOrEmpty(invoice.CardId))
             {
-                ErrorMessage = "Invoice CardID cannot be null or empty.";
+                ErrorMessage = "Tên khách hàng không được để trống.";
                 return false;
             }
 
 
             if (string.IsNullOrEmpty(invoice.StaffId))
             {
-                ErrorMessage = "Invoice StaffID cannot be null or empty.";
+                ErrorMessage = "Tên nhân viên không được để trống.";
                 return false;
             }
 
 
             if (invoice.Date > DateTime.Now)
             {
-                ErrorMessage = "Invoice date cannot be in the future.";
+                ErrorMessage = "Ngày tạo hóa đơn không thể ở tương lai.";
                 return false;
             }
 
