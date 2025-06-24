@@ -674,8 +674,15 @@ namespace GUI_UI_PolyCafe
         {
             if (dgvInvoices.Columns[e.ColumnIndex].Name == "CardId" && e.Value != null)
             {
-                var card = membershipCardServices.GetAllMembershipCards()
-                    .FirstOrDefault(c => c.CardId == e.Value.ToString());
+                MembershipCard card = null;
+                foreach (var c in membershipCardServices.GetAllMembershipCards())
+                {
+                    if (c.CardId == e.Value.ToString())
+                    {
+                        card = c;
+                        break;
+                    }
+                }
                 e.Value = card?.CardHolder ?? "";
                 e.FormattingApplied = true;
             }

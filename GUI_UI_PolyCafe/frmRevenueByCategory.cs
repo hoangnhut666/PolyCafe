@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using BLL_Services_PolyCafe;
 using DTO_Models_PolyCafe;
 using Microsoft.VisualBasic;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace GUI_UI_PolyCafe
 {
@@ -86,10 +87,22 @@ namespace GUI_UI_PolyCafe
             }
         }
 
+        private void dgvReport_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            dgvReport.Columns["ProductId"].HeaderText = "Mã Sản Phẩm";
+            dgvReport.Columns["ProductName"].HeaderText = "Tên Sản Phẩm";
+            dgvReport.Columns["TotalAmount"].HeaderText = "Tổng Doanh Thu";
+            dgvReport.Columns["QuantitySold"].HeaderText = "Số Lượng Bán";
+            dgvReport.Columns["SaleDate"].HeaderText = "Ngày Bán";
+            dgvReport.Columns["NumberOfReceipts"].HeaderText = "Số Lượng Phiếu";
+            dgvReport.Columns["Status"].HeaderText = "Trạng Thái";
+        }
+
         private void dgvReport_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
 
         }
     }
 }
+
 

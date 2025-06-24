@@ -156,6 +156,7 @@
             dgvReport.Size = new Size(2698, 1530);
             dgvReport.TabIndex = 1;
             dgvReport.CellFormatting += dgvReport_CellFormatting;
+            dgvReport.DataBindingComplete += dgvReport_DataBindingComplete;
             // 
             // frmRevenueByCategory
             // 

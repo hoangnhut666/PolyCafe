@@ -50,6 +50,7 @@
             dgvReport.Size = new Size(2239, 1216);
             dgvReport.TabIndex = 3;
             dgvReport.CellFormatting += dgvReport_CellFormatting;
+            dgvReport.DataBindingComplete += dgvReport_DataBindingComplete;
             // 
             // panel1
             // 

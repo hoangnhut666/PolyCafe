@@ -72,13 +72,13 @@ namespace GUI_UI_PolyCafe
                 dtpFromDate.Value.Date,
                 dtpToDate.Value.Date);
 
-            dgvReport.DataSource = reportData;
-            // Check if there is no data
-            if (reportData.Count == 0)
-            {
-                MessageBox.Show("No data found for the selected criteria.", "Information",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+                dgvReport.DataSource = reportData;
+                // Check if there is no data
+                if (reportData.Count == 0)
+                {
+                    MessageBox.Show("No data found for the selected criteria.", "Information",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
             catch (Exception ex)
             {
@@ -98,6 +98,17 @@ namespace GUI_UI_PolyCafe
                     e.FormattingApplied = true;
                 }
             }
+        }
+
+        private void dgvReport_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            dgvReport.Columns["EmployeeId"].HeaderText = "Mã Nhân Viên";
+            dgvReport.Columns["FullName"].HeaderText = "Họ Tên Nhân Viên";
+            dgvReport.Columns["TotalAmount"].HeaderText = "Tổng Doanh Thu";
+            dgvReport.Columns["QuantitySold"].HeaderText = "Số Lượng Bán";
+            dgvReport.Columns["SaleDate"].HeaderText = "Ngày Bán";
+            dgvReport.Columns["NumberOfReceipts"].HeaderText = "Số Lượng Phiếu";
+            dgvReport.Columns["Status"].HeaderText = "Trạng Thái";
         }
     }
 }

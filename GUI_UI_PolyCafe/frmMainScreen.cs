@@ -44,8 +44,8 @@ namespace GUI_UI_PolyCafe
         {
             if (AuthUtil.CurrentUser != null)
             {
-                lblAccount.Text = $"Welcome: {AuthUtil.CurrentUser.FullName}";
-                lblRole.Text = AuthUtil.IsManager() ? "Role: Admin" : "Role: Staff";
+                lblAccount.Text = $"Xin chào: {AuthUtil.CurrentUser.FullName}";
+                lblRole.Text = AuthUtil.IsManager() ? "Vai trò: Quản trị viên" : "Vai trò: Nhân viên";
             }
         }
 

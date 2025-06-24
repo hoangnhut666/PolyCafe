@@ -40,7 +40,7 @@ namespace GUI_UI_PolyCafe
             //Set up Form
             StartPosition = FormStartPosition.CenterScreen;
 
-            //Hide password fields by default
+            //Hide password fields by default 
             txtPassword.UseSystemPasswordChar = true;
             txtConfirmPassword.UseSystemPasswordChar = true;
 
